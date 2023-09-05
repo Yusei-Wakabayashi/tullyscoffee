@@ -13,6 +13,18 @@ class WorldSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        World::truncate();
+        World::create([
+            'name' => 'オーバーワールド',
+            'order' => '1'
+        ]);
+        World::create([
+            'name' => 'ネザー',
+            'order' => '2'
+        ]);
+        World::create([
+            'name' => 'エンド',
+            'order' => '3'
+        ]);
     }
 }
