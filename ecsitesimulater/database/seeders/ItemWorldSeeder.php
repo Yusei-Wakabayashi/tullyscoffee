@@ -13,6 +13,6 @@ class ItemWorldSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        ItemWorld::truncate();
     }
 }

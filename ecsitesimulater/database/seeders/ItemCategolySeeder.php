@@ -13,6 +13,6 @@ class ItemCategolySeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        ItemCategoly::truncate();
     }
 }
