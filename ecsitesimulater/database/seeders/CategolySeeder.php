@@ -43,7 +43,7 @@ class CategolySeeder extends Seeder
             'order' => '7'
         ]);
         Categoly::create([
-            'name' => '食べ物と実用',
+            'name' => '食べ物と飲み物',
             'order' => '8'
         ]);
         Categoly::create([
