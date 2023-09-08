@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('item_world', function (Blueprint $table) {
+        Schema::create('item_worlds', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('item_id')->nullable();
-            $table->bigInteger('world_id')->nullable();
+            $table->bigInteger('item_id');
+            $table->bigInteger('world_id');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('item_world');
+        Schema::dropIfExists('item_worlds');
     }
 };
