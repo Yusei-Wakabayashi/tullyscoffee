@@ -9,27 +9,28 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+    
     public function up(): void
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->string('pic', 255)->nullable();
-            $table->string('name', 255)->nullable();
-            $table->bigInteger('item_id1');
-            $table->bigInteger('item_id2');
-            $table->bigInteger('item_id3');
-            $table->bigInteger('item_id4');
-            $table->bigInteger('item_id5');
-            $table->bigInteger('item_id6');
-            $table->bigInteger('item_id7');
-            $table->bigInteger('item_id8');
-            $table->bigInteger('item_id9');
-            $table->string('note', 255);
-            $table->integer('order')->nullable();
+            $table->string('pic', 255);
+            $table->string('name', 255);
+            $table->bigInteger('item_id1')->nullable();
+            $table->bigInteger('item_id2')->nullable();
+            $table->bigInteger('item_id3')->nullable();
+            $table->bigInteger('item_id4')->nullable();
+            $table->bigInteger('item_id5')->nullable();
+            $table->bigInteger('item_id6')->nullable();
+            $table->bigInteger('item_id7')->nullable();
+            $table->bigInteger('item_id8')->nullable();
+            $table->bigInteger('item_id9')->nullable();
+            $table->string('note', 255)->nullable();
+            $table->integer('order');
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      */
