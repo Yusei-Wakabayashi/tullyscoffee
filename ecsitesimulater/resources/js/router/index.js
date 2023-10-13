@@ -1,17 +1,29 @@
 import { createRouter, createWebHistory } from "vue-router";
-import AboutView from "../views/AboutView.vue"
-import HomeView from "../views/HomeView.vue"
+import AllView from "../views/AllView.vue"
+import OverWorldView from "../views/OverWorldView.vue"
+import NetherView from '../views/NetherView.vue'
+import EndView from '../views/EndView.vue'
 const routes = [
     {
-        path: "/about",
-        component: AboutView,
-        name: "about"
+        path: "/",
+        component: AllView,
+        name: "all"
     },
     {
-        path: "/",
-        component: HomeView,
-        name: "home"
-    }
+        path: "/overWorld",
+        component: OverWorldView,
+        name: "overWorld"
+    },
+    {
+        path: "/nether",
+        component: NetherView,
+        name: "nether"
+    },
+    {
+        path: "/end",
+        component: EndView,
+        name: "end"
+    },
 ]
 
 const router = createRouter({

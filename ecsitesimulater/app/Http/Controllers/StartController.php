@@ -10,8 +10,14 @@ class StartController extends Controller
 {
     public function index()
     {
+
+        return view('app');
+    }
+
+    public function getItems()
+    {
+        //データベース内のアイテム名
         $object = new Item;
-        $data = $object->getdata();
-        return view('testshowitem', ['data' => $data]);
+        return $object->getdata();
     }
 }

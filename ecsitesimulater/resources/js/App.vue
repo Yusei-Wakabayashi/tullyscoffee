@@ -1,7 +1,7 @@
 <script setup>
-import TestHeader from './components/TestHeader.vue';
+import WorldsHeader from './components/WorldsHeader.vue';
 </script>
 
 <template>
-    <TestHeader/>
+    <WorldsHeader/>
 </template>
