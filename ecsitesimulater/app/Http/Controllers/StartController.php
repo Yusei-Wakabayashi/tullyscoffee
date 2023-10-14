@@ -20,29 +20,33 @@ class StartController extends Controller
     {
         $object = new Item;
         return $object->getData();
+        //全てのアイテムを配列として返します
     }
     public function findItemid()
     {
         $id = 1;//引数として入ってきたものを入れる
         $object = new Item;
         return $object->finditem($id);
-        //返すのは一つのアイテムのデータのみ
+        //引数として一つのアイテムのidを渡してそのアイテムのデータを返す
     }
     public function searchItems()
     {
         $name = '樹皮を剥いだサクラの木';//引数として入ってきたものを入れる
         $object = new Item;
         return $object->search_name($name);
+        //引数として入力された文言をでitemテーブルに検索をかけて合致するものがあれば配列として返します
     }
-    public function allCategoly()
+    public function categolylist()
     {
         $object = new Categoly;
         return $object->allgetCategoly();
+        //全てのカテゴリーを配列として返します(id含む)
     }
-    public function allWorld()
+    public function worldlist()
     {
         $object = new World;
         return $object->allgetWorld();
+        //全てのワールドを配列として返します(id含む)
     }
     public function selectCategoly()
     {
@@ -78,6 +82,7 @@ class StartController extends Controller
             //var_dump($data);
         });
         return $data;
+        //入ってきたカテゴリーidに合致するアイテムを配列として返します
     }
     public function selectWorld()
     {
@@ -90,5 +95,6 @@ class StartController extends Controller
             return $item_object->finditem($i->item_id);
         });
         return $data;
+        //入ってきたワールドidに合致するアイテムを配列として返します
     }
 }
