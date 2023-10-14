@@ -22,16 +22,16 @@ class StartController extends Controller
         return $object->getData();
         //全てのアイテムを配列として返します
     }
-    public function findItemid()
+    public function findItemid($id)
     {
-        $id = 1;//引数として入ってきたものを入れる
+        //$id = 1;//引数として入ってきたものを入れる
         $object = new Item;
         return $object->finditem($id);
         //引数として一つのアイテムのidを渡してそのアイテムのデータを返す
     }
-    public function searchItems()
+    public function searchItems($name)
     {
-        $name = '樹皮を剥いだサクラの木';//引数として入ってきたものを入れる
+        //$name = '樹皮を剥いだサクラの木';//引数として入ってきたものを入れる
         $object = new Item;
         return $object->search_name($name);
         //引数として入力された文言をでitemテーブルに検索をかけて合致するものがあれば配列として返します
@@ -48,14 +48,14 @@ class StartController extends Controller
         return $object->allgetWorld();
         //全てのワールドを配列として返します(id含む)
     }
-    public function selectCategoly()
+    public function selectCategoly($id)
     {
-        $categoly_id = 1;
+        //$request = 1;
         $data = [];
         $object = new ItemCategoly;
         //$item_object = new Item;
         //$items = $object->search_item($categoly_id);
-        $items = $object->search_item($categoly_id);
+        $items = $object->search_item($id);
          //dd($items);
 //         foreach ($items as $item);
 //         {
@@ -84,12 +84,12 @@ class StartController extends Controller
         return $data;
         //入ってきたカテゴリーidに合致するアイテムを配列として返します
     }
-    public function selectWorld()
+    public function selectWorld($id)
     {
-        $world_id = 1;
+        //$request = 1;
         $data = [];
         $object = new ItemWorld;
-        $items = $object->search_item($world_id);
+        $items = $object->search_item($id);
         $data = $items->map( function($i) {
             $item_object = new Item;
             return $item_object->finditem($i->item_id);
