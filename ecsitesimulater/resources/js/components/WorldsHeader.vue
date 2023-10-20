@@ -1,3 +1,4 @@
+
 <template>
     <router-link to="/overWorld">オーバーワールド</router-link> |
     <router-link to="/nether">ネザー</router-link> |
