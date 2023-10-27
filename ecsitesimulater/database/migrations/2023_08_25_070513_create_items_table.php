@@ -27,6 +27,7 @@ return new class extends Migration
             $table->bigInteger('item_id9')->nullable();
             $table->string('note', 255)->nullable();
             $table->integer('order');
+            $table->bigInteger('crafttable_id')->nullable();
             $table->timestamps();
         });
     }
