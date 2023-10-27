@@ -14,7 +14,7 @@ class ItemWorldSeeder extends Seeder
     public function run(): void
     {
         ItemWorld::truncate();
-        $csv_content = new \SplFileObject(database_path('csv_data'.'/item_categoly.csv'));
+        $csv_content = new \SplFileObject(database_path('csv_data'.'/item_world.csv'));
         $csv_content->setFlags(
             \SplFileObject::READ_CSV |      // CSVとして行を読み込み
             \SplFileObject::READ_AHEAD |    // 先読み／巻き戻しで読み込み

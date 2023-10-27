@@ -28,24 +28,17 @@ class ItemCategolySeeder extends Seeder
 
             // 文字コード変換
             $value = mb_convert_encoding($value, "UTF-8");
-            // 項目行を省く        
-            if($value[0] == "id"){
-                continue;
-            }
+
             $csv_data[] = [
-                'id' => $value[0],
-                'item_id' => $value[1],
-                'categoly_id' => $value[2]
+                'item_id' => $value[0],
+                'categoly_id' => $value[1]
             ];
         }
         foreach($csv_data as $data){
-            if ($data['id'] != "\u{FEFF}id"){
-                ItemCategoly::create([
-                    'item_id' => $data['item_id'],
-                    'categoly_id' => $data['categoly_id']
-                ]);
-                
-            }
+            ItemCategoly::create([
+                'item_id' => $data['item_id'],
+                'categoly_id' => $data['categoly_id']
+            ]);
         }
     }
 }
