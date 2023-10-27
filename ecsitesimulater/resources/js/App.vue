@@ -36,20 +36,6 @@ const isNetherTabClick = ref(false);
 const isEndTabClick = ref(false);
 const isAllTabClick = ref(true);
 
-//カテゴリーボタン
-const isArchitectureClick = ref(true);
-const isColoredClick = ref(false);
-const isNaturalClick = ref(false);
-const isFunctionClick = ref(false);
-const isRedstoneClick = ref(false);
-const isToolClick = ref(false);
-const isBattleClick = ref(false);
-const isFoodclick = ref(false);
-const isMaterialClick = ref(false);
-const isAllItemClick = ref(false);
-const isKeepItemClick = ref(false);
-
-
 //オーバーワールド
 const setOverworldClick = () => {
     isOverworldClick.value = true;
@@ -82,170 +68,13 @@ const setAllTabClick = () => {
     isAllTabClick.value = true;
 };
 
-//建築
-const setArchitectureClick = () => {
-    isArchitectureClick.value = true;
-    isColoredClick.value = false;
-    isNaturalClick.value = false;
-    isFunctionClick.value = false;
-    isRedstoneClick.value = false;
-    isToolClick.value = false;
-    isBattleClick.value = false;
-    isFoodclick.value = false;
-    isMaterialClick.value = false;
-    isAllItemClick.value = false;
-    isKeepItemClick.value = false;
-}
+//初期のcss状態(ALLカテゴリーボタン)
+const currentCategory = ref('architecture');
 
-//色付き
-const setColoredClick = () => {
-    isArchitectureClick.value = false;
-    isColoredClick.value = true;
-    isNaturalClick.value = false;
-    isFunctionClick.value = false;
-    isRedstoneClick.value = false;
-    isToolClick.value = false;
-    isBattleClick.value = false;
-    isFoodclick.value = false;
-    isMaterialClick.value = false;
-    isAllItemClick.value = false;
-    isKeepItemClick.value = false;
-}
-
-//天然
-const setNaturalClick = () => {
-    isArchitectureClick.value = false;
-    isColoredClick.value = false;
-    isNaturalClick.value = true;
-    isFunctionClick.value = false;
-    isRedstoneClick.value = false;
-    isToolClick.value = false;
-    isBattleClick.value = false;
-    isFoodclick.value = false;
-    isMaterialClick.value = false;
-    isAllItemClick.value = false;
-    isKeepItemClick.value = false;
-}
-
-//機能的
-const setFunctionClick = () => {
-    isArchitectureClick.value = false;
-    isColoredClick.value = false;
-    isNaturalClick.value = false;
-    isFunctionClick.value = true;
-    isRedstoneClick.value = false;
-    isToolClick.value = false;
-    isBattleClick.value = false;
-    isFoodclick.value = false;
-    isMaterialClick.value = false;
-    isAllItemClick.value = false;
-    isKeepItemClick.value = false;
-}
-
-//レッドストーン
-const setRedstoneClick = () => {
-    isArchitectureClick.value = false;
-    isColoredClick.value = false;
-    isNaturalClick.value = false;
-    isFunctionClick.value = false;
-    isRedstoneClick.value = true;
-    isToolClick.value = false;
-    isBattleClick.value = false;
-    isFoodclick.value = false;
-    isMaterialClick.value = false;
-    isAllItemClick.value = false;
-    isKeepItemClick.value = false;
-}
-
-//道具と実用
-const setToolClick = () => {
-    isArchitectureClick.value = false;
-    isColoredClick.value = false;
-    isNaturalClick.value = false;
-    isFunctionClick.value = false;
-    isRedstoneClick.value = false;
-    isToolClick.value = true;
-    isBattleClick.value = false;
-    isFoodclick.value = false;
-    isMaterialClick.value = false;
-    isAllItemClick.value = false;
-    isKeepItemClick.value = false;
-}
-
-//戦闘
-const setBattleClick = () => {
-    isArchitectureClick.value = false;
-    isColoredClick.value = false;
-    isNaturalClick.value = false;
-    isFunctionClick.value = false;
-    isRedstoneClick.value = false;
-    isToolClick.value = false;
-    isBattleClick.value = true;
-    isFoodclick.value = false;
-    isMaterialClick.value = false;
-    isAllItemClick.value = false;
-    isKeepItemClick.value = false;
-}
-
-//食べ物と飲み物
-const setFoodClick = () => {
-    isArchitectureClick.value = false;
-    isColoredClick.value = false;
-    isNaturalClick.value = false;
-    isFunctionClick.value = false;
-    isRedstoneClick.value = false;
-    isToolClick.value = false;
-    isBattleClick.value = false;
-    isFoodclick.value = true;
-    isMaterialClick.value = false;
-    isAllItemClick.value = false;
-    isKeepItemClick.value = false;
-}
-
-//材料
-const setMaterialClick = () => {
-    isArchitectureClick.value = false;
-    isColoredClick.value = false;
-    isNaturalClick.value = false;
-    isFunctionClick.value = false;
-    isRedstoneClick.value = false;
-    isToolClick.value = false;
-    isBattleClick.value = false;
-    isFoodclick.value = false;
-    isMaterialClick.value = true;
-    isAllItemClick.value = false;
-    isKeepItemClick.value = false;
-}
-
-//全アイテム一覧
-const setAllItemClick = () => {
-    isArchitectureClick.value = false;
-    isColoredClick.value = false;
-    isNaturalClick.value = false;
-    isFunctionClick.value = false;
-    isRedstoneClick.value = false;
-    isToolClick.value = false;
-    isBattleClick.value = false;
-    isFoodclick.value = false;
-    isMaterialClick.value = false;
-    isAllItemClick.value = true;
-    isKeepItemClick.value = false;
-}
-
-//保存アイテム一覧
-const setKeepItemClick = () => {
-    isArchitectureClick.value = false;
-    isColoredClick.value = false;
-    isNaturalClick.value = false;
-    isFunctionClick.value = false;
-    isRedstoneClick.value = false;
-    isToolClick.value = false;
-    isBattleClick.value = false;
-    isFoodclick.value = false;
-    isMaterialClick.value = false;
-    isAllItemClick.value = false;
-    isKeepItemClick.value = true;
-}
+//クリックしたものの引数をcurrentCategoryに入れて変更
+const setCategory = (category) => {
+    currentCategory.value = category;
+};
 
 // ユーザーの検索語を格納
 const searchTerm = ref('');
@@ -265,8 +94,8 @@ const filtereditems = computed(() => {
         <div class="split">
             <div>
                 <div class="main">
-                    <!--ワールドボタン-->
                     <div class="tab-container">
+                        <!--オーバーワールドボタン-->
                         <div :class="{ 'tab-click-left': isOverworldClick, 'tab-left': !isOverworldClick }"
                             @click="setOverworldClick(true)">
                             <button
@@ -288,47 +117,49 @@ const filtereditems = computed(() => {
                             <button :class="{ 'tab-world-click': isAllTabClick, 'tab-world': !isAllTabClick }">オール</button>
                         </div>
                     </div>
-
-                    <!--カテゴリーボタン-->
+                    <!--カテゴリーボタン上部-->
                     <div class="tab-category-container">
-                        <!--建築-->
-                        <div class="tab-category" @click="setArchitectureClick(true)">
+                        <!--建築ブロックボタン-->
+                        <div class="tab-category" @click="setCategory('architecture')">
                             <button
-                                :class="{ 'btn-category-click': isArchitectureClick, 'btn-category': !isArchitectureClick }">
+                                :class="{ 'btn-category-click': currentCategory === 'architecture', 'btn-category': currentCategory !== 'architecture' }">
                                 <img src="./img/architecture/bricks.webp">
                             </button>
                         </div>
-                        <!--色付き-->
-                        <div class="tab-category" @click="setColoredClick(true)">
-                            <button :class="{ 'btn-category-click': isColoredClick, 'btn-category': !isColoredClick }">
+                        <!--色付きブロックボタン-->
+                        <div class="tab-category" @click="setCategory('colored')">
+                            <button
+                                :class="{ 'btn-category-click': currentCategory === 'colored', 'btn-category': currentCategory !== 'colored' }">
                                 <img src="./img/colored/cyan_wool.webp">
                             </button>
                         </div>
-                        <!--天然-->
-                        <div class="tab-category" @click="setNaturalClick(true)">
-                            <button :class="{ 'btn-category-click': isNaturalClick, 'btn-category': !isNaturalClick }">
+                        <!--天然ブロックボタン-->
+                        <div class="tab-category" @click="setCategory('natural')">
+                            <button
+                                :class="{ 'btn-category-click': currentCategory === 'natural', 'btn-category': currentCategory !== 'natural' }">
                                 <img src="./img/natural/grass_block.webp">
                             </button>
                         </div>
-                        <!--機能的-->
-                        <div class="tab-category" @click="setFunctionClick(true)">
-                            <button :class="{ 'btn-category-click': isFunctionClick, 'btn-category': !isFunctionClick }">
+                        <!--機能的ブロックボタン-->
+                        <div class="tab-category" @click="setCategory('function')">
+                            <button
+                                :class="{ 'btn-category-click': currentCategory === 'function', 'btn-category': currentCategory !== 'function' }">
                                 <img src="./img/function/oak_sign.webp">
                             </button>
                         </div>
                         <!--レッドストーン-->
-                        <div class="tab-category" @click="setRedstoneClick(true)">
-                            <button :class="{ 'btn-category-click': isRedstoneClick, 'btn-category': !isRedstoneClick }">
+                        <div class="tab-category" @click="setCategory('redstone')">
+                            <button
+                                :class="{ 'btn-category-click': currentCategory === 'redstone', 'btn-category': currentCategory !== 'redstone' }">
                                 <img src="./img/redstone/redstone.png">
                             </button>
                         </div>
-                        <div>
-                            <input v-model="searchTerm" placeholder="検索">
-                        </div>
-                        <!--非同期の待ち時間アニメーション-->
-                        <div v-show="isLoading" class="loading-animation">
-                            <h1>Now Loading<span class="loading-dots"></span></h1>
-                        </div>
+                        <!--検索ボックス-->
+                        <input v-model="searchTerm" placeholder="検索">
+                    </div>
+                    <!--非同期の待ち時間アニメーション-->
+                    <div v-show="isLoading" class="loading-animation">
+                        <h1>Now Loading<span class="loading-dots"></span></h1>
                     </div>
                     <!--アイテム一覧-->
                     <h1 class="title">装飾ブロック</h1>
@@ -348,33 +179,33 @@ const filtereditems = computed(() => {
                     </div>
 
                     <div class="tab-category-container-bottom">
-                        <div class="tab-category-bottom" @click="setToolClick(true)">
+                        <div class="tab-category-bottom" @click="setCategory('tool')">
                             <button
-                                :class="{ 'btn-category-bottom-click': isToolClick, 'btn-category-bottom': !isToolClick }">
+                                :class="{ 'btn-category-bottom-click': currentCategory === 'tool', 'btn-category-bottom': currentCategory !== 'tool' }">
                                 <img src="./img/tool/diamond_pickaxe.webp">
                             </button>
                         </div>
-                        <div class="tab-category-bottom" @click="setBattleClick(true)">
+                        <div class="tab-category-bottom" @click="setCategory('battle')">
                             <button
-                                :class="{ 'btn-category-bottom-click': isBattleClick, 'btn-category-bottom': !isBattleClick }">
+                                :class="{ 'btn-category-bottom-click': currentCategory === 'battle', 'btn-category-bottom': currentCategory !== 'battle' }">
                                 <img src="./img/battle/netherite_sword.webp">
                             </button>
                         </div>
-                        <div class="tab-category-bottom" @click="setFoodClick(true)">
+                        <div class="tab-category-bottom" @click="setCategory('food')">
                             <button
-                                :class="{ 'btn-category-bottom-click': isFoodclick, 'btn-category-bottom': !isFoodclick }">
+                                :class="{ 'btn-category-bottom-click': currentCategory === 'food', 'btn-category-bottom': currentCategory !== 'food' }">
                                 <img src="./img/food/golden_apple.png">
                             </button>
                         </div>
-                        <div class="tab-category-bottom" @click="setMaterialClick(true)">
+                        <div class="tab-category-bottom" @click="setCategory('material')">
                             <button
-                                :class="{ 'btn-category-bottom-click': isMaterialClick, 'btn-category-bottom': !isMaterialClick }">
+                                :class="{ 'btn-category-bottom-click': currentCategory === 'material', 'btn-category-bottom': currentCategory !== 'material' }">
                                 <img src="./img/material/iron_ingot.webp">
                             </button>
                         </div>
-                        <div class="tab-category-bottom" @click="setAllItemClick(true)">
+                        <div class="tab-category-bottom" @click="setCategory('all')">
                             <button
-                                :class="{ 'btn-category-bottom-click': isAllItemClick, 'btn-category-bottom': !isAllItemClick }">
+                                :class="{ 'btn-category-bottom-click': currentCategory === 'all', 'btn-category-bottom': currentCategory !== 'all' }">
                                 <img src="">
                             </button>
                         </div>
@@ -382,9 +213,9 @@ const filtereditems = computed(() => {
                         <div class="tab-category-bottom-blank"></div>
                         <div class="tab-category-bottom-blank"></div>
                         <!--ここまで-->
-                        <div class="tab-category-bottom" @click="setKeepItemClick(true)">
+                        <div class="tab-category-bottom" @click="setCategory('keep')">
                             <button
-                                :class="{ 'btn-category-bottom-click': isKeepItemClick, 'btn-category-bottom': !isKeepItemClick }">
+                                :class="{ 'btn-category-bottom-click': currentCategory === 'keep', 'btn-category-bottom': currentCategory !== 'keep' }">
                                 <img src="">
                             </button>
                         </div>
@@ -399,5 +230,4 @@ const filtereditems = computed(() => {
                 </div>
             </div>
         </div>
-    </div>
-</template>
+</div></template>

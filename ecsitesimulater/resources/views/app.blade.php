@@ -7,6 +7,7 @@
 
     <title>Minecraft Book</title>
     @vite(['resources/css/app.css', 'resources/js/main.js'])
+    <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 </head>
 
 <body>

@@ -57,8 +57,6 @@ const showItemDetails = (item) => {
 }
 
 
-
-
 //カテゴリーボタン
 const buttons = ref([
     { id: 1, name: '建築', pic: '/img/architecture/bricks.webp' },
