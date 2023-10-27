@@ -65,6 +65,7 @@ class ItemSeeder extends Seeder
                 'item_id9' => $value[20],
                 'note' => $value[21],
                 'order' => $value[22],
+                'crafttable_id' => $value[23],
             ];
         }
         foreach($csv_data as $data){
@@ -82,7 +83,8 @@ class ItemSeeder extends Seeder
                     'item_id8' => empty_null($data['item_id8']),
                     'item_id9' => empty_null($data['item_id9']),
                     'note' => $data['note'],
-                    'order' => $data['order']
+                    'order' => $data['order'],
+                    'crafttable_id' => empty_null($data['crafttable_id'])
                 ]);
                 
             }
