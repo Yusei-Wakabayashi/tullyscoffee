@@ -52,10 +52,10 @@ class StartController extends Controller
     {
         //$request = 1;
         $data = [];
-        $object = new ItemCategoly;
+        $ItemCategoly_object = new ItemCategoly;
+        $Item_object = new Item;
         //$item_object = new Item;
         //$items = $object->search_item($categoly_id);
-        $items = $object->search_item($id);
          //dd($items);
 //         foreach ($items as $item);
 //         {
@@ -76,25 +76,42 @@ class StartController extends Controller
         //    array_push($test,$testdata);
         //}
         //dd($test);
-        $data = $items->map( function($i) {
-            $item_object = new Item;
-            return $item_object->finditem($i->item_id);
-            //var_dump($data);
-        });
-        return $data;
+        if ($id == 10)
+        {
+            return $Item_object->getData();
+        }
+        else
+        {
+            $items = $ItemCategoly_object->search_item($id);
+            $data = $items->map( function($i) {
+                $item_object = new Item;
+                return $item_object->finditem($i->item_id);
+                //var_dump($data);
+            });
+            return $data;
+        }
         //入ってきたカテゴリーidに合致するアイテムを配列として返します
     }
     public function selectWorld($id)
     {
         //$request = 1;
         $data = [];
-        $object = new ItemWorld;
-        $items = $object->search_item($id);
-        $data = $items->map( function($i) {
-            $item_object = new Item;
-            return $item_object->finditem($i->item_id);
-        });
-        return $data;
+        $Item_object = new Item;
+        $ItemWorld_object = new ItemWorld;
+        if ($id == 4)
+        {
+            return $Item_object->getData();
+        }
+        else
+        {
+            $items = $ItemWorld_object->search_item($id);
+            $data = $items->map( function($i) {
+                $item_object = new Item;
+                return $item_object->finditem($i->item_id);
+            });
+            return $data;
+        }
+        
         //入ってきたワールドidに合致するアイテムを配列として返します
     }
 }
