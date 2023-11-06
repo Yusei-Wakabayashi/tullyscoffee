@@ -16,15 +16,6 @@ return new class extends Migration
             $table->id();
             $table->string('pic', 255);
             $table->string('name', 255);
-            $table->bigInteger('item_id1')->nullable();
-            $table->bigInteger('item_id2')->nullable();
-            $table->bigInteger('item_id3')->nullable();
-            $table->bigInteger('item_id4')->nullable();
-            $table->bigInteger('item_id5')->nullable();
-            $table->bigInteger('item_id6')->nullable();
-            $table->bigInteger('item_id7')->nullable();
-            $table->bigInteger('item_id8')->nullable();
-            $table->bigInteger('item_id9')->nullable();
             $table->string('note', 255)->nullable();
             $table->integer('order');
             $table->timestamps();

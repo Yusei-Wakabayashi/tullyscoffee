@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ItemWorldSeeder::class);
         $this->call(ItemCategolySeeder::class);
         $this->call(CrafttableSeeder::class);
+        $this->call(ItemRecipeCrafttableSeeder::class);
     }
 }

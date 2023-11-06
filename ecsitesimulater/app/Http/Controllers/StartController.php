@@ -8,6 +8,7 @@ use App\Models\Categoly;
 use App\Models\ItemCategoly;
 use App\Models\World;
 use App\Models\ItemWorld;
+use App\Models\ItemRecipeCrafttable;
 use Illuminate\Support\Facades\DB;
 
 class StartController extends Controller
@@ -113,5 +114,10 @@ class StartController extends Controller
         }
         
         //入ってきたワールドidに合致するアイテムを配列として返します
+    }
+    public function search_recipe($id)
+    {
+        $ItemRecipeCrafttable_object = new ItemRecipeCrafttable;
+        return $ItemRecipeCrafttable_object->search_recipe($id);
     }
 }
