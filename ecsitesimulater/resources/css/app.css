@@ -257,11 +257,10 @@ input {
 }
 
 .loading-animation {
-    /**background-color: rgba(255, 255, 255, 0.8);**/
-    background-image: url(../js/img/loading.jpg);
+    background-color: rgba(255, 255, 255, 0.8);
     background-position: center;
     background-size: cover;
-    color: white;
+    color: black;
     position: relative;
     animation: slide 2s infinite linear;
     position: fixed;
@@ -314,7 +313,7 @@ input {
 }
 
 .vertical-scrollable-list {
-    height: 273px;
+    height: 276px;
     width: 526px;
     overflow-y: scroll;
     overflow-x: hidden;
