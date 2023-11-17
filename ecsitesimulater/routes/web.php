@@ -12,6 +12,6 @@ Route::get('/item/worldall', 'App\Http\Controllers\StartController@worldlist');
 Route::get('/item/categoly/{id}', 'App\Http\Controllers\StartController@selectCategoly');
 Route::get('/item/categolyall', 'App\Http\Controllers\StartController@categolylist');
 Route::get('/item/recipe', 'App\Http\Controllers\StartController@findItemid');
-Route::get('/item/recipesearch', 'App\Http\Controllers\StartController@search_recipe');
+Route::get('/item/recipesearch/{id}', 'App\Http\Controllers\StartController@search_recipe');
 
 //Route::get('/{any?}', fn () => view('app'))->where('any', '.+');
