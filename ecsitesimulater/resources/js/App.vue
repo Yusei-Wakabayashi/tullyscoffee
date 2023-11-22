@@ -2,11 +2,16 @@
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios'
 
-
-//非同期処理の読み込み判定 (trueの間だけアニメーション表示)
-const isLoading = ref(true);
-//アイテム配列
-const items = ref([]);
+const isLoading = ref(true);//非同期処理の読み込み判定 (trueの間だけアニメーション表示)
+const items = ref([]);//アイテム配列
+const itemRecipeList = ref([])//アイテムのレシピIDのリスト
+const searchTerm = ref('');// ユーザーの検索語を格納
+const hoveredItem = ref(null)// カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
+const itemRecipeNote = ref('');//クラフトレシピの注意書き
+const isOverworldClick = ref(false);//オーバーワールドボタン
+const isNetherTabClick = ref(false);//ネザーワールドボタン
+const isEndTabClick = ref(false);//エンドワールドボタン
+const isAllTabClick = ref(true);//オーバーワールドボタン
 
 //初期の表示オールアイテム
 const getAllitem = () => {
@@ -27,12 +32,6 @@ onMounted(() => {
     getAllitem();
 }
 );
-
-//(ワールドボタン)
-const isOverworldClick = ref(false);
-const isNetherTabClick = ref(false);
-const isEndTabClick = ref(false);
-const isAllTabClick = ref(true);
 
 //オーバーワールド
 const setOverworldClick = () => {
@@ -115,7 +114,7 @@ const currentCategory = ref(10);
 
 //クリックしたものの引数をcurrentCategoryに入れてアイテム表示を変更する
 const setCategory = (category) => {
-    currentCategory.value = category;
+    currentCategory.value = category;//cssのデザイン変化
     searchTerm.value = ''
     isLoading.value = true
     axios.get(`/item/categoly/${category}`)
@@ -168,10 +167,6 @@ const setCategory = (category) => {
     }
 };
 
-// ユーザーの検索語を格納
-const searchTerm = ref('');
-// カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
-const hoveredItem = ref(null)
 //アイテム名検索(アイテム名)
 const filtereditems = computed(() => {
     // データベース内のアイテム名を含むアイテムだけをフィルタリング
@@ -180,9 +175,42 @@ const filtereditems = computed(() => {
     );
 });
 
+//画像をクリックしたときのレシピ表示処理
+const itemRecipe = (item, i) => {
+    isLoading.value = true
+    itemRecipeNote.value = item.note
+    axios.get(`/item/recipesearch/${i}`)
+        .then(response => {
+            console.log(i)
+            itemRecipeList.value = response.data;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        .finally(() => {
+            isLoading.value = false;
+        }); 
+
+
+        /**axios.get(`/item/recipe/${i}`)
+        .then(response => {
+            itemRecipeList.value = response.data;
+        })
+        .catch(error => {
+            console.log(error);
+        })
+        .finally(() => {
+            isLoading.value = false;
+        });  */
+}
+
 </script>
 
 <template>
+    <div :class="{ 'whole-nether': isNetherTabClick, 'whole-overworld': !isNetherTabClick, 'whole-end': isEndTabClick, 'whole-all': isAllTabClick }">
+        <div class="title-rogo">
+        <img src="./web_png/05rogo.png" width="500" alt="">
+    </div>
     <div class="position">
         <div class="split">
             <div>
@@ -262,7 +290,7 @@ const filtereditems = computed(() => {
                                 <li v-for="(item, i) in filtereditems" :key="i" class="item-container">
                                     <!--アイテム画像-->
                                     <img @mouseover="hoveredItem = item.name" @mouseleave="hoveredItem = null"
-                                        :src="item.pic">
+                                        :src="item.pic" @click="itemRecipe(item, i + 1)">
                                     <!--アイテム名-->
                                     <div class="item-name" v-if="hoveredItem === item.name">{{ item.name }}</div>
                                 </li>
@@ -298,6 +326,7 @@ const filtereditems = computed(() => {
                         <div class="tab-category-bottom" @click="setCategory(10)">
                             <button
                                 :class="{ 'btn-category-bottom-click': currentCategory === 10, 'btn-category-bottom': currentCategory !== 10 }">
+                                <img src="./web_png/all.png">
                             </button>
                         </div>
                         <!--二つ分開ける-->
@@ -307,7 +336,7 @@ const filtereditems = computed(() => {
                         <div class="tab-category-bottom" @click="setCategory(11)">
                             <button
                                 :class="{ 'btn-category-bottom-click': currentCategory === 11, 'btn-category-bottom': currentCategory !== 11 }">
-                                <img src="">
+                                <img src="./web_png/book.png">
                             </button>
                         </div>
                     </div>
@@ -317,10 +346,58 @@ const filtereditems = computed(() => {
                 <!--レシピデザイン待ち-->
                 <div class="recipe">
                     <div class="recipe-inline">
-                        
+                        <div class="recipe-box" v-for="(recipe, i) in itemRecipeList" :key="i">
+                            <ul>
+                                <li>{{ recipe.item_id1 }}</li>
+                                <li>{{ recipe.item_id2 }}</li>
+                                <li>{{ recipe.item_id3 }}</li>
+                                <li>{{ recipe.item_id4 }}</li>
+                                <li>{{ recipe.item_id5 }}</li>
+                                <li>{{ recipe.item_id6 }}</li>
+                                <li>{{ recipe.item_id7 }}</li>
+                                <li>{{ recipe.item_id8 }}</li>
+                                <li>{{ recipe.item_id9 }}</li>
+                            </ul>
+                        </div>
                     </div>
+                    <h3 style="color: white; background-color: black;">{{ itemRecipeNote }}</h3>
                 </div>
             </div>
         </div>
     </div>
+    </div>
 </template>
+
+<style scoped>
+.whole-nether{
+    background-image: url(../js/web_png/nether_back.png);
+    background-color: red;
+    animation: blink 3s infinite;
+    padding: 0 0 100% 0;
+}
+
+.whole-overworld{
+    background-image: url(../js/web_png/overworld_back.png);
+    padding: 0 0 100% 0;
+}
+.whole-all{
+    background-image: url(../js/web_png/overworld_back.png);
+    padding: 0 0 100% 0;
+}
+.whole-end{
+    background-image: url(../js/web_png/theend_back.png);
+    padding: 0 0 100% 0;
+}
+
+@keyframes blink {
+    0% {
+      background-color: rgba(255, 0, 0, 0.377); /* 初期の透明度を設定 */
+    }
+    50% {
+      background-color: rgba(255, 0, 0, 1); /* 色を濃くする */
+    }
+    100% {
+      background-color: rgba(255, 0, 0, 0.377); /* 再び透明度を設定 */
+    }
+  }
+</style>

@@ -5,11 +5,14 @@
 
 body {
     font-family: 'DotGothic16', sans-serif;
-    background-image: url(../js/img/back.jpg);
     background-size: cover;
     overflow: hidden;
     /*要素選択できなくさせる(コピペなど)*/
     user-select: none;
+}
+
+.title-rogo{
+    text-align: center;
 }
 
 .split {
@@ -17,7 +20,6 @@ body {
 }
 
 .position {
-    height: 100vh;
     /* 画面の高さに合わせる場合 */
     display: flex;
     align-items: center;
@@ -220,13 +222,13 @@ input {
     font-family: 'DotGothic16', sans-serif;
     color: white;
     background-color: rgb(101, 101, 101);
-    background-image: url('../js/img/input.png');
-    background-size: 40px;
+    background-image: url('../js/web_png/search.png');
+    background-size: 30px;
     background-repeat: no-repeat;
     background-position: 2px center;
-    padding-left: 35px;
+    padding-left: 40px;
     margin: 11px 0 0 15px;
-    width: 153px;
+    width: 150px;
     height: 44px;
     border: none;
 }
@@ -390,4 +392,38 @@ input {
     border-top: 3px solid #f2f2f2;
     border-bottom: 3px solid rgb(101, 101, 101);
     border-right: 3px solid rgb(101, 101, 101);
+}
+
+
+
+
+
+
+
+/*ここからすういの部分 */
+.recipe-box img {
+    width: 49px;
+    height: 49px;
+
+}
+
+.recipe-box ul {
+    list-style: none;
+    margin: 21px 0 21px 21px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 50px);
+    /* 3つの列を作成し、各列の幅を50pxに設定 */
+    grid-template-rows: repeat(3, 50px);
+    grid-gap: 6px;
+}
+
+.recipe-box li {
+    width: 49px;
+    height: 49px;
+    background-color: #999999;
+    border-left: 3px solid #333333;
+    border-top: 3px solid #333333;
+    border-bottom: 5px solid #f2f2f2;
+    border-right: 5px solid #f2f2f2;
 }

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Minecraft Book</title>
+    <link rel="icon" href="">
     @vite(['resources/css/app.css', 'resources/js/main.js'])
     <link href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap" rel="stylesheet">
 </head>
