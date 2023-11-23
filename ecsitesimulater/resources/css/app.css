@@ -11,7 +11,46 @@ body {
     user-select: none;
 }
 
-.title-rogo{
+.whole-nether {
+    background-image: url(../js/web_png/nether_back.png);
+    background-color: red;
+    animation: blink 3s infinite;
+    padding: 0 0 100% 0;
+}
+
+.whole-overworld {
+    background-image: url(../js/web_png/overworld_back.png);
+    padding: 0 0 100% 0;
+}
+
+.whole-all {
+    background-image: url(../js/web_png/overworld_back.png);
+    padding: 0 0 100% 0;
+}
+
+.whole-end {
+    background-image: url(../js/web_png/theend_back.png);
+    padding: 0 0 100% 0;
+}
+
+@keyframes blink {
+    0% {
+        background-color: rgba(255, 0, 0, 0.377);
+        /* 初期の透明度を設定 */
+    }
+
+    50% {
+        background-color: rgba(255, 0, 0, 1);
+        /* 色を濃くする */
+    }
+
+    100% {
+        background-color: rgba(255, 0, 0, 0.377);
+        /* 再び透明度を設定 */
+    }
+}
+
+.title-rogo {
     text-align: center;
 }
 
