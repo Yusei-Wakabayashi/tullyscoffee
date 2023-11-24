@@ -439,22 +439,25 @@ input {
 
 
 /*ここからすういの部分 */
+.recipe-box {
+    display: flex;
+}
+
 .recipe-box img {
     width: 49px;
     height: 49px;
-
+    
 }
 
 .recipe-box ul {
     list-style: none;
-    margin: 21px 0 21px 21px;
+    margin: 15px 0 15px 15px;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(3, 50px);
-    /* 3つの列を作成し、各列の幅を50pxに設定 */
-    grid-template-rows: repeat(3, 50px);
-    grid-gap: 6px;
-}
+    grid-template-columns: repeat(3, 50px); /* 3つの列を作成し、各列の幅を50pxに設定 */
+    grid-template-rows: repeat(3,50px);
+    grid-gap: 6px; 
+  }
 
 .recipe-box li {
     width: 49px;
@@ -464,4 +467,133 @@ input {
     border-top: 3px solid #333333;
     border-bottom: 5px solid #f2f2f2;
     border-right: 5px solid #f2f2f2;
+  }
+  
+
+
+
+  .right-side{
+    text-align: center;
+    margin-top: 26px;
+  }
+
+  .square-button button {
+    width: 35px; /* ボタンの横幅 */
+    height: 30px; /* ボタンの縦幅 */
+    margin: 0  0 15px 65px;
+    text-align: center;
+    background-color: #cccccc; /* ボタンの背景色 */
+    color: #000; /* テキストの色 */
+    border-left: 3px solid black;
+    border-top: 3px solid black;
+    border-right: 3px solid white;
+    border-bottom: 3px solid white;
+    cursor: pointer; /* カーソルをポインターに設定 */
+    
+  }
+ .square-button button img {
+    width: 25px;
+    height: 20px;
+    margin-top: 3px;
+    object-fit: cover; 
+  }
+
+  
+.square_triangle_arrow {
+    position: relative;
+    padding-left: 35px;
+    display: inline-block; /* 追加: インライン要素にする */
 }
+
+.square_triangle_arrow::before {
+    content: "";
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right:  90px;
+    width: 45px;
+    height: 10px;
+    background: #999999;
+}
+
+.square_triangle_arrow::after {
+    content: "";
+    margin: auto;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 25px;
+    width: 0;
+    height: 0;
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+    border-left: 25px solid #999999;
+}
+
+.image-container {
+    width: 50px;
+    height: 50px;
+    margin-left: 30px;
+    border-left: 3px solid black;
+    border-top: 3px solid black;
+    border-right: 3px solid white;
+    border-bottom: 3px solid white;
+    background-color: #999;
+  }
+
+  .image-container img {
+    width: 100%;
+    height: 100%;
+  }
+
+
+.button-container {
+    display: flex;
+    margin-left: 55px;
+    margin-top: 15px;
+  }
+
+.out-button {
+    border: 3px solid #000;
+    margin-left: 10px;
+    
+  }
+
+  .button:hover {
+    opacity: 0.8;
+  }
+
+  .button-left:hover {
+    background-color: #A4e76a; 
+  }
+
+  .button-left {
+    display: flex;
+    width: 45.2px;
+    height: 30.2px;
+    align-items: center;
+    justify-content: center;
+    background-color: #999;
+    border-left: 3px solid white;
+    border-top: 3px solid white;
+    border-right: 3px solid #999;
+    border-bottom: 3px solid #999;  
+  }
+
+  .button-right:hover {
+    background-color: #df272d; 
+  }
+
+  .button-right {
+    display: flex;
+    width: 45.2px;
+    height: 30.2px;
+    align-items: center;
+    justify-content: center;
+    background-color: #999;
+    border-left: 3px solid white;
+    border-top: 3px solid white;
+    border-right: 3px solid #999;
+    border-bottom: 3px solid #999;  
+  }
