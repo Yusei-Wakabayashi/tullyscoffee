@@ -120,4 +120,29 @@ class StartController extends Controller
         $ItemRecipeCrafttable_object = new ItemRecipeCrafttable;
         return $ItemRecipeCrafttable_object->search_recipe($id);
     }
+    public function catwar($world_id,$categoly_id)
+    {
+        if ($world_id == 4){
+            if ($categoly_id == 10){
+                return StartController::getItems();
+            }
+            else{
+                return StartController::selectCategoly($categoly_id);
+            }
+        }
+        elseif ($categoly_id == 10){
+            return StartController::selectWorld($world_id);
+        }
+        
+        $categoly = DB::table('item_categolies')
+        ->where('categoly_id', '=', ':cat_id')
+        ->toSql();
+        //dd($categoly);
+        $items = DB::table(DB::raw('('.$categoly.') AS cat'))
+        ->leftJoin('item_worlds', 'item_worlds.item_id', '=', 'cat.item_id')
+        ->setBindings([':cat_id'=>$categoly_id])
+        ->where('item_worlds.world_id', '=', $world_id)
+        ->get();
+        return $items;
+    }
 }
