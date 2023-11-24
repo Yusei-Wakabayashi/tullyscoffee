@@ -6,7 +6,6 @@
 body {
     font-family: 'DotGothic16', sans-serif;
     background-size: cover;
-    overflow: hidden;
     /*要素選択できなくさせる(コピペなど)*/
     user-select: none;
 }

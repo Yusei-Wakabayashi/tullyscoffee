@@ -11,7 +11,7 @@ const itemRecipeNote = ref('');//クラフトレシピの注意書き
 const isOverworldClick = ref(false);//オーバーワールドボタン
 const isNetherTabClick = ref(false);//ネザーワールドボタン
 const isEndTabClick = ref(false);//エンドワールドボタン
-const isAllTabClick = ref(true);//オーバーワールドボタン
+const isAllTabClick = ref(true);//オールボタン
 
 //初期の表示オールアイテム
 const getAllitem = () => {
@@ -81,7 +81,6 @@ const setEndTabClick = () => {
     isAllTabClick.value = false;
     isLoading.value = true
     searchTerm.value = ''
-    //ネザーAPI
     axios.get('/item/world/3')
         .then(response => {
             items.value = response.data;
@@ -176,12 +175,13 @@ const filtereditems = computed(() => {
 });
 
 //画像をクリックしたときのレシピ表示処理
-const itemRecipe = (item, i) => {
+const itemRecipe = (item) => {
     isLoading.value = true
     itemRecipeNote.value = item.note
-    axios.get(`/item/recipesearch/${i}`)
+    const itemRecipeID = item.id
+    axios.get(`/item/recipesearch/${itemRecipeID}`)
         .then(response => {
-            console.log(i)
+            console.log(itemRecipeID)
             itemRecipeList.value = response.data;
         })
         .catch(error => {
@@ -191,7 +191,6 @@ const itemRecipe = (item, i) => {
             isLoading.value = false;
         });
 
-        console.log(recipe.crafttable_id)
 
 
     /**axios.get(`/item/recipe/${i}`)
@@ -296,7 +295,7 @@ const itemRecipe = (item, i) => {
                                     <li v-for="(item, i) in filtereditems" :key="i" class="item-container">
                                         <!--アイテム画像-->
                                         <img @mouseover="hoveredItem = item.name" @mouseleave="hoveredItem = null"
-                                            :src="item.pic" @click="itemRecipe(item, i + 1)">
+                                            :src="item.pic" @click="itemRecipe(item)">
                                         <!--アイテム名-->
                                         <div class="item-name" v-if="hoveredItem === item.name">{{ item.name }}</div>
                                     </li>
@@ -359,20 +358,26 @@ const itemRecipe = (item, i) => {
                     <div class="recipe">
                         <div class="recipe-inline">
                             <div class="recipe-box" v-for="(recipe, i) in itemRecipeList" :key="i">
-                                <ul v-if="recipe.crafttable_id === 2">
-                                    <li>{{ recipe.item_id1 }}</li>
-                                    <li>{{ recipe.item_id2 }}</li>
-                                    <li>{{ recipe.item_id3 }}</li>
-                                    <li>{{ recipe.item_id4 }}</li>
-                                    <li>{{ recipe.item_id5 }}</li>
-                                    <li>{{ recipe.item_id6 }}</li>
-                                    <li>{{ recipe.item_id7 }}</li>
-                                    <li>{{ recipe.item_id8 }}</li>
-                                    <li>{{ recipe.item_id9 }}</li>
-                                </ul>
-                                <ul v-else>
-                                    <li class="attention-img"><img src="./web_png/attention.png" alt=""></li>
-                                </ul>
+                                <!--クラフト不可レシピ-->
+                                <div v-if="recipe.crafttable_id === 1">
+                                    <ul>
+                                        <li class="attention-img"><img src="./web_png/attention.png" alt=""></li>
+                                    </ul>
+                                </div>
+                                <!--作業台レシピ-->
+                                <div v-if="recipe.crafttable_id === 2">
+                                    <ul>
+                                        <li>{{ recipe.item_id1 }}</li>
+                                        <li>{{ recipe.item_id2 }}</li>
+                                        <li>{{ recipe.item_id3 }}</li>
+                                        <li>{{ recipe.item_id4 }}</li>
+                                        <li>{{ recipe.item_id5 }}</li>
+                                        <li>{{ recipe.item_id6 }}</li>
+                                        <li>{{ recipe.item_id7 }}</li>
+                                        <li>{{ recipe.item_id8 }}</li>
+                                        <li>{{ recipe.item_id9 }}</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         <!--仮デザイン-->
@@ -385,7 +390,7 @@ const itemRecipe = (item, i) => {
 </template>
 
 <style scoped>
-.attention-img{
+.attention-img {
     margin: 50px;
 }
 </style>
