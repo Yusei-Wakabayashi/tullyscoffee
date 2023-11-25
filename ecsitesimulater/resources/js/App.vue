@@ -6,6 +6,8 @@ const isLoading = ref(true); //非同期処理の読み込み判定 (trueの間�
 const items = ref([]);//アイテム配列
 const itemRecipeList = ref([]);//アイテムのレシピIDのリスト
 const searchTerm = ref("");//ユーザーの検索語を格納
+const categoryName = ref("全アイテム一覧");//カテゴリーボタンを押した際に文字を入れる(初期は全アイテム一覧表示)
+const currentCategory = ref(10);//初期のcss状態(ALLカテゴリーボタン)
 const hoveredItem = ref(null);//カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
 const itemRecipeNote = ref("");//クラフトレシピの注意書き
 const itemImgSrc = ref('')//itemImgの値をセット
@@ -17,7 +19,7 @@ const isAllTabClick = ref(true);//オールボタン
 //初期の表示オールアイテム
 const getAllitem = () => {
     axios
-        .get("/item/world/4")
+        .get("/item/start")
         .then((response) => {
             items.value = response.data;
         })
@@ -36,6 +38,7 @@ onMounted(() => {
 
 //オーバーワールド
 const setOverworldClick = () => {
+    currentCategory.value = 10
     isOverworldClick.value = true;
     isNetherTabClick.value = false;
     isEndTabClick.value = false;
@@ -57,6 +60,7 @@ const setOverworldClick = () => {
 
 //ネザー
 const setNetherTabClick = () => {
+    currentCategory.value = 10
     isOverworldClick.value = false;
     isNetherTabClick.value = true;
     isEndTabClick.value = false;
@@ -78,6 +82,7 @@ const setNetherTabClick = () => {
 
 //エンド
 const setEndTabClick = () => {
+    currentCategory.value = 10
     isOverworldClick.value = false;
     isNetherTabClick.value = false;
     isEndTabClick.value = true;
@@ -109,67 +114,22 @@ const setAllTabClick = () => {
     getAllitem();
 };
 
-//カテゴリーボタンを押した際に文字を入れる(初期は全アイテム一覧表示)
-const categoryName = ref("全アイテム一覧");
-
-//初期のcss状態(ALLカテゴリーボタン)
-const currentCategory = ref(10);
-
 //クリックしたものの引数をcurrentCategoryに入れてアイテム表示を変更する
 const setCategory = (category) => {
     currentCategory.value = category; //cssのデザイン変化
     searchTerm.value = "";
     isLoading.value = true;
-    if (isOverworldClick.value === true) {
-        axios
-            .get(`/item/catwar/1/${category}`)
-            .then((response) => {
-                console.log(category)
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
-    } else if (isNetherTabClick.value === true) {
-        axios
-            .get(`/item/catwar/2/${category}`)
-            .then((response) => {
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
-    } else if (isEndTabClick.value === true) {
-        axios
-            .get(`/item/catwar/3/${category}`)
-            .then((response) => {
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
-    } else if (isAllTabClick.value === true) {
-        axios
-            .get(`/item/categoly/${category}`)
-            .then((response) => {
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
-    }
+    axios
+        .get(`/item/categoly/${category}`)
+        .then((response) => {
+            items.value = response.data;
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            isLoading.value = false;
+        });
     //categoryに応じてcategoryNameを設定
     switch (category) {
         case 1:
@@ -220,8 +180,8 @@ const filtereditems = computed(() => {
 const itemRecipe = (item) => {
     isLoading.value = true;
     itemRecipeNote.value = item.note;
-    const itemRecipeID = item.id;
-    const itemImg = item.pic
+    let itemRecipeID = item.id;
+    let itemImg = item.pic
     itemImgSrc.value = itemImg;//アイテム一覧の押したアイテム画像を入れる
     axios
         .get(`/item/recipesearch/${itemRecipeID}`)
@@ -474,11 +434,7 @@ const itemRecipe = (item) => {
                                 </div>
                                 <!--かまどレシピ-->
                                 <div v-if="recipe.crafttable_id === 4">
-                                    <div class="Furnace">
-                                        <img src="" alt="">
-                                        <img class="fire" src="./web_png/fire.png" alt="">
-                                        <img src="" alt="">
-                                    </div>
+
                                 </div>
                                 <!--鍛冶台レシピ-->
                                 <div v-if="recipe.crafttable_id === 5">
@@ -492,15 +448,19 @@ const itemRecipe = (item) => {
                                             <img src="./web_png/return.png" />
                                         </button>
                                     </div>
+
                                     <div class="arrow_img">
                                         <p class="square_triangle_arrow">
+                                            <!--アイテム一覧の押された画像-->
                                             <img class="image-container" :src="itemImgSrc" />
                                         </p>
                                     </div>
+
                                     <div class="button-container">
                                         <div class="out-button">
                                             <button class="button-left">保存</button>
                                         </div>
+
                                         <div class="out-button">
                                             <button class="button-right">削除</button>
                                         </div>
