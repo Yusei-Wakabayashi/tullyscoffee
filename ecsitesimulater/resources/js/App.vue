@@ -202,13 +202,15 @@ const setCategory = (category) => {
         case 10:
             categoryName.value = "全アイテム一覧";
             break;
-        case 11:
-            categoryName.value = "保存アイテム一覧";
-            break;
         default:
             categoryName.value = "";
     }
 };
+
+const setCategoryKeep = () => {
+    categoryName.value = "保存アイテム一覧";
+    currentCategory.value = 11;
+}
 
 //アイテム名検索(アイテム名)
 const filtereditems = computed(() => {
@@ -430,7 +432,7 @@ const itemRecipe = (item) => {
                             <div class="tab-category-bottom-blank"></div>
                             <!--ここまで-->
                             <!--保存-->
-                            <div class="tab-category-bottom" @click="setCategory(11)">
+                            <div class="tab-category-bottom" @click="setCategoryKeep()">
                                 <button :class="{
                                     'btn-category-bottom-click': currentCategory === 11,
                                     'btn-category-bottom': currentCategory !== 11,
