@@ -6,6 +6,7 @@
 body {
     font-family: 'DotGothic16', sans-serif;
     background-size: cover;
+    overflow: hidden;
     /*要素選択できなくさせる(コピペなど)*/
     user-select: none;
 }
@@ -450,7 +451,6 @@ input {
 }
 
 .recipe-box ul {
-    display: flex;
     list-style: none;
     margin: 15px 0 15px 15px;
     padding: 0;
