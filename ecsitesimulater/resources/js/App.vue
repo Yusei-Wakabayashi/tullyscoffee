@@ -19,7 +19,7 @@ const isAllTabClick = ref(true);//オールボタン
 //初期の表示オールアイテム
 const getAllitem = () => {
     axios
-        .get("/item/start")
+        .get("/item/world/4")
         .then((response) => {
             items.value = response.data;
         })
@@ -104,6 +104,7 @@ const setEndTabClick = () => {
 
 //オール
 const setAllTabClick = () => {
+    currentCategory.value = 10
     isOverworldClick.value = false;
     isNetherTabClick.value = false;
     isEndTabClick.value = false;
@@ -119,17 +120,56 @@ const setCategory = (category) => {
     currentCategory.value = category; //cssのデザイン変化
     searchTerm.value = "";
     isLoading.value = true;
-    axios
-        .get(`/item/categoly/${category}`)
-        .then((response) => {
-            items.value = response.data;
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-        .finally(() => {
-            isLoading.value = false;
-        });
+    if (isOverworldClick.value === true) {
+        axios
+            .get(`/item/catwar/1/${category}`)
+            .then((response) => {
+                console.log(category)
+                items.value = response.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                isLoading.value = false;
+            });
+    } else if (isNetherTabClick.value === true) {
+        axios
+            .get(`/item/catwar/2/${category}`)
+            .then((response) => {
+                items.value = response.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                isLoading.value = false;
+            });
+    } else if (isEndTabClick.value === true) {
+        axios
+            .get(`/item/catwar/3/${category}`)
+            .then((response) => {
+                items.value = response.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                isLoading.value = false;
+            });
+    } else if (isAllTabClick.value === true) {
+        axios
+            .get(`/item/categoly/${category}`)
+            .then((response) => {
+                items.value = response.data;
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+            .finally(() => {
+                isLoading.value = false;
+            });
+    }
     //categoryに応じてcategoryNameを設定
     switch (category) {
         case 1:
@@ -180,8 +220,8 @@ const filtereditems = computed(() => {
 const itemRecipe = (item) => {
     isLoading.value = true;
     itemRecipeNote.value = item.note;
-    let itemRecipeID = item.id;
-    let itemImg = item.pic
+    const itemRecipeID = item.id;
+    const itemImg = item.pic
     itemImgSrc.value = itemImg;//アイテム一覧の押したアイテム画像を入れる
     axios
         .get(`/item/recipesearch/${itemRecipeID}`)
@@ -208,7 +248,7 @@ const itemRecipe = (item) => {
       });  */
 };
 </script>
-
+ 
 <template>
     <div :class="{
         'whole-nether': isNetherTabClick,
@@ -434,11 +474,23 @@ const itemRecipe = (item) => {
                                 </div>
                                 <!--かまどレシピ-->
                                 <div v-if="recipe.crafttable_id === 4">
-
+                                    <div>
+                                        <ul>
+                                            <li>10</li>
+                                            <li><img class="fire" src="./web_png/fire.png" alt=""></li>
+                                            <li>10</li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <!--鍛冶台レシピ-->
                                 <div v-if="recipe.crafttable_id === 5">
-
+                                    <div>
+                                        <ul>
+                                            <li>10</li>
+                                            <li>10</li>
+                                            <li>10</li>
+                                        </ul>
+                                    </div>
                                 </div>
 
                                 <!--保存、削除-->
@@ -448,19 +500,15 @@ const itemRecipe = (item) => {
                                             <img src="./web_png/return.png" />
                                         </button>
                                     </div>
-
                                     <div class="arrow_img">
                                         <p class="square_triangle_arrow">
-                                            <!--アイテム一覧の押された画像-->
                                             <img class="image-container" :src="itemImgSrc" />
                                         </p>
                                     </div>
-
                                     <div class="button-container">
                                         <div class="out-button">
                                             <button class="button-left">保存</button>
                                         </div>
-
                                         <div class="out-button">
                                             <button class="button-right">削除</button>
                                         </div>
@@ -478,7 +526,7 @@ const itemRecipe = (item) => {
         </div>
     </div>
 </template>
-
+ 
 <style scoped>
 .attention-img {
     margin: 57px;

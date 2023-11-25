@@ -610,34 +610,3 @@ input {
     border-right: 3px solid #999;
     border-bottom: 3px solid #999;
 }
-
-
-/*かまど*/
-
-.Furnace {
-    margin: 12px 50px 0 75px;
-}
-
-.Furnace img {
-    display: flex;
-    margin: 0 0 14px 0;
-    width: 49px;
-    height: 49px;
-    background-color: #999999;
-    border-left: 3px solid #333333;
-    border-top: 3px solid #333333;
-    border-bottom: 3px solid #f2f2f2;
-    border-right: 3px solid #f2f2f2;
-
-}
-
-.Furnace img.fire {
-    background-color: transparent;
-    /* 背景を透明にする */
-    width: 40px;
-    height: 40px;
-    margin-left: 5px;
-
-    border: none;
-    /* ボーダーをなしにする */
-}
