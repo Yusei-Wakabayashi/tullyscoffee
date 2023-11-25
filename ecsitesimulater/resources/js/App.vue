@@ -3,15 +3,16 @@ import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 
 const isLoading = ref(true); //非同期処理の読み込み判定 (trueの間だけアニメーション表示)
-const items = ref([]); //アイテム配列
-const itemRecipeList = ref([]); //アイテムのレシピIDのリスト
-const searchTerm = ref(""); // ユーザーの検索語を格納
-const hoveredItem = ref(null); // カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
-const itemRecipeNote = ref(""); //クラフトレシピの注意書き
-const isOverworldClick = ref(false); //オーバーワールドボタン
-const isNetherTabClick = ref(false); //ネザーワールドボタン
-const isEndTabClick = ref(false); //エンドワールドボタン
-const isAllTabClick = ref(true); //オールボタン
+const items = ref([]);//アイテム配列
+const itemRecipeList = ref([]);//アイテムのレシピIDのリスト
+const searchTerm = ref("");//ユーザーの検索語を格納
+const hoveredItem = ref(null);//カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
+const itemRecipeNote = ref("");//クラフトレシピの注意書き
+const itemImgSrc = ref('')//itemImgの値をセット
+const isOverworldClick = ref(false);//オーバーワールドボタン
+const isNetherTabClick = ref(false);//ネザーワールドボタン
+const isEndTabClick = ref(false);//エンドワールドボタン
+const isAllTabClick = ref(true);//オールボタン
 
 //初期の表示オールアイテム
 const getAllitem = () => {
@@ -181,6 +182,8 @@ const itemRecipe = (item) => {
     isLoading.value = true;
     itemRecipeNote.value = item.note;
     const itemRecipeID = item.id;
+    const itemImg = item.pic
+    itemImgSrc.value = itemImg;//アイテム一覧の押したアイテム画像を入れる
     axios
         .get(`/item/recipesearch/${itemRecipeID}`)
         .then((response) => {
@@ -403,9 +406,9 @@ const itemRecipe = (item) => {
                     <!--レシピデザイン待ち-->
                     <div class="recipe">
                         <div class="recipe-inline">
-                            <div v-for="(recipe, i) in itemRecipeList" :key="i">
+                            <div class="recipe-box" v-for="(recipe, i) in itemRecipeList" :key="i">
                                 <!--クラフト不可レシピ-->
-                                <div class="recipe-box" v-if="recipe.crafttable_id === 1">
+                                <div v-if="recipe.crafttable_id === 1">
                                     <ul>
                                         <li class="attention-img">
                                             <img src="./web_png/attention.png" alt="" />
@@ -413,7 +416,7 @@ const itemRecipe = (item) => {
                                     </ul>
                                 </div>
                                 <!--作業台レシピ-->
-                                <div class="recipe-box" v-if="recipe.crafttable_id === 2">
+                                <div v-if="recipe.crafttable_id === 2">
                                     <ul>
                                         <li>{{ recipe.item_id1 }}</li>
                                         <li>{{ recipe.item_id2 }}</li>
@@ -427,18 +430,19 @@ const itemRecipe = (item) => {
                                     </ul>
                                 </div>
                                 <!--醸造台レシピ-->
-                                <div class="recipe-box" v-if="recipe.crafttable_id === 3">
+                                <div v-if="recipe.crafttable_id === 3">
 
                                 </div>
                                 <!--かまどレシピ-->
-                                <div class="recipe-box" v-if="recipe.crafttable_id === 4">
+                                <div v-if="recipe.crafttable_id === 4">
 
                                 </div>
                                 <!--鍛冶台レシピ-->
-                                <div class="recipe-box" v-if="recipe.crafttable_id === 5">
+                                <div v-if="recipe.crafttable_id === 5">
 
                                 </div>
 
+                                <!--保存、削除-->
                                 <div class="right-side">
                                     <div class="square-button">
                                         <button type="submit">
@@ -448,7 +452,8 @@ const itemRecipe = (item) => {
 
                                     <div class="arrow_img">
                                         <p class="square_triangle_arrow">
-                                            <img class="image-container" src="" alt="" />
+                                            <!--アイテム一覧の押された画像-->
+                                            <img class="image-container" :src="itemImgSrc" />
                                         </p>
                                     </div>
 
@@ -477,6 +482,6 @@ const itemRecipe = (item) => {
 
 <style scoped>
 .attention-img {
-    margin: 50px;
+    margin: 57px;
 }
 </style>
