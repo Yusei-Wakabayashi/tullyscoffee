@@ -122,6 +122,7 @@ class StartController extends Controller
     }
     public function catwar($world_id,$categoly_id)
     {
+        $item_object = new Item;
         if ($world_id == 4){
             if ($categoly_id == 10){
                 return StartController::getItems();
@@ -143,6 +144,11 @@ class StartController extends Controller
         ->setBindings([':cat_id'=>$categoly_id])
         ->where('item_worlds.world_id', '=', $world_id)
         ->get();
-        return $items;
+
+        $data = $items->map( function($i) {
+            $item_object = new Item;
+            return $item_object->finditem($i->item_id);
+        });
+        return $data;
     }
 }
