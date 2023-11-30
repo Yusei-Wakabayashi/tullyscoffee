@@ -30,6 +30,6 @@ class ItemRecipeCrafttable extends Model
             $data[] = $items;
             $items = array();
         }
-        //return $items;
+        return $data;
     } 
 }
