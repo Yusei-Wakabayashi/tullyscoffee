@@ -16,20 +16,27 @@ class ItemRecipeCrafttable extends Model
         $items = [];
         $item_object = new Item;
         $item_id = ItemRecipeCrafttable::where('item_id', '=', $item_id)
-        ->get(['item_id1','item_id2','item_id3','item_id4','item_id5','item_id6','item_id7','item_id8','item_id9']);
+        ->get(['item_id1','item_id2','item_id3','item_id4','item_id5','item_id6','item_id7','item_id8','item_id9','crafttable_id']);
         foreach($item_id as $recipe_id)
         {
             foreach($recipe_id as $key => $recipe)
             {
                 if ($key == 'attributes')
                 {
-                    foreach($recipe as $value)
-                        $items[] = $item_object->finditem($value);
+                    foreach($recipe as $value => $id)
+                        if (!($value == 'crafttable_id'))
+                        {
+                            $items[] = $item_object->finditem($id);
+                        } else
+                        {
+                            $items[] = $id;
+                        }
                 }
             }
             $data[] = $items;
             $items = array();
         }
+        dd($data);
         return $data;
     } 
 }
