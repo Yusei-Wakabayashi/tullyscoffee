@@ -118,11 +118,12 @@ class StartController extends Controller
     public function search_recipe($id)
     {
         $ItemRecipeCrafttable_object = new ItemRecipeCrafttable;
-        return $ItemRecipeCrafttable_object->search_recipe($id);
+
+        $data = $ItemRecipeCrafttable_object->search_recipe($id);
+        return $data;
     }
     public function catwar($world_id,$categoly_id)
     {
-        $item_object = new Item;
         if ($world_id == 4){
             if ($categoly_id == 10){
                 return StartController::getItems();
