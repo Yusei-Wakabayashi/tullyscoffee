@@ -30,8 +30,8 @@ class ItemCategolySeeder extends Seeder
             $value = mb_convert_encoding($value, "UTF-8");
 
             $csv_data[] = [
-                'item_id' => $value[0],
-                'categoly_id' => $value[1]
+                'item_id' => (int)$value[0],
+                'categoly_id' => (int)$value[1]
             ];
         }
         foreach($csv_data as $data){

@@ -24,6 +24,7 @@ class ItemRecipeCrafttable extends Model
                 if ($key == 'attributes')
                 {
                     foreach($recipe as $value => $id)
+                    {
                         if (!($value == 'crafttable_id'))
                         {
                             $items[] = $item_object->finditem($id);
@@ -31,6 +32,7 @@ class ItemRecipeCrafttable extends Model
                         {
                             $items[] = $id;
                         }
+                    }
                 }
             }
             $data[] = $items;
