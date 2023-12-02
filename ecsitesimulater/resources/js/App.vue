@@ -7,6 +7,7 @@ const { items,
     currentCategory,
     isLoading,
     searchTerm,
+    categoryName,
     isOverworldClick,
     isNetherTabClick,
     isEndTabClick,
@@ -18,15 +19,10 @@ const { items,
     setAllTabClick, } = WorldTabBtn()
 
 const itemRecipeList = ref([]);//アイテムのレシピIDのリスト
-const categoryName = ref("全アイテム一覧");//カテゴリーボタンを押した際に文字を入れる(初期は全アイテム一覧表示)
 const hoveredItem = ref(null);//カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
 const itemRecipeNote = ref("");//クラフトレシピの注意書き
 const itemImgSrc = ref('')//itemImgの値をセット
-
-//リロード時オールの全アイテムが表示される
-onMounted(() => {
-    getAllitem();
-});
+let selectedItemClick = ref(null); // クリックされたアイテム
 
 //クリックしたものの引数をcurrentCategoryに入れてアイテム表示を変更する
 const setCategory = (category) => {
@@ -120,9 +116,12 @@ const setCategory = (category) => {
     }
 };
 
+// 保存ボタンメソッド
 const setCategoryKeep = () => {
     categoryName.value = "保存アイテム一覧";
     currentCategory.value = 11;
+    getSavedItems();
+    items.value = existingItems.value; // 保存されたアイテムだけを表示する
 }
 
 //アイテム名検索(アイテム名)
@@ -131,17 +130,19 @@ const filtereditems = computed(() => {
     return items.value.filter((item) => item.name.includes(searchTerm.value));
 });
 
+
 //画像をクリックしたときのレシピ表示処理
 const itemRecipe = (item) => {
     isLoading.value = true;
     itemRecipeNote.value = item.note;
-    const itemRecipeID = item.id;
+    const itemId = item.id;
     const itemImg = item.pic
-    itemImgSrc.value = itemImg;//アイテム一覧の押したアイテム画像を入れる
+    itemImgSrc.value = itemImg; //アイテム一覧の押したアイテム画像を入れる
+    selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
     axios
-        .get(`/item/recipesearch/${itemRecipeID}`)
+        .get(`/item/recipesearch/${itemId}`)
         .then((response) => {
-            console.log(itemRecipeID);
+            console.log(response.data)
             itemRecipeList.value = response.data;
         })
         .catch((error) => {
@@ -150,18 +151,69 @@ const itemRecipe = (item) => {
         .finally(() => {
             isLoading.value = false;
         });
-
-    /**axios.get(`/item/recipe/${i}`)
-      .then(response => {
-          itemRecipeList.value = response.data;
-      })
-      .catch(error => {
-          console.log(error);
-      })
-      .finally(() => {
-          isLoading.value = false;
-      });  */
 };
+
+let keepName = ref('保存') // 保存ボタンの文字
+
+// 既存のデータを取得
+const existingItems = JSON.parse(localStorage.getItem("saved-Minecraft-Items")) || [];
+
+// アイテムの保存メソッド
+const keepItemBtn = () => {
+
+    // 同じアイテムが既に保存されているか確認
+    const isAlreadySaved = existingItems.some((item) => {
+        return item.name === selectedItemClick.value.name;
+    });
+
+    // ローカルストレージに保存
+    localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItems));
+
+    // アイテムがまだ保存されていない場合追加
+    if (!isAlreadySaved) {
+        // アイテムを保存
+        existingItems.unshift(selectedItemClick.value);
+        localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItems));
+    }
+};
+
+// アイテムの削除メソッド
+const deleteItemBtn = () => {
+
+    // クリックされたアイテムのIDを取得
+    const clickItemId = selectedItemClick.value.id;
+
+    // clickItemIdと異なるidを持つ要素だけを残す。一致したものは消す
+    const deleteItem = existingItems.filter((item) => item.id !== clickItemId);
+
+    // ローカルストレージに保存
+    localStorage.setItem("saved-Minecraft-Items", JSON.stringify(deleteItem));
+
+    window.location.reload();
+
+    // アイテムが正常に削除された場合にのみページをリロードして保存画面のまま表示
+    if (existingItems.length - 1) {
+        window.location.reload();
+    }
+};
+
+// ローカルストレージから保存されたアイテムを取得するメソッド
+const getSavedItems = () => {
+    const savedItems = JSON.parse(localStorage.getItem("saved-Minecraft-Items")) || [];
+    existingItems.value = savedItems;
+};
+
+//リロード時オールの全アイテムが表示される
+onMounted(() => {
+
+    getAllitem();
+
+    // 保存ボタンが押されているときにsetSavedItems()を呼び出して表示
+    if (currentCategory.value === 11) {
+        getSavedItems();
+    }
+});
+
 </script>
  
 <template>
@@ -360,53 +412,12 @@ const itemRecipe = (item) => {
                     <!--レシピデザイン待ち-->
                     <div class="recipe">
                         <div class="recipe-inline">
-                            <div class="recipe-box" v-for="(recipe, i) in itemRecipeList" :key="i">
-                                <!--クラフト不可レシピ-->
-                                <div v-if="recipe.crafttable_id === 1">
-                                    <ul>
-                                        <li class="attention-img">
-                                            <img src="./web_png/attention.png" alt="" />
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!--作業台レシピ-->
-                                <div v-if="recipe.crafttable_id === 2">
-                                    <ul>
-                                        <li>{{ recipe.item_id1 }}</li>
-                                        <li>{{ recipe.item_id2 }}</li>
-                                        <li>{{ recipe.item_id3 }}</li>
-                                        <li>{{ recipe.item_id4 }}</li>
-                                        <li>{{ recipe.item_id5 }}</li>
-                                        <li>{{ recipe.item_id6 }}</li>
-                                        <li>{{ recipe.item_id7 }}</li>
-                                        <li>{{ recipe.item_id8 }}</li>
-                                        <li>{{ recipe.item_id9 }}</li>
-                                    </ul>
-                                </div>
-                                <!--醸造台レシピ-->
-                                <div v-if="recipe.crafttable_id === 3">
-
-                                </div>
-                                <!--かまどレシピ-->
-                                <div v-if="recipe.crafttable_id === 4">
-                                    <div>
-                                        <ul>
-                                            <li>10</li>
-                                            <li><img class="fire" src="./web_png/fire.png" alt=""></li>
-                                            <li>10</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!--鍛冶台レシピ-->
-                                <div v-if="recipe.crafttable_id === 5">
-                                    <div>
-                                        <ul>
-                                            <li>10</li>
-                                            <li>10</li>
-                                            <li>10</li>
-                                        </ul>
-                                    </div>
-                                </div>
+                            <div class="recipe-box">
+                                <ul>
+                                    <li v-for="(recipe, i) in itemRecipeList[0]" :key="i">
+                                        <img :src="recipe?.pic" alt="">
+                                    </li>
+                                </ul>
 
                                 <!--保存、削除-->
                                 <div class="right-side">
@@ -422,10 +433,10 @@ const itemRecipe = (item) => {
                                     </div>
                                     <div class="button-container">
                                         <div class="out-button">
-                                            <button class="button-left">保存</button>
+                                            <button class="button-left" @click="keepItemBtn()">{{ keepName }}</button>
                                         </div>
                                         <div class="out-button">
-                                            <button class="button-right">削除</button>
+                                            <button class="button-right" @click="deleteItemBtn()">削除</button>
                                         </div>
                                     </div>
                                 </div>
@@ -441,9 +452,3 @@ const itemRecipe = (item) => {
         </div>
     </div>
 </template>
- 
-<style scoped>
-.attention-img {
-    margin: 57px;
-}
-</style>
