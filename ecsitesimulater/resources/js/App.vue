@@ -20,9 +20,11 @@ const { items,
 
 const itemRecipeList = ref([]);//アイテムのレシピIDのリスト
 const hoveredItem = ref(null);//カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
+const hoveredItemRecipeNote = ref(null)
 const itemRecipeNote = ref("");//クラフトレシピの注意書き
 const itemImgSrc = ref('')//itemImgの値をセット
-let selectedItemClick = ref(null); // クリックされたアイテム
+let selectedItemClick = ref(null); // クリックされたアイテム(保存ボタン)
+
 
 //クリックしたものの引数をcurrentCategoryに入れてアイテム表示を変更する
 const setCategory = (category) => {
@@ -203,9 +205,9 @@ const getSavedItems = () => {
     existingItems.value = savedItems;
 };
 
-//リロード時オールの全アイテムが表示される
 onMounted(() => {
 
+    //リロード時オールの全アイテムが表示される
     getAllitem();
 
     // 保存ボタンが押されているときにsetSavedItems()を呼び出して表示
@@ -328,7 +330,12 @@ onMounted(() => {
                             <h1>Now Loading<span class="loading-dots"></span></h1>
                         </div>
                         <!--アイテム一覧-->
-                        <h1 class="title">{{ categoryName }}</h1>
+                        <h1 class="title">
+                            {{ categoryName }}
+                            <span>
+                                : {{ items.length }}アイテム
+                            </span>
+                        </h1>
                         <div class="itemlist-inline">
                             <div class="vertical-scrollable-list">
                                 <!--アイテム画像-->
@@ -409,19 +416,22 @@ onMounted(() => {
                     </div>
                 </div>
                 <div>
-                    <!--レシピデザイン待ち-->
                     <div class="recipe">
                         <div class="recipe-inline">
-                            <div class="recipe-box" v-for="(recipe, i) in itemRecipeList" :key="i">
-                                <!--クラフト不可レシピ-->
-                                <div v-if="recipe.crafttable_id === 1">
+                            <div class="recipe-box">
+                                <ul class="sagyou-ul">
+                                    <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0]" :key="i">
+                                        <img :src="recipe?.pic">
+                                    </li>
+                                </ul>
+                                <!--
+                                    <div v-if="recipe.crafttable_id === 1">
                                     <ul>
                                         <li class="attention-img">
                                             <img src="./web_png/attention.png" alt="" />
                                         </li>
                                     </ul>
                                 </div>
-                                <!--作業台レシピ-->
                                 <div v-if="recipe.crafttable_id === 2">
                                     <ul class="sagyou-ul">
                                         <li class="sagyou-li">{{ recipe.item_id1 }}</li>
@@ -435,7 +445,6 @@ onMounted(() => {
                                         <li class="sagyou-li">{{ recipe.item_id9 }}</li>
                                     </ul>
                                 </div>
-                                <!--醸造台レシピ-->
                                 <div v-if="recipe.crafttable_id === 3">
                                     <div>
                                         <ul>
@@ -450,7 +459,6 @@ onMounted(() => {
                                     </div>
 
                                 </div>
-                                <!--かまどレシピ-->
                                 <div v-if="recipe.crafttable_id === 4">
                                     <div class="kamado">
                                         <ul class="kamado-ul">
@@ -461,7 +469,6 @@ onMounted(() => {
                                     </div>
                                 </div>
 
-                                <!--鍛冶台レシピ-->
                                 <div v-if="recipe.crafttable_id === 5">
                                     <div class="kaji">
                                         <ul class="kaji-ul">
@@ -471,10 +478,18 @@ onMounted(() => {
                                         </ul>
                                     </div>
                                 </div>
+                                -->
 
                                 <!--保存、削除-->
-                                <div class="right-side">
-                                    <div class="box">?</div>
+                                <div class="right-side" v-if="itemImgSrc">
+                                    <!--注意書き-->
+                                    <div class="box" @mouseover="hoveredItemRecipeNote = itemRecipeNote"
+                                        @mouseleave="hoveredItemRecipeNote = null">
+                                        ?
+                                        <div class="item-name-note" v-if="hoveredItemRecipeNote === itemRecipeNote">
+                                            {{ itemRecipeNote }}
+                                        </div>
+                                    </div>
 
                                     <div class="square-button">
                                         <button type="submit">
@@ -499,7 +514,7 @@ onMounted(() => {
                         </div>
                         <!--仮デザイン-->
                         <h3 style="color: white; background-color: black" v-if="itemRecipeNote">
-                            ※{{ itemRecipeNote }}
+
                         </h3>
                     </div>
                 </div>
@@ -512,6 +527,4 @@ onMounted(() => {
 .attention-img {
     margin: 57px;
 }
-
-
 </style>
