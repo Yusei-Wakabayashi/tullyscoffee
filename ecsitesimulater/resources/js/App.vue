@@ -412,15 +412,70 @@ onMounted(() => {
                     <!--レシピデザイン待ち-->
                     <div class="recipe">
                         <div class="recipe-inline">
-                            <div class="recipe-box">
-                                <ul>
-                                    <li v-for="(recipe, i) in itemRecipeList[0]" :key="i">
-                                        <img :src="recipe?.pic" alt="">
-                                    </li>
-                                </ul>
+                            <div class="recipe-box" v-for="(recipe, i) in itemRecipeList" :key="i">
+                                <!--クラフト不可レシピ-->
+                                <div v-if="recipe.crafttable_id === 1">
+                                    <ul>
+                                        <li class="attention-img">
+                                            <img src="./web_png/attention.png" alt="" />
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--作業台レシピ-->
+                                <div v-if="recipe.crafttable_id === 2">
+                                    <ul class="sagyou-ul">
+                                        <li class="sagyou-li">{{ recipe.item_id1 }}</li>
+                                        <li class="sagyou-li">{{ recipe.item_id2 }}</li>
+                                        <li class="sagyou-li">{{ recipe.item_id3 }}</li>
+                                        <li class="sagyou-li">{{ recipe.item_id4 }}</li>
+                                        <li class="sagyou-li">{{ recipe.item_id5 }}</li>
+                                        <li class="sagyou-li">{{ recipe.item_id6 }}</li>
+                                        <li class="sagyou-li">{{ recipe.item_id7 }}</li>
+                                        <li class="sagyou-li">{{ recipe.item_id8 }}</li>
+                                        <li class="sagyou-li">{{ recipe.item_id9 }}</li>
+                                    </ul>
+                                </div>
+                                <!--醸造台レシピ-->
+                                <div v-if="recipe.crafttable_id === 3">
+                                    <div>
+                                        <ul>
+                                            <li></li>
+                                        </ul>
+
+                                        <ul>
+                                            <li></li>
+                                            <li></li>
+                                            <li></li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                                <!--かまどレシピ-->
+                                <div v-if="recipe.crafttable_id === 4">
+                                    <div class="kamado">
+                                        <ul class="kamado-ul">
+                                            <li class="kamado-top">10</li>
+                                            <li class="kamado-img"><img class="fire" src="./web_png/fire.png" alt=""></li>
+                                            <li class="kamado-bottom">10</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!--鍛冶台レシピ-->
+                                <div v-if="recipe.crafttable_id === 5">
+                                    <div class="kaji">
+                                        <ul class="kaji-ul">
+                                            <li class="kaji-li">10</li>
+                                            <li class="kaji-li">10</li>
+                                            <li class="kaji-li">10</li>
+                                        </ul>
+                                    </div>
+                                </div>
 
                                 <!--保存、削除-->
                                 <div class="right-side">
+                                    <div class="box">?</div>
+
                                     <div class="square-button">
                                         <button type="submit">
                                             <img src="./web_png/return.png" />
@@ -452,3 +507,11 @@ onMounted(() => {
         </div>
     </div>
 </template>
+ 
+<style scoped>
+.attention-img {
+    margin: 57px;
+}
+
+
+</style>
