@@ -26,6 +26,7 @@ body {
 .whole-all {
     background-image: url(../js/web_png/overworld_back.png);
     padding: 0 0 100% 0;
+    
 }
 
 .whole-end {
@@ -448,13 +449,7 @@ input {
     display: flex;
 }
 
-.recipe-box img {
-    width: 49px;
-    height: 49px;
-
-}
-
-.recipe-box ul {
+.sagyou-ul{
     list-style: none;
     margin: 15px 0 15px 15px;
     padding: 0;
@@ -463,9 +458,11 @@ input {
     /* 3つの列を作成し、各列の幅を50pxに設定 */
     grid-template-rows: repeat(3, 50px);
     grid-gap: 6px;
+
 }
 
-.recipe-box li {
+
+.sagyou-li{
     width: 49px;
     height: 49px;
     background-color: #999999;
@@ -473,33 +470,91 @@ input {
     border-top: 3px solid #333333;
     border-bottom: 5px solid #f2f2f2;
     border-right: 5px solid #f2f2f2;
+
+}
+
+/*鍛冶台*/
+.kaji-ul {
+    display: flex;
+    list-style: none;
+    margin: 75px 0 0 5px;
+}
+
+.kaji-li{
+    width: 49px;
+    height: 49px;
+    margin-left: 3px;
+    background-color: #999999;
+    border-left: 3px solid #333333;
+    border-top: 3px solid #333333;
+    border-bottom: 3px solid #f2f2f2;
+    border-right: 3px solid #f2f2f2;
+
+}
+
+/*かまど*/
+.kamado-ul{
+    list-style: none;
+    margin: 15px 50px 0 70px;
+}
+
+.kamado-top{
+    width: 49px;
+    height: 49px;
+    margin: 0 0 10px 0;
+    background-color: #999999;
+    border-left: 3px solid #333333;
+    border-top: 3px solid #333333;
+    border-bottom: 3px solid #f2f2f2;
+    border-right: 3px solid #f2f2f2;
+}
+
+.kamado-bottom{
+    width: 49px;
+    height: 49px;
+    margin: 5px 0 0 0;
+    background-color: #999999;
+    border-left: 3px solid #333333;
+    border-top: 3px solid #333333;
+    border-bottom: 3px solid #f2f2f2;
+    border-right: 3px solid #f2f2f2;
 }
 
 
+.fire{
+    margin-left: 5px;
 
+}
 
 .right-side {
     text-align: center;
-    margin-top: 26px;
+}
+
+/*？ボタン*/
+.box {
+    width: 30px;
+    height: 30px;
+    margin-left: 168px;
+    background-color: #999999;
+    border-left: 3px solid #333333;
+    border-top: 3px solid #333333;
+    border-bottom: 3px solid #f2f2f2;
+    border-right: 3px solid #f2f2f2;
+    box-sizing: border-box; /* ボーダーボックスモデルを使用して、外側のサイズにボーダーを含める */
 }
 
 .square-button button {
     width: 35px;
-    /* ボタンの横幅 */
     height: 30px;
-    /* ボタンの縦幅 */
     margin: 0 0 15px 65px;
     text-align: center;
     background-color: #cccccc;
-    /* ボタンの背景色 */
     color: #000;
-    /* テキストの色 */
     border-left: 3px solid black;
     border-top: 3px solid black;
     border-right: 3px solid white;
     border-bottom: 3px solid white;
     cursor: pointer;
-    /* カーソルをポインターに設定 */
 
 }
 
@@ -515,7 +570,6 @@ input {
     position: relative;
     padding-left: 35px;
     display: inline-block;
-    /* 追加: インライン要素にする */
 }
 
 .square_triangle_arrow::before {
@@ -569,7 +623,7 @@ input {
 
 .out-button {
     border: 3px solid #000;
-    margin-left: 10px;
+    margin-left: 17px;
 
 }
 
