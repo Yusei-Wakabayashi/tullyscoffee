@@ -5,7 +5,7 @@ export default function () {
     const currentCategory = ref(10);//初期のcss状態(ALLカテゴリーボタン)
     const isLoading = ref(true); //非同期処理の読み込み判定 (trueの間だけアニメーション表示)
     const searchTerm = ref("");//ユーザーの検索語を格納
-    const categoryName = ref("全アイテム一覧");//カテゴリーボタンを押した際に文字を入れる(初期は全アイテム一覧表示)
+    const categoryName = ref("全アイテム一覧:");//カテゴリーボタンを押した際に文字を入れる(初期は全アイテム一覧表示)
     const isOverworldClick = ref(false);//オーバーワールドボタン
     const isNetherTabClick = ref(false);//ネザーワールドボタン
     const isEndTabClick = ref(false);//エンドワールドボタン
@@ -28,7 +28,7 @@ export default function () {
 
     //オーバーワールド
     const setOverworldClick = () => {
-        categoryName.value = "全アイテム一覧";
+        categoryName.value = "全アイテム一覧:";
         currentCategory.value = 10
         isOverworldClick.value = true;
         isNetherTabClick.value = false;
@@ -51,7 +51,7 @@ export default function () {
 
     //ネザー
     const setNetherTabClick = () => {
-        categoryName.value = "全アイテム一覧";
+        categoryName.value = "全アイテム一覧:";
         currentCategory.value = 10
         isOverworldClick.value = false;
         isNetherTabClick.value = true;
@@ -74,7 +74,7 @@ export default function () {
 
     //エンド
     const setEndTabClick = () => {
-        categoryName.value = "全アイテム一覧";
+        categoryName.value = "全アイテム一覧:";
         currentCategory.value = 10
         isOverworldClick.value = false;
         isNetherTabClick.value = false;
@@ -97,7 +97,7 @@ export default function () {
 
     //オール
     const setAllTabClick = () => {
-        categoryName.value = "全アイテム一覧";
+        categoryName.value = "全アイテム一覧:";
         currentCategory.value = 10
         isOverworldClick.value = false;
         isNetherTabClick.value = false;

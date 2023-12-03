@@ -84,34 +84,34 @@ const setCategory = (category) => {
     //categoryに応じてcategoryNameを設定
     switch (category) {
         case 1:
-            categoryName.value = "建築";
+            categoryName.value = "建築:";
             break;
         case 2:
-            categoryName.value = "色付きブロック";
+            categoryName.value = "色付きブロック:";
             break;
         case 3:
-            categoryName.value = "天然ブロック";
+            categoryName.value = "天然ブロック:";
             break;
         case 4:
-            categoryName.value = "機能的ブロック";
+            categoryName.value = "機能的ブロック:";
             break;
         case 5:
-            categoryName.value = "レッドストーン";
+            categoryName.value = "レッドストーン:";
             break;
         case 6:
-            categoryName.value = "道具と実用";
+            categoryName.value = "道具と実用:";
             break;
         case 7:
-            categoryName.value = "戦闘";
+            categoryName.value = "戦闘:";
             break;
         case 8:
-            categoryName.value = "食べ物と飲み物";
+            categoryName.value = "食べ物と飲み物:";
             break;
         case 9:
-            categoryName.value = "材料";
+            categoryName.value = "材料:";
             break;
         case 10:
-            categoryName.value = "全アイテム一覧";
+            categoryName.value = "全アイテム一覧:";
             break;
         default:
             categoryName.value = "";
@@ -120,7 +120,7 @@ const setCategory = (category) => {
 
 // 保存ボタンメソッド
 const setCategoryKeep = () => {
-    categoryName.value = "保存アイテム一覧";
+    categoryName.value = "保存アイテム一覧:";
     currentCategory.value = 11;
     getSavedItems();
     items.value = existingItems.value; // 保存されたアイテムだけを表示する
@@ -157,7 +157,7 @@ const itemRecipe = (item) => {
 
 let keepName = ref('保存') // 保存ボタンの文字
 
-// 既存のデータを取得
+// 既存のローカルストレージ内データを取得
 const existingItems = JSON.parse(localStorage.getItem("saved-Minecraft-Items")) || [];
 
 // アイテムの保存メソッド
@@ -332,9 +332,7 @@ onMounted(() => {
                         <!--アイテム一覧-->
                         <h1 class="title">
                             {{ categoryName }}
-                            <span>
-                                : {{ items.length }}アイテム
-                            </span>
+                            {{ items.length }}アイテム
                         </h1>
                         <div class="itemlist-inline">
                             <div class="vertical-scrollable-list">
