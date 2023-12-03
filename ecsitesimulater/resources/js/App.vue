@@ -20,9 +20,10 @@ const { items,
 
 const itemRecipeList = ref([]);//アイテムのレシピIDのリスト
 const hoveredItem = ref(null);//カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
-const hoveredItemRecipeNote = ref(null)
+const hoveredItemRecipeName = ref(null)
 const itemRecipeNote = ref("");//クラフトレシピの注意書き
 const itemImgSrc = ref('')//itemImgの値をセット
+const itemName = ref('')
 let selectedItemClick = ref(null); // クリックされたアイテム(保存ボタン)
 
 
@@ -139,6 +140,7 @@ const itemRecipe = (item) => {
     itemRecipeNote.value = item.note;
     const itemId = item.id;
     const itemImg = item.pic
+    itemName.value = item.name
     itemImgSrc.value = itemImg; //アイテム一覧の押したアイテム画像を入れる
     selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
     axios
@@ -215,7 +217,6 @@ onMounted(() => {
         getSavedItems();
     }
 });
-
 </script>
  
 <template>
@@ -340,10 +341,10 @@ onMounted(() => {
                                 <ul>
                                     <li v-for="(item, i) in filtereditems" :key="i" class="item-container">
                                         <!--アイテム画像-->
-                                        <img @mouseover="hoveredItem = item.name" @mouseleave="hoveredItem = null"
-                                            :src="item.pic" @click="itemRecipe(item)" />
+                                        <img @mouseover="hoveredItem = i" @mouseleave="hoveredItem = null" :src="item.pic"
+                                            @click="itemRecipe(item)" />
                                         <!--アイテム名-->
-                                        <div class="item-name" v-if="hoveredItem === item.name">
+                                        <div class="item-name" v-if="hoveredItem === i">
                                             {{ item.name }}
                                         </div>
                                     </li>
@@ -419,9 +420,49 @@ onMounted(() => {
                             <div class="recipe-box">
                                 <ul class="sagyou-ul">
                                     <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0]" :key="i">
-                                        <img :src="recipe?.pic">
+                                        <img :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
+                                            @mouseleave="hoveredItemRecipeName = null" width="49">
+
+                                        <!-- アイテム名 -->
+                                        <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
+                                            {{ recipe?.name }}
+                                        </div>
                                     </li>
                                 </ul>
+                                <!--保存、削除-->
+                                <div class="right-side" v-if="itemImgSrc">
+                                    <!--注意書き-->
+                                    <div class="box" @mouseover="hoveredItem = itemRecipeNote"
+                                        @mouseleave="hoveredItem = null">
+                                        ?
+                                        <div class="item-name-note" v-if="hoveredItem === itemRecipeNote">
+                                            {{ itemRecipeNote }}
+                                        </div>
+                                    </div>
+
+                                    <div class="square-button">
+                                        <button type="submit">
+                                            <img src="./web_png/return.png" />
+                                        </button>
+                                    </div>
+                                    <div class="arrow_img">
+                                        <div class="square_triangle_arrow">
+                                            <img class="image-container" :src="itemImgSrc" @mouseover="hoveredItem = itemName"
+                                                @mouseleave="hoveredItem = null" />
+                                            <div class="item-name" v-if="hoveredItem === itemName">
+                                                {{ itemName }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="button-container">
+                                        <div class="out-button">
+                                            <button class="button-left" @click="keepItemBtn()">{{ keepName }}</button>
+                                        </div>
+                                        <div class="out-button">
+                                            <button class="button-right" @click="deleteItemBtn()">削除</button>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!--
                                     <div v-if="recipe.crafttable_id === 1">
                                     <ul>
@@ -477,43 +518,8 @@ onMounted(() => {
                                     </div>
                                 </div>
                                 -->
-
-                                <!--保存、削除-->
-                                <div class="right-side" v-if="itemImgSrc">
-                                    <!--注意書き-->
-                                    <div class="box" @mouseover="hoveredItemRecipeNote = itemRecipeNote"
-                                        @mouseleave="hoveredItemRecipeNote = null">
-                                        ?
-                                        <div class="item-name-note" v-if="hoveredItemRecipeNote === itemRecipeNote">
-                                            {{ itemRecipeNote }}
-                                        </div>
-                                    </div>
-
-                                    <div class="square-button">
-                                        <button type="submit">
-                                            <img src="./web_png/return.png" />
-                                        </button>
-                                    </div>
-                                    <div class="arrow_img">
-                                        <p class="square_triangle_arrow">
-                                            <img class="image-container" :src="itemImgSrc" />
-                                        </p>
-                                    </div>
-                                    <div class="button-container">
-                                        <div class="out-button">
-                                            <button class="button-left" @click="keepItemBtn()">{{ keepName }}</button>
-                                        </div>
-                                        <div class="out-button">
-                                            <button class="button-right" @click="deleteItemBtn()">削除</button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        <!--仮デザイン-->
-                        <h3 style="color: white; background-color: black" v-if="itemRecipeNote">
-
-                        </h3>
                     </div>
                 </div>
             </div>
