@@ -232,126 +232,128 @@ onMounted(() => {
         </div>
         <div class="position">
             <div class="split">
-                <div>
-                    <div class="main">
-                        <div class="tab-container">
-                            <!--オーバーワールドボタン-->
-                            <div :class="{ 'tab-click-left': isOverworldClick, 'tab-left': !isOverworldClick, }">
-                                <button @click="setOverworldClick(true)"
-                                    :class="{ 'tab-world-click': isOverworldClick, 'tab-world': !isOverworldClick, }">
-                                    オーバーワールド
-                                </button>
-                            </div>
-                            <!--ネザーボタン-->
-                            <div :class="{
-                                'tab-click': isNetherTabClick,
-                                tab: !isNetherTabClick,
-                            }" @click="setNetherTabClick(true)">
-                                <button :class="{
-                                    'tab-world-click': isNetherTabClick,
-                                    'tab-world': !isNetherTabClick,
-                                }">
-                                    ネザー
-                                </button>
-                            </div>
-                            <!--エンドボタン-->
-                            <div :class="{ 'tab-click': isEndTabClick, tab: !isEndTabClick }" @click="setEndTabClick(true)">
-                                <button :class="{
-                                    'tab-world-click': isEndTabClick,
-                                    'tab-world': !isEndTabClick,
-                                }">
-                                    エンド
-                                </button>
-                            </div>
-                            <!--オールボタン-->
-                            <div :class="{
-                                'tab-click': isAllTabClick,
-                                'tab-right': !isAllTabClick,
+                <div class="main">
+                    <!--ワールドボタン-->
+                    <div class="tab-container">
+                        <!--オーバーワールドボタン-->
+                        <div :class="{ 'tab-click-left': isOverworldClick, 'tab-left': !isOverworldClick, }">
+                            <button @click="setOverworldClick(true)"
+                                :class="{ 'tab-world-click': isOverworldClick, 'tab-world': !isOverworldClick, }">
+                                オーバーワールド
+                            </button>
+                        </div>
+                        <!--ネザーボタン-->
+                        <div :class="{
+                            'tab-click': isNetherTabClick,
+                            tab: !isNetherTabClick,
+                        }" @click="setNetherTabClick(true)">
+                            <button :class="{
+                                'tab-world-click': isNetherTabClick,
+                                'tab-world': !isNetherTabClick,
                             }">
-                                <button @click="setAllTabClick(true)" :class="{
-                                    'tab-world-click': isAllTabClick,
-                                    'tab-world': !isAllTabClick,
-                                }">
-                                    オール
-                                </button>
-                            </div>
+                                ネザー
+                            </button>
                         </div>
-                        <!--カテゴリーボタン上部-->
-                        <div class="tab-category-container">
-                            <!--建築ブロックボタン-->
-                            <div class="tab-category" @click="setCategory(1)">
-                                <button :class="{
-                                    'btn-category-click': currentCategory === 1,
-                                    'btn-category': currentCategory !== 1,
-                                }">
-                                    <img src="./img/architecture/bricks.webp" />
-                                </button>
-                            </div>
-                            <!--色付きブロックボタン-->
-                            <div class="tab-category" @click="setCategory(2)">
-                                <button :class="{
-                                    'btn-category-click': currentCategory === 2,
-                                    'btn-category': currentCategory !== 2,
-                                }">
-                                    <img src="./img/colored/cyan_wool.webp" />
-                                </button>
-                            </div>
-                            <!--天然ブロックボタン-->
-                            <div class="tab-category" @click="setCategory(3)">
-                                <button :class="{
-                                    'btn-category-click': currentCategory === 3,
-                                    'btn-category': currentCategory !== 3,
-                                }">
-                                    <img src="./img/natural/grass_block.webp" />
-                                </button>
-                            </div>
-                            <!--機能的ブロックボタン-->
-                            <div class="tab-category" @click="setCategory(4)">
-                                <button :class="{
-                                    'btn-category-click': currentCategory === 4,
-                                    'btn-category': currentCategory !== 4,
-                                }">
-                                    <img src="./img/function/oak_sign.webp" />
-                                </button>
-                            </div>
-                            <!--レッドストーン-->
-                            <div class="tab-category" @click="setCategory(5)">
-                                <button :class="{
-                                    'btn-category-click': currentCategory === 5,
-                                    'btn-category': currentCategory !== 5,
-                                }">
-                                    <img src="./img/redstone/redstone.png" />
-                                </button>
-                            </div>
-                            <!--検索ボックス-->
-                            <input v-model="searchTerm" placeholder="検索" />
+                        <!--エンドボタン-->
+                        <div :class="{ 'tab-click': isEndTabClick, tab: !isEndTabClick }" @click="setEndTabClick(true)">
+                            <button :class="{
+                                'tab-world-click': isEndTabClick,
+                                'tab-world': !isEndTabClick,
+                            }">
+                                エンド
+                            </button>
                         </div>
-                        <!--非同期の待ち時間アニメーション-->
-                        <div v-show="isLoading" class="loading-animation">
-                            <h1>Now Loading<span class="loading-dots"></span></h1>
+                        <!--オールボタン-->
+                        <div :class="{
+                            'tab-click': isAllTabClick,
+                            'tab-right': !isAllTabClick,
+                        }">
+                            <button @click="setAllTabClick(true)" :class="{
+                                'tab-world-click': isAllTabClick,
+                                'tab-world': !isAllTabClick,
+                            }">
+                                オール
+                            </button>
                         </div>
-                        <!--アイテム一覧-->
-                        <h1 class="title">
-                            {{ categoryName }}
-                            {{ items.length }}アイテム
-                        </h1>
-                        <div class="itemlist-inline">
-                            <div class="vertical-scrollable-list">
-                                <!--アイテム画像-->
-                                <ul>
-                                    <li v-for="(item, i) in filtereditems" :key="i" class="item-container">
-                                        <!--アイテム画像-->
-                                        <img @mouseover="hoveredItem = i" @mouseleave="hoveredItem = null" :src="item.pic"
-                                            @click="itemRecipe(item)" />
-                                        <!--アイテム名-->
-                                        <div class="item-name" v-if="hoveredItem === i">
-                                            {{ item.name }}
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                    </div>
+                    <!--カテゴリーボタン上部-->
+                    <div class="tab-category-container">
+                        <!--建築ブロックボタン-->
+                        <div class="tab-category" @click="setCategory(1)">
+                            <button :class="{
+                                'btn-category-click': currentCategory === 1,
+                                'btn-category': currentCategory !== 1,
+                            }">
+                                <img src="./img/architecture/bricks.webp" />
+                            </button>
                         </div>
-
+                        <!--色付きブロックボタン-->
+                        <div class="tab-category" @click="setCategory(2)">
+                            <button :class="{
+                                'btn-category-click': currentCategory === 2,
+                                'btn-category': currentCategory !== 2,
+                            }">
+                                <img src="./img/colored/cyan_wool.webp" />
+                            </button>
+                        </div>
+                        <!--天然ブロックボタン-->
+                        <div class="tab-category" @click="setCategory(3)">
+                            <button :class="{
+                                'btn-category-click': currentCategory === 3,
+                                'btn-category': currentCategory !== 3,
+                            }">
+                                <img src="./img/natural/grass_block.webp" />
+                            </button>
+                        </div>
+                        <!--機能的ブロックボタン-->
+                        <div class="tab-category" @click="setCategory(4)">
+                            <button :class="{
+                                'btn-category-click': currentCategory === 4,
+                                'btn-category': currentCategory !== 4,
+                            }">
+                                <img src="./img/function/oak_sign.webp" />
+                            </button>
+                        </div>
+                        <!--レッドストーン-->
+                        <div class="tab-category" @click="setCategory(5)">
+                            <button :class="{
+                                'btn-category-click': currentCategory === 5,
+                                'btn-category': currentCategory !== 5,
+                            }">
+                                <img src="./img/redstone/redstone.png" />
+                            </button>
+                        </div>
+                        <!--検索ボックス-->
+                        <input v-model="searchTerm" placeholder="検索" />
+                    </div>
+                    <!--非同期の待ち時間アニメーション-->
+                    <div v-show="isLoading" class="loading-animation">
+                        <h1>Now Loading<span class="loading-dots"></span></h1>
+                    </div>
+                    <!--カテゴリ名前-->
+                    <h1 class="title">
+                        {{ categoryName }}
+                        {{ items.length }}アイテム
+                    </h1>
+                    <!--アイテム一覧-->
+                    <div class="itemlist-inline">
+                        <div class="vertical-scrollable-list">
+                            <!--アイテム画像-->
+                            <ul>
+                                <li v-for="(item, i) in filtereditems" :key="i" class="item-container">
+                                    <!--アイテム画像-->
+                                    <img @mouseover="hoveredItem = i" @mouseleave="hoveredItem = null" :src="item.pic"
+                                        @click="itemRecipe(item)" />
+                                    <!--アイテム名-->
+                                    <div class="item-name" v-if="hoveredItem === i">
+                                        {{ item.name }}
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--カテゴリーボタン下部-->
+                    <div>
                         <div class="tab-category-container-bottom">
                             <!--道具と実用-->
                             <div class="tab-category-bottom" @click="setCategory(6)">
@@ -414,56 +416,56 @@ onMounted(() => {
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div class="recipe">
-                        <div class="recipe-inline">
-                            <div class="recipe-box">
-                                <ul class="sagyou-ul">
-                                    <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0]" :key="i">
-                                        <img :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
-                                            @mouseleave="hoveredItemRecipeName = null" width="49">
+            </div>
+            <div>
+                <div class="recipe">
+                    <div class="recipe-inline">
+                        <div class="recipe-box">
+                            <ul class="sagyou-ul">
+                                <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0]" :key="i">
+                                    <img :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
+                                        @mouseleave="hoveredItemRecipeName = null" width="49">
 
-                                        <!-- アイテム名 -->
-                                        <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
-                                            {{ recipe?.name }}
-                                        </div>
-                                    </li>
-                                </ul>
-                                <!--保存、削除-->
-                                <div class="right-side" v-if="itemImgSrc">
-                                    <!--注意書き-->
-                                    <div class="box" @mouseover="hoveredItem = itemRecipeNote"
-                                        @mouseleave="hoveredItem = null">
-                                        ?
-                                        <div class="item-name-note" v-if="hoveredItem === itemRecipeNote">
-                                            {{ itemRecipeNote }}
-                                        </div>
+                                    <!-- アイテム名 -->
+                                    <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
+                                        {{ recipe?.name }}
                                     </div>
+                                </li>
+                            </ul>
+                            <!--保存、削除-->
+                            <div class="right-side" v-if="itemImgSrc">
+                                <!--注意書き-->
+                                <div class="box" @mouseover="hoveredItem = itemRecipeNote" @mouseleave="hoveredItem = null">
+                                    ?
+                                    <div class="item-name-note" v-if="hoveredItem === itemRecipeNote">
+                                        {{ itemRecipeNote }}
+                                    </div>
+                                </div>
 
-                                    <div class="square-button">
-                                        <button type="submit">
-                                            <img src="./web_png/return.png" />
-                                        </button>
-                                    </div>
-                                    <div class="arrow_img">
-                                        <div class="square_triangle_arrow">
-                                            <img class="image-container" :src="itemImgSrc" @mouseover="hoveredItem = itemName"
-                                                @mouseleave="hoveredItem = null" />
-                                            <div class="item-name" v-if="hoveredItem === itemName">
-                                                {{ itemName }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="button-container">
-                                        <div class="out-button">
-                                            <button class="button-left" @click="keepItemBtn()">{{ keepName }}</button>
-                                        </div>
-                                        <div class="out-button">
-                                            <button class="button-right" @click="deleteItemBtn()">削除</button>
+                                <div class="square-button">
+                                    <button type="submit">
+                                        <img src="./web_png/return.png" />
+                                    </button>
+                                </div>
+                                <div class="arrow_img">
+                                    <div class="square_triangle_arrow">
+                                        <img class="image-container" :src="itemImgSrc" @mouseover="hoveredItem = itemName"
+                                            @mouseleave="hoveredItem = null" />
+                                        <div class="item-name" v-if="hoveredItem === itemName">
+                                            {{ itemName }}
                                         </div>
                                     </div>
                                 </div>
-                                <!--
+                                <div class="button-container">
+                                    <div class="out-button">
+                                        <button class="button-left" @click="keepItemBtn()">{{ keepName }}</button>
+                                    </div>
+                                    <div class="out-button">
+                                        <button class="button-right" @click="deleteItemBtn()">削除</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--
                                     <div v-if="recipe.crafttable_id === 1">
                                     <ul>
                                         <li class="attention-img">
@@ -518,7 +520,6 @@ onMounted(() => {
                                     </div>
                                 </div>
                                 -->
-                            </div>
                         </div>
                     </div>
                 </div>
