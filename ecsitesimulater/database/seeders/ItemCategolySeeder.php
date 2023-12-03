@@ -35,6 +35,9 @@ class ItemCategolySeeder extends Seeder
             ];
         }
         foreach($csv_data as $data){
+            if($data['item_id'] == 0){
+                $data['item_id'] = 1;
+            }
             ItemCategoly::create([
                 'item_id' => $data['item_id'],
                 'categoly_id' => $data['categoly_id']
