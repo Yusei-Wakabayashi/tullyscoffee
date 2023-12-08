@@ -13,8 +13,13 @@ class ItemRecipeCrafttable extends Model
     public function search_recipe($item_id)
     {
         $data = [];
+        $recipes = [];
         $items = [];
+
         $nums = 1;
+        $craft_num = null;
+        $item_num = null;
+
         $item_object = new Item;
         $item_id = ItemRecipeCrafttable::where('item_id', '=', $item_id)
         ->get(['item_id1','item_id2','item_id3','item_id4','item_id5','item_id6','item_id7','item_id8','item_id9','crafttable_id','item_num']);
@@ -28,21 +33,29 @@ class ItemRecipeCrafttable extends Model
                     {
                         if (!($value == 'crafttable_id') and !($value == 'item_num'))
                         {
-                            $items += array($nums => $item_object->finditem($id));
+                            $recipes += array($nums => $item_object->finditem($id));
                             $nums += 1;
                         } 
                         elseif($value == 'crafttable_id')
                         {
-                            $items += array('craft_num' => $id);
+                            $craft_num = $id;
                         } else
                         {
-                            $items += array('item_num' => $id);
+                            $item_num = $id;
                         }
                     }
                 }
             }
+            $items += array('recipes' => $recipes);
+            $items += array('craft_num' => $craft_num);
+            $items += array('item_num' => $item_num);
             $data[] = $items;
+// 使った配列や変数を空にしています
+            $recipes = array();
             $items = array();
+
+            $craft_num = null;
+            $item_num = null;
             $nums = 1;
         }
         return $data;
