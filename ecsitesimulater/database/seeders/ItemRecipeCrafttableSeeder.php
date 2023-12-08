@@ -50,6 +50,7 @@ class ItemRecipeCrafttableSeeder extends Seeder
                 'craft_id8' => $value[8],
                 'craft_id9' => $value[9],
                 'crafttable_id' => $value[10],
+                'item_num' => $value[11],
             ];
         }
     
@@ -69,6 +70,7 @@ class ItemRecipeCrafttableSeeder extends Seeder
                 'item_id8' => empty_null($data['craft_id8']),
                 'item_id9' => empty_null($data['craft_id9']),
                 'crafttable_id' => $data['crafttable_id'],
+                'item_num' => $data['item_num'],
             ]);
         }
     }

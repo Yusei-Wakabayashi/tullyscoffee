@@ -24,6 +24,7 @@ return new class extends Migration
             $table->bigInteger('item_id8')->nullable();
             $table->bigInteger('item_id9')->nullable();
             $table->bigInteger('crafttable_id');
+            $table->integer('item_num')->nullable();
             $table->timestamps();
         });
     }
