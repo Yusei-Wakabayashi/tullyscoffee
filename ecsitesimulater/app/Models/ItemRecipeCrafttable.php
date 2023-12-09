@@ -33,20 +33,42 @@ class ItemRecipeCrafttable extends Model
                     {
                         if($recipe['crafttable_id'] == 1)
                         {
-                            $recipes += array($nums => '/img/attention.png');
+                            $recipes += array(5 => '/img/attention.png');
                             $craft_num = $recipe['crafttable_id'];
                             $item_num = $recipe['item_num'];
-                        } elseif (!($value == 'crafttable_id') and !($value == 'item_num'))
-                        {
-                            $recipes += array($nums => $item_object->finditem($id));
-                            $nums += 1;
                         } 
-                        elseif($value == 'crafttable_id')
+                        elseif ($recipe['crafttable_id'] == 2)
                         {
-                            $craft_num = $id;
-                        } else
+                            $recipes += array($nums => $item_object->finditem($recipe['item_id1']));
+                            $nums += 1;
+                            $craft_num = $recipe['crafttable_id'];
+                            $item_num = $recipe['item_num'];
+                        } 
+                        elseif($recipe['crafttable_id'] == 3)
                         {
-                            $item_num = $id;
+                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id1']));
+                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id2']));
+                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id3']));
+                            $craft_num = $recipe['crafttable_id'];
+                            $item_num = $recipe['item_num'];
+                            break;
+                        }
+                        elseif($recipe['crafttable_id'] == 4)
+                        {
+                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id1']));
+                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id2']));
+                            $craft_num = $recipe['crafttable_id'];
+                            $item_num = $recipe['item_num'];
+                            break;
+                        }
+                        elseif($recipe['crafttable_id'] == 5)
+                        {
+                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id1']));
+                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id2']));
+                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id3']));
+                            $craft_num = $recipe['crafttable_id'];
+                            $item_num = $recipe['item_num'];
+                            break;
                         }
                     }
                 }
@@ -63,6 +85,7 @@ class ItemRecipeCrafttable extends Model
             $item_num = null;
             $nums = 1;
         }
+        dd($data);
         return $data;
     } 
 }
