@@ -232,6 +232,7 @@ onMounted(() => {
         </div>
         <div class="position">
             <div class="split">
+                <!--左側デザイン-->
                 <div class="main">
                     <!--ワールドボタン-->
                     <div class="tab-container">
@@ -338,7 +339,6 @@ onMounted(() => {
                     <!--アイテム一覧-->
                     <div class="itemlist-inline">
                         <div class="vertical-scrollable-list">
-                            <!--アイテム画像-->
                             <ul>
                                 <li v-for="(item, i) in filtereditems" :key="i" class="item-container">
                                     <!--アイテム画像-->
@@ -418,21 +418,76 @@ onMounted(() => {
                 </div>
             </div>
             <div>
+                <!--右側デザイン-->
                 <div class="recipe">
                     <div class="recipe-inline">
                         <div class="recipe-box">
-                            <ul class="sagyou-ul">
-                                <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0]" :key="i">
-                                    <img :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
-                                        @mouseleave="hoveredItemRecipeName = null" width="49">
+                            <!--クラフト不可-->
+                            <div v-if="itemRecipeList[0].craft_num === 1">
+                                <ul>
+                                    <li class="attention-img" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
+                                        <img :src="recipe" alt="">
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--作業台-->
+                            <div v-if="itemRecipeList[0].craft_num === 2">
+                                <ul class="sagyou-ul">
+                                    <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
+                                        <img :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
+                                            @mouseleave="hoveredItemRecipeName = null" width="49">
 
-                                    <!-- アイテム名 -->
-                                    <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
-                                        {{ recipe?.name }}
-                                    </div>
-                                </li>
-                            </ul>
-                            <!--保存、削除-->
+                                        <!-- アイテム名 -->
+                                        <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
+                                            {{ recipe?.name }}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--醸造台-->
+                            <div v-if="itemRecipeList[0].craft_num === 3">
+                                <ul>
+                                    <li v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
+                                        <img :src="recipe.pic" @mouseover="hoveredItemRecipeName = i"
+                                            @mouseleave="hoveredItemRecipeName = null">
+
+                                        <!-- アイテム名 -->
+                                        <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
+                                            {{ recipe.name }}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--かまど-->
+                            <div class="kamado" v-if="itemRecipeList[0].craft_num === 4">
+                                <ul class="kamado-ul">
+                                    <li v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
+                                        <img :src="recipe.pic" @mouseover="hoveredItemRecipeName = i"
+                                            @mouseleave="hoveredItemRecipeName = null">
+
+                                        <!-- アイテム名 -->
+                                        <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
+                                            {{ recipe.name }}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--鍛冶台-->
+                            <div class="kaji" v-if="itemRecipeList[0].craft_num === 5">
+                                <ul class="kaji-ul">
+                                    <li class="kaji-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
+                                        <img :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
+                                            @mouseleave="hoveredItemRecipeName = null" width="49">
+
+                                        <!-- アイテム名 -->
+                                        <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
+                                            {{ recipe?.name }}
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <!--レシピの右側デザイン-->
                             <div class="right-side" v-if="itemImgSrc">
                                 <!--注意書き-->
                                 <div class="box" @mouseover="hoveredItem = itemRecipeNote" @mouseleave="hoveredItem = null">
@@ -441,12 +496,13 @@ onMounted(() => {
                                         {{ itemRecipeNote }}
                                     </div>
                                 </div>
-
+                                <!--矢印ボタン-->
                                 <div class="square-button">
                                     <button type="submit">
                                         <img src="./web_png/return.png" />
                                     </button>
                                 </div>
+                                <!--レシピ右側の画像-->
                                 <div class="arrow_img">
                                     <div class="square_triangle_arrow">
                                         <img class="image-container" :src="itemImgSrc" @mouseover="hoveredItem = itemName"
@@ -456,6 +512,7 @@ onMounted(() => {
                                         </div>
                                     </div>
                                 </div>
+                                <!--保存、削除ボタン-->
                                 <div class="button-container">
                                     <div class="out-button">
                                         <button class="button-left" @click="keepItemBtn()">{{ keepName }}</button>
@@ -465,61 +522,6 @@ onMounted(() => {
                                     </div>
                                 </div>
                             </div>
-                            <!--
-                                    <div v-if="recipe.crafttable_id === 1">
-                                    <ul>
-                                        <li class="attention-img">
-                                            <img src="./web_png/attention.png" alt="" />
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div v-if="recipe.crafttable_id === 2">
-                                    <ul class="sagyou-ul">
-                                        <li class="sagyou-li">{{ recipe.item_id1 }}</li>
-                                        <li class="sagyou-li">{{ recipe.item_id2 }}</li>
-                                        <li class="sagyou-li">{{ recipe.item_id3 }}</li>
-                                        <li class="sagyou-li">{{ recipe.item_id4 }}</li>
-                                        <li class="sagyou-li">{{ recipe.item_id5 }}</li>
-                                        <li class="sagyou-li">{{ recipe.item_id6 }}</li>
-                                        <li class="sagyou-li">{{ recipe.item_id7 }}</li>
-                                        <li class="sagyou-li">{{ recipe.item_id8 }}</li>
-                                        <li class="sagyou-li">{{ recipe.item_id9 }}</li>
-                                    </ul>
-                                </div>
-                                <div v-if="recipe.crafttable_id === 3">
-                                    <div>
-                                        <ul>
-                                            <li></li>
-                                        </ul>
-
-                                        <ul>
-                                            <li></li>
-                                            <li></li>
-                                            <li></li>
-                                        </ul>
-                                    </div>
-
-                                </div>
-                                <div v-if="recipe.crafttable_id === 4">
-                                    <div class="kamado">
-                                        <ul class="kamado-ul">
-                                            <li class="kamado-top">10</li>
-                                            <li class="kamado-img"><img class="fire" src="./web_png/fire.png" alt=""></li>
-                                            <li class="kamado-bottom">10</li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                                <div v-if="recipe.crafttable_id === 5">
-                                    <div class="kaji">
-                                        <ul class="kaji-ul">
-                                            <li class="kaji-li">10</li>
-                                            <li class="kaji-li">10</li>
-                                            <li class="kaji-li">10</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                -->
                         </div>
                     </div>
                 </div>
@@ -527,9 +529,3 @@ onMounted(() => {
         </div>
     </div>
 </template>
- 
-<style scoped>
-.attention-img {
-    margin: 57px;
-}
-</style>
