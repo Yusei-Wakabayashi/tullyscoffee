@@ -16,7 +16,6 @@ class ItemRecipeCrafttable extends Model
         $recipes = [];
         $items = [];
 
-        $nums = 1;
         $craft_num = null;
         $item_num = null;
 
@@ -39,33 +38,40 @@ class ItemRecipeCrafttable extends Model
                         } 
                         elseif ($recipe['crafttable_id'] == 2)
                         {
-                            $recipes += array($nums => $item_object->finditem($recipe['item_id1']));
-                            $nums += 1;
+                            $recipes += array(1 => $item_object->finditem($recipe['item_id1']));
+                            $recipes += array(2 => $item_object->finditem($recipe['item_id2']));
+                            $recipes += array(3 => $item_object->finditem($recipe['item_id3']));
+                            $recipes += array(4 => $item_object->finditem($recipe['item_id4']));
+                            $recipes += array(5 => $item_object->finditem($recipe['item_id5']));
+                            $recipes += array(6 => $item_object->finditem($recipe['item_id6']));
+                            $recipes += array(7 => $item_object->finditem($recipe['item_id7']));
+                            $recipes += array(8 => $item_object->finditem($recipe['item_id8']));
+                            $recipes += array(9 => $item_object->finditem($recipe['item_id9']));
                             $craft_num = $recipe['crafttable_id'];
                             $item_num = $recipe['item_num'];
                         } 
                         elseif($recipe['crafttable_id'] == 3)
                         {
-                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id1']));
-                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id2']));
-                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id3']));
+                            $recipes += array(1 => $item_object->finditem($recipe['item_id1']));
+                            $recipes += array(2 => $item_object->finditem($recipe['item_id2']));
+                            $recipes += array(3 => $item_object->finditem($recipe['item_id3']));
                             $craft_num = $recipe['crafttable_id'];
                             $item_num = $recipe['item_num'];
                             break;
                         }
                         elseif($recipe['crafttable_id'] == 4)
                         {
-                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id1']));
-                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id2']));
+                            $recipes += array(1 => $item_object->finditem($recipe['item_id1']));
+                            $recipes += array(2 => $item_object->finditem($recipe['item_id2']));
                             $craft_num = $recipe['crafttable_id'];
                             $item_num = $recipe['item_num'];
                             break;
                         }
                         elseif($recipe['crafttable_id'] == 5)
                         {
-                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id1']));
-                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id2']));
-                            $recipes[] += array($nums => $item_object->finditem($recipe['item_id3']));
+                            $recipes += array(1 => $item_object->finditem($recipe['item_id1']));
+                            $recipes += array(2 => $item_object->finditem($recipe['item_id2']));
+                            $recipes += array(3 => $item_object->finditem($recipe['item_id3']));
                             $craft_num = $recipe['crafttable_id'];
                             $item_num = $recipe['item_num'];
                             break;
@@ -83,9 +89,7 @@ class ItemRecipeCrafttable extends Model
 
             $craft_num = null;
             $item_num = null;
-            $nums = 1;
         }
-        dd($data);
         return $data;
     } 
 }
