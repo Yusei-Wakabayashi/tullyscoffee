@@ -62,7 +62,8 @@ class ItemRecipeCrafttable extends Model
                         elseif($recipe['crafttable_id'] == 4)
                         {
                             $recipes += array(1 => $item_object->finditem($recipe['item_id1']));
-                            $recipes += array(2 => $item_object->finditem($recipe['item_id2']));
+                            $recipes += array(2 => '/img/fire.png');
+                            $recipes += array(3 => $item_object->finditem($recipe['item_id2']));
                             $craft_num = $recipe['crafttable_id'];
                             $item_num = $recipe['item_num'];
                             break;
