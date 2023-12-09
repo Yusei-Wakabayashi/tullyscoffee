@@ -423,7 +423,7 @@ onMounted(() => {
                     <div class="recipe-inline">
                         <div class="recipe-box">
                             <!--クラフト不可-->
-                            <div v-if="itemRecipeList[0].craft_num === 1">
+                            <div v-if="itemRecipeList[0]?.craft_num === 1">
                                 <ul>
                                     <li class="attention-img" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
                                         <img :src="recipe" alt="">
@@ -431,7 +431,7 @@ onMounted(() => {
                                 </ul>
                             </div>
                             <!--作業台-->
-                            <div v-if="itemRecipeList[0].craft_num === 2">
+                            <div v-if="itemRecipeList[0]?.craft_num === 2">
                                 <ul class="sagyou-ul">
                                     <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
                                         <img :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
@@ -445,7 +445,7 @@ onMounted(() => {
                                 </ul>
                             </div>
                             <!--醸造台-->
-                            <div v-if="itemRecipeList[0].craft_num === 3">
+                            <div v-if="itemRecipeList[0]?.craft_num === 3">
                                 <ul>
                                     <li v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
                                         <img :src="recipe.pic" @mouseover="hoveredItemRecipeName = i"
@@ -459,7 +459,7 @@ onMounted(() => {
                                 </ul>
                             </div>
                             <!--かまど-->
-                            <div class="kamado" v-if="itemRecipeList[0].craft_num === 4">
+                            <div class="kamado" v-if="itemRecipeList[0]?.craft_num === 4">
                                 <ul class="kamado-ul">
                                     <li v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
                                         <img :src="recipe.pic" @mouseover="hoveredItemRecipeName = i"
@@ -473,7 +473,7 @@ onMounted(() => {
                                 </ul>
                             </div>
                             <!--鍛冶台-->
-                            <div class="kaji" v-if="itemRecipeList[0].craft_num === 5">
+                            <div class="kaji" v-if="itemRecipeList[0]?.craft_num === 5">
                                 <ul class="kaji-ul">
                                     <li class="kaji-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
                                         <img :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
