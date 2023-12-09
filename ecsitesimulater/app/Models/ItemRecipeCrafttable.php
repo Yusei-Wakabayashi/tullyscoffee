@@ -31,7 +31,12 @@ class ItemRecipeCrafttable extends Model
                 {
                     foreach($recipe as $value => $id)
                     {
-                        if (!($value == 'crafttable_id') and !($value == 'item_num'))
+                        if($recipe['crafttable_id'] == 1)
+                        {
+                            $recipes += array($nums => '/img/attention.png');
+                            $craft_num = $recipe['crafttable_id'];
+                            $item_num = $recipe['item_num'];
+                        } elseif (!($value == 'crafttable_id') and !($value == 'item_num'))
                         {
                             $recipes += array($nums => $item_object->finditem($id));
                             $nums += 1;
