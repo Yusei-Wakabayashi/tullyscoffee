@@ -133,15 +133,17 @@ const filtereditems = computed(() => {
     return items.value.filter((item) => item.name.includes(searchTerm.value));
 });
 
-
+const test = ref('')
 //画像をクリックしたときのレシピ表示処理
 const itemRecipe = (item) => {
     isLoading.value = true;
     itemRecipeNote.value = item.note;
     const itemId = item.id;
     const itemImg = item.pic
+    const itemNum = item.item_num
     itemName.value = item.name
     itemImgSrc.value = itemImg; //アイテム一覧の押したアイテム画像を入れる
+    test.value = itemNum
     selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
     axios
         .get(`/item/recipesearch/${itemId}`)
@@ -342,8 +344,8 @@ onMounted(() => {
                             <ul>
                                 <li v-for="(item, i) in filtereditems" :key="i" class="item-container">
                                     <!--アイテム画像-->
-                                    <img @mouseover="hoveredItem = i" @mouseleave="hoveredItem = null" :src="item.pic"
-                                        @click="itemRecipe(item)" />
+                                    <img class="item-img" @mouseover="hoveredItem = i" @mouseleave="hoveredItem = null"
+                                        :src="item.pic" @click="itemRecipe(item)" />
                                     <!--アイテム名-->
                                     <div class="item-name" v-if="hoveredItem === i">
                                         {{ item.name }}
@@ -434,7 +436,7 @@ onMounted(() => {
                             <div v-if="itemRecipeList[0]?.craft_num === 2">
                                 <ul class="sagyou-ul">
                                     <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
-                                        <img :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
+                                        <img class="item-img" :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
                                             @mouseleave="hoveredItemRecipeName = null" width="49">
 
                                         <!-- アイテム名 -->
@@ -476,7 +478,7 @@ onMounted(() => {
                             <div class="kaji" v-if="itemRecipeList[0]?.craft_num === 5">
                                 <ul class="kaji-ul">
                                     <li class="kaji-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
-                                        <img :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
+                                        <img class="item-img" :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
                                             @mouseleave="hoveredItemRecipeName = null" width="49">
 
                                         <!-- アイテム名 -->
@@ -521,6 +523,8 @@ onMounted(() => {
                                         <button class="button-right" @click="deleteItemBtn()">削除</button>
                                     </div>
                                 </div>
+                                <!--仮-->
+                                <p>{{ test }}</p>
                             </div>
                         </div>
                     </div>
@@ -529,3 +533,17 @@ onMounted(() => {
         </div>
     </div>
 </template>
+
+<style scoped>
+.item-img:hover {
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    opacity: 0.7;
+}
+
+.image-container:hover {
+    background-color: rgb(255, 255, 255);
+    z-index: 1;
+    opacity: 0.6;
+}
+</style>
