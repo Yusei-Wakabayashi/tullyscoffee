@@ -1,7 +1,11 @@
 <script setup>
-import Index from './store/index.js'
-import SearchBox from './components/SearchBox.vue';
-import LoadAnime from './components/LoadAnime.vue'
+import Index from './store/index.js';
+import WorldBtn from './components/WorldBtn.vue'
+import NotCraft from './components/NotCraft.vue'
+import SagyouCraft from './components/SagyouTable.vue';
+import BrewingTable from './components/BrewingTable.vue';
+import FurnaceTable from './components/FurnaceTable.vue';
+import BlacksmithTable from './components/BlacksmithTable.vue'
 import { onMounted } from "vue";
 
 const { items,
@@ -17,6 +21,7 @@ const { items,
     hoveredItem,
     hoveredItemRecipeName,
     itemRecipeNote,
+    itemGetNote,
     itemImgSrc,
     itemName,
     selectedItemClick,
@@ -63,101 +68,56 @@ onMounted(() => {
                 <!--左側デザイン-->
                 <div class="main">
                     <!--ワールドボタン-->
-                    <div class="tab-container">
-                        <!--オーバーワールドボタン-->
-                        <div :class="{ 'tab-click-left': isOverworldClick, 'tab-left': !isOverworldClick, }">
-                            <button @click="setOverworldClick(true)"
-                                :class="{ 'tab-world-click': isOverworldClick, 'tab-world': !isOverworldClick, }">
-                                オーバーワールド
-                            </button>
-                        </div>
-                        <!--ネザーボタン-->
-                        <div :class="{
-                            'tab-click': isNetherTabClick,
-                            tab: !isNetherTabClick,
-                        }" @click="setNetherTabClick(true)">
-                            <button :class="{
-                                'tab-world-click': isNetherTabClick,
-                                'tab-world': !isNetherTabClick,
-                            }">
-                                ネザー
-                            </button>
-                        </div>
-                        <!--エンドボタン-->
-                        <div :class="{ 'tab-click': isEndTabClick, tab: !isEndTabClick }" @click="setEndTabClick(true)">
-                            <button :class="{
-                                'tab-world-click': isEndTabClick,
-                                'tab-world': !isEndTabClick,
-                            }">
-                                エンド
-                            </button>
-                        </div>
-                        <!--オールボタン-->
-                        <div :class="{
-                            'tab-click': isAllTabClick,
-                            'tab-right': !isAllTabClick,
-                        }">
-                            <button @click="setAllTabClick(true)" :class="{
-                                'tab-world-click': isAllTabClick,
-                                'tab-world': !isAllTabClick,
-                            }">
-                                オール
-                            </button>
-                        </div>
-                    </div>
+                    <WorldBtn :isOverworldClick="isOverworldClick" :isNetherTabClick="isNetherTabClick"
+                        :isEndTabClick="isEndTabClick" :isAllTabClick="isAllTabClick" :setOverworldClick="setOverworldClick"
+                        :setNetherTabClick="setNetherTabClick" :setEndTabClick="setEndTabClick"
+                        :setAllTabClick="setAllTabClick" />
+
 
                     <!--カテゴリーボタン上部-->
                     <div class="tab-category-container">
                         <!--建築ブロックボタン-->
-                        <div class="tab-category" @click="setCategory(1)">
-                            <button :class="{
-                                'btn-category-click': currentCategory === 1,
-                                'btn-category': currentCategory !== 1,
-                            }">
+                        <div class="tab-category">
+                            <button @click="setCategory(1)"
+                                :class="{ 'btn-category-click': currentCategory === 1, 'btn-category': currentCategory !== 1, }">
                                 <img src="./img/architecture/bricks.webp" />
                             </button>
                         </div>
                         <!--色付きブロックボタン-->
-                        <div class="tab-category" @click="setCategory(2)">
-                            <button :class="{
-                                'btn-category-click': currentCategory === 2,
-                                'btn-category': currentCategory !== 2,
-                            }">
+                        <div class="tab-category">
+                            <button @click="setCategory(2)"
+                                :class="{ 'btn-category-click': currentCategory === 2, 'btn-category': currentCategory !== 2, }">
                                 <img src="./img/colored/cyan_wool.webp" />
                             </button>
                         </div>
                         <!--天然ブロックボタン-->
-                        <div class="tab-category" @click="setCategory(3)">
-                            <button :class="{
-                                'btn-category-click': currentCategory === 3,
-                                'btn-category': currentCategory !== 3,
-                            }">
+                        <div class="tab-category">
+                            <button @click="setCategory(3)"
+                                :class="{ 'btn-category-click': currentCategory === 3, 'btn-category': currentCategory !== 3, }">
                                 <img src="./img/natural/grass_block.webp" />
                             </button>
                         </div>
                         <!--機能的ブロックボタン-->
-                        <div class="tab-category" @click="setCategory(4)">
-                            <button :class="{
-                                'btn-category-click': currentCategory === 4,
-                                'btn-category': currentCategory !== 4,
-                            }">
+                        <div class="tab-category">
+                            <button @click="setCategory(4)"
+                                :class="{ 'btn-category-click': currentCategory === 4, 'btn-category': currentCategory !== 4, }">
                                 <img src="./img/function/oak_sign.webp" />
                             </button>
                         </div>
                         <!--レッドストーン-->
-                        <div class="tab-category" @click="setCategory(5)">
-                            <button :class="{
-                                'btn-category-click': currentCategory === 5,
-                                'btn-category': currentCategory !== 5,
-                            }">
+                        <div class="tab-category">
+                            <button @click="setCategory(5)"
+                                :class="{ 'btn-category-click': currentCategory === 5, 'btn-category': currentCategory !== 5, }">
                                 <img src="./img/redstone/redstone.png" />
                             </button>
                         </div>
-                        <!--検索ボックスコンポーネント-->
-                        <SearchBox v-model="searchTerm" />
+                        <!--検索ボックス-->
+                        <input v-model="searchTerm" placeholder="検索" />
                     </div>
                     <!--非同期の待ち時間アニメーション-->
-                    <LoadAnime v-show="isLoading" />
+                    <div v-show="isLoading" class="loading-animation">
+                        <h1>Now Loading<span class="loading-dots"></span></h1>
+                    </div>
                     <!--カテゴリ名前-->
                     <h1 class="title">
                         {{ categoryName }}
@@ -183,47 +143,37 @@ onMounted(() => {
                     <div>
                         <div class="tab-category-container-bottom">
                             <!--道具と実用-->
-                            <div class="tab-category-bottom" @click="setCategory(6)">
-                                <button :class="{
-                                    'btn-category-bottom-click': currentCategory === 6,
-                                    'btn-category-bottom': currentCategory !== 6,
-                                }">
+                            <div class="tab-category-bottom">
+                                <button @click="setCategory(6)"
+                                    :class="{ 'btn-category-bottom-click': currentCategory === 6, 'btn-category-bottom': currentCategory !== 6, }">
                                     <img src="./img/tool/diamond_pickaxe.webp" />
                                 </button>
                             </div>
                             <!--戦闘-->
-                            <div class="tab-category-bottom" @click="setCategory(7)">
-                                <button :class="{
-                                    'btn-category-bottom-click': currentCategory === 7,
-                                    'btn-category-bottom': currentCategory !== 7,
-                                }">
+                            <div class="tab-category-bottom">
+                                <button @click="setCategory(7)"
+                                    :class="{ 'btn-category-bottom-click': currentCategory === 7, 'btn-category-bottom': currentCategory !== 7, }">
                                     <img src="./img/battle/netherite_sword.webp" />
                                 </button>
                             </div>
                             <!--食べ物と飲み物-->
-                            <div class="tab-category-bottom" @click="setCategory(8)">
-                                <button :class="{
-                                    'btn-category-bottom-click': currentCategory === 8,
-                                    'btn-category-bottom': currentCategory !== 8,
-                                }">
+                            <div class="tab-category-bottom">
+                                <button @click="setCategory(8)"
+                                    :class="{ 'btn-category-bottom-click': currentCategory === 8, 'btn-category-bottom': currentCategory !== 8, }">
                                     <img src="./img/food/golden_apple.png" />
                                 </button>
                             </div>
                             <!--材料-->
-                            <div class="tab-category-bottom" @click="setCategory(9)">
-                                <button :class="{
-                                    'btn-category-bottom-click': currentCategory === 9,
-                                    'btn-category-bottom': currentCategory !== 9,
-                                }">
+                            <div class="tab-category-bottom">
+                                <button @click="setCategory(9)"
+                                    :class="{ 'btn-category-bottom-click': currentCategory === 9, 'btn-category-bottom': currentCategory !== 9, }">
                                     <img src="./img/material/iron_ingot.webp" />
                                 </button>
                             </div>
                             <!--オール-->
-                            <div class="tab-category-bottom" @click="setCategory(10)">
-                                <button :class="{
-                                    'btn-category-bottom-click': currentCategory === 10,
-                                    'btn-category-bottom': currentCategory !== 10,
-                                }">
+                            <div class="tab-category-bottom">
+                                <button @click="setCategory(10)"
+                                    :class="{ 'btn-category-bottom-click': currentCategory === 10, 'btn-category-bottom': currentCategory !== 10, }">
                                     <img src="./web_png/all.png" />
                                 </button>
                             </div>
@@ -232,11 +182,9 @@ onMounted(() => {
                             <div class="tab-category-bottom-blank"></div>
                             <!--ここまで-->
                             <!--保存-->
-                            <div class="tab-category-bottom" @click="setCategoryKeep()">
-                                <button :class="{
-                                    'btn-category-bottom-click': currentCategory === 11,
-                                    'btn-category-bottom': currentCategory !== 11,
-                                }">
+                            <div class="tab-category-bottom">
+                                <button @click="setCategoryKeep()"
+                                    :class="{ 'btn-category-bottom-click': currentCategory === 11, 'btn-category-bottom': currentCategory !== 11, }">
                                     <img src="./web_png/book.png" />
                                 </button>
                             </div>
@@ -250,78 +198,29 @@ onMounted(() => {
                     <div class="recipe-inline">
                         <div class="recipe-box">
                             <!--クラフト不可-->
-                            <div v-if="itemRecipeList[0]?.craft_num === 1">
-                                <ul>
-                                    <li class="attention-img" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
-                                        <img :src="recipe" alt="">
-                                    </li>
-                                </ul>
-                            </div>
+                            <NotCraft :itemRecipeList="itemRecipeList" />
                             <!--作業台-->
-                            <div v-if="itemRecipeList[0]?.craft_num === 2">
-                                <ul class="sagyou-ul">
-                                    <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
-                                        <img class="item-img" :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
-                                            @mouseleave="hoveredItemRecipeName = null" @click="itemRecipe(recipe)"
-                                            width="49">
-
-                                        <!-- アイテム名 -->
-                                        <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
-                                            {{ recipe?.name }}
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            <SagyouCraft :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
+                                :itemRecipe="itemRecipe" />
                             <!--醸造台-->
-                            <div v-if="itemRecipeList[0]?.craft_num === 3">
-                                <ul>
-                                    <li v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
-                                        <img :src="recipe.pic" @mouseover="hoveredItemRecipeName = i"
-                                            @mouseleave="hoveredItemRecipeName = null">
-
-                                        <!-- アイテム名 -->
-                                        <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
-                                            {{ recipe.name }}
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            <BrewingTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName" />
                             <!--かまど-->
-                            <div class="kamado" v-if="itemRecipeList[0]?.craft_num === 4">
-                                <ul class="kamado-ul">
-                                    <li v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
-                                        <img :src="recipe.pic" @mouseover="hoveredItemRecipeName = i"
-                                            @mouseleave="hoveredItemRecipeName = null">
-
-                                        <!-- アイテム名 -->
-                                        <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
-                                            {{ recipe.name }}
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            <FurnaceTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName" />
                             <!--鍛冶台-->
-                            <div class="kaji" v-if="itemRecipeList[0]?.craft_num === 5">
-                                <ul class="kaji-ul">
-                                    <li class="kaji-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
-                                        <img class="item-img" :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
-                                            @mouseleave="hoveredItemRecipeName = null" width="49">
-
-                                        <!-- アイテム名 -->
-                                        <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
-                                            {{ recipe?.name }}
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            <BlacksmithTable :itemRecipeList="itemRecipeList"
+                                :hoveredItemRecipeName="hoveredItemRecipeName" />
 
                             <!--レシピの右側デザイン-->
                             <div class="right-side" v-if="itemImgSrc">
                                 <!--注意書き-->
-                                <div class="box" @mouseover="hoveredItem = itemRecipeNote" @mouseleave="hoveredItem = null">
-                                    ?
-                                    <div class="item-name-note" v-if="hoveredItem === itemRecipeNote">
-                                        {{ itemRecipeNote }}
+                                <div>
+                                    <!--後でitemGetNoteを追加する-->
+                                    <div class="box" @mouseover="hoveredItem = itemRecipeNote"
+                                        @mouseleave="hoveredItem = null">
+                                        ?
+                                        <div class="item-name-note" v-if="hoveredItem === itemRecipeNote">
+                                            {{ itemRecipeNote }}
+                                        </div>
                                     </div>
                                 </div>
                                 <!--矢印ボタン-->
@@ -355,5 +254,4 @@ onMounted(() => {
                 </div>
             </div>
         </div>
-    </div>
-</template>
+</div></template>

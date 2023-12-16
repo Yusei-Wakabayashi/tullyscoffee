@@ -14,7 +14,8 @@ export default function () {
     const itemRecipeList = ref([]);//アイテムのレシピIDのリスト
     const hoveredItem = ref(null);//カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
     const hoveredItemRecipeName = ref(null)
-    const itemRecipeNote = ref("");//クラフトレシピの注意書き
+    const itemRecipeNote = ref('');//クラフトレシピの注意書き
+    const itemGetNote = ref('')//クラフト不可のものの入手場所
     const itemImgSrc = ref('')//itemImgの値をセット
     const itemName = ref('')
     const selectedItemClick = ref(null);
@@ -229,6 +230,7 @@ export default function () {
     const itemRecipe = (item) => {
         isLoading.value = true;
         itemRecipeNote.value = item.note;
+        itemGetNote.value = item.howtoget;
         const itemId = item.id;
         const itemImg = item.pic
         itemName.value = item.name
@@ -307,6 +309,7 @@ export default function () {
         hoveredItem,
         hoveredItemRecipeName,
         itemRecipeNote,
+        itemGetNote,
         itemImgSrc,
         itemName,
         selectedItemClick,
