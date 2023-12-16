@@ -1,6 +1,7 @@
 <script setup>
 import Index from './store/index.js'
 import SearchBox from './components/SearchBox.vue';
+import LoadAnime from './components/LoadAnime.vue'
 import { onMounted } from "vue";
 
 const { items,
@@ -156,9 +157,7 @@ onMounted(() => {
                         <SearchBox v-model="searchTerm" />
                     </div>
                     <!--非同期の待ち時間アニメーション-->
-                    <div v-show="isLoading" class="loading-animation">
-                        <h1>Now Loading<span class="loading-dots"></span></h1>
-                    </div>
+                    <LoadAnime v-show="isLoading" />
                     <!--カテゴリ名前-->
                     <h1 class="title">
                         {{ categoryName }}
