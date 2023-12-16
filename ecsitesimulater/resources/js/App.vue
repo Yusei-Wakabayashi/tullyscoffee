@@ -1,7 +1,7 @@
 <script setup>
-import WorldTabBtn from '../js/store/WorldTabBtn'
-import { ref, onMounted, computed } from "vue";
-import axios from "axios";
+import Index from './store/index.js'
+import SearchBox from './components/SearchBox.vue';
+import { onMounted } from "vue";
 
 const { items,
     currentCategory,
@@ -12,202 +12,27 @@ const { items,
     isNetherTabClick,
     isEndTabClick,
     isAllTabClick,
+    itemRecipeList,
+    hoveredItem,
+    hoveredItemRecipeName,
+    itemRecipeNote,
+    itemImgSrc,
+    itemName,
+    selectedItemClick,
+    existingItems,
+    filtereditems,
     getAllitem,
     setOverworldClick,
     setNetherTabClick,
     setEndTabClick,
-    setAllTabClick, } = WorldTabBtn()
+    setAllTabClick,
+    setCategory,
+    setCategoryKeep,
+    itemRecipe,
+    keepItemBtn,
+    deleteItemBtn,
+    getSavedItems } = Index()
 
-const itemRecipeList = ref([]);//アイテムのレシピIDのリスト
-const hoveredItem = ref(null);//カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
-const hoveredItemRecipeName = ref(null)
-const itemRecipeNote = ref("");//クラフトレシピの注意書き
-const itemImgSrc = ref('')//itemImgの値をセット
-const itemName = ref('')
-let selectedItemClick = ref(null); // クリックされたアイテム(保存ボタン)
-
-
-//クリックしたものの引数をcurrentCategoryに入れてアイテム表示を変更する
-const setCategory = (category) => {
-    currentCategory.value = category; //cssのデザイン変化
-    searchTerm.value = "";
-    isLoading.value = true;
-    if (isOverworldClick.value === true) {
-        axios
-            .get(`/item/catwar/1/${category}`)
-            .then((response) => {
-                console.log(category)
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
-    } else if (isNetherTabClick.value === true) {
-        axios
-            .get(`/item/catwar/2/${category}`)
-            .then((response) => {
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
-    } else if (isEndTabClick.value === true) {
-        axios
-            .get(`/item/catwar/3/${category}`)
-            .then((response) => {
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
-    } else if (isAllTabClick.value === true) {
-        axios
-            .get(`/item/categoly/${category}`)
-            .then((response) => {
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
-    }
-    //categoryに応じてcategoryNameを設定
-    switch (category) {
-        case 1:
-            categoryName.value = "建築:";
-            break;
-        case 2:
-            categoryName.value = "色付きブロック:";
-            break;
-        case 3:
-            categoryName.value = "天然ブロック:";
-            break;
-        case 4:
-            categoryName.value = "機能的ブロック:";
-            break;
-        case 5:
-            categoryName.value = "レッドストーン:";
-            break;
-        case 6:
-            categoryName.value = "道具と実用:";
-            break;
-        case 7:
-            categoryName.value = "戦闘:";
-            break;
-        case 8:
-            categoryName.value = "食べ物と飲み物:";
-            break;
-        case 9:
-            categoryName.value = "材料:";
-            break;
-        case 10:
-            categoryName.value = "全アイテム一覧:";
-            break;
-        default:
-            categoryName.value = "";
-    }
-};
-
-// 保存ボタンメソッド
-const setCategoryKeep = () => {
-    categoryName.value = "保存アイテム一覧:";
-    currentCategory.value = 11;
-    getSavedItems();
-    items.value = existingItems.value; // 保存されたアイテムだけを表示する
-}
-
-//アイテム名検索(アイテム名)
-const filtereditems = computed(() => {
-    // データベース内のアイテム名を含むアイテムだけをフィルタリング
-    return items.value.filter((item) => item.name.includes(searchTerm.value));
-});
-
-const test = ref('')
-//画像をクリックしたときのレシピ表示処理
-const itemRecipe = (item) => {
-    isLoading.value = true;
-    itemRecipeNote.value = item.note;
-    const itemId = item.id;
-    const itemImg = item.pic
-    const itemNum = item.item_num
-    itemName.value = item.name
-    itemImgSrc.value = itemImg; //アイテム一覧の押したアイテム画像を入れる
-    test.value = itemNum
-    selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
-    axios
-        .get(`/item/recipesearch/${itemId}`)
-        .then((response) => {
-            console.log(response.data)
-            itemRecipeList.value = response.data;
-        })
-        .catch((error) => {
-            console.log(error);
-        })
-        .finally(() => {
-            isLoading.value = false;
-        });
-};
-
-let keepName = ref('保存') // 保存ボタンの文字
-
-// 既存のローカルストレージ内データを取得
-const existingItems = JSON.parse(localStorage.getItem("saved-Minecraft-Items")) || [];
-
-// アイテムの保存メソッド
-const keepItemBtn = () => {
-
-    // 同じアイテムが既に保存されているか確認
-    const isAlreadySaved = existingItems.some((item) => {
-        return item.name === selectedItemClick.value.name;
-    });
-
-    // ローカルストレージに保存
-    localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItems));
-
-    // アイテムがまだ保存されていない場合追加
-    if (!isAlreadySaved) {
-        // アイテムを保存
-        existingItems.unshift(selectedItemClick.value);
-        localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItems));
-    }
-};
-
-// アイテムの削除メソッド
-const deleteItemBtn = () => {
-
-    // クリックされたアイテムのIDを取得
-    const clickItemId = selectedItemClick.value.id;
-
-    // clickItemIdと異なるidを持つ要素だけを残す。一致したものは消す
-    const deleteItem = existingItems.filter((item) => item.id !== clickItemId);
-
-    // ローカルストレージに保存
-    localStorage.setItem("saved-Minecraft-Items", JSON.stringify(deleteItem));
-
-    window.location.reload();
-
-    // アイテムが正常に削除された場合にのみページをリロードして保存画面のまま表示
-    if (existingItems.length - 1) {
-        window.location.reload();
-    }
-};
-
-// ローカルストレージから保存されたアイテムを取得するメソッド
-const getSavedItems = () => {
-    const savedItems = JSON.parse(localStorage.getItem("saved-Minecraft-Items")) || [];
-    existingItems.value = savedItems;
-};
 
 onMounted(() => {
 
@@ -279,6 +104,7 @@ onMounted(() => {
                             </button>
                         </div>
                     </div>
+
                     <!--カテゴリーボタン上部-->
                     <div class="tab-category-container">
                         <!--建築ブロックボタン-->
@@ -326,8 +152,8 @@ onMounted(() => {
                                 <img src="./img/redstone/redstone.png" />
                             </button>
                         </div>
-                        <!--検索ボックス-->
-                        <input v-model="searchTerm" placeholder="検索" />
+                        <!--検索ボックスコンポーネント-->
+                        <SearchBox v-model="searchTerm" />
                     </div>
                     <!--非同期の待ち時間アニメーション-->
                     <div v-show="isLoading" class="loading-animation">
@@ -437,7 +263,8 @@ onMounted(() => {
                                 <ul class="sagyou-ul">
                                     <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
                                         <img class="item-img" :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
-                                            @mouseleave="hoveredItemRecipeName = null" width="49">
+                                            @mouseleave="hoveredItemRecipeName = null" @click="itemRecipe(recipe)"
+                                            width="49">
 
                                         <!-- アイテム名 -->
                                         <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
@@ -517,14 +344,12 @@ onMounted(() => {
                                 <!--保存、削除ボタン-->
                                 <div class="button-container">
                                     <div class="out-button">
-                                        <button class="button-left" @click="keepItemBtn()">{{ keepName }}</button>
+                                        <button class="button-left" @click="keepItemBtn()">保存</button>
                                     </div>
                                     <div class="out-button">
                                         <button class="button-right" @click="deleteItemBtn()">削除</button>
                                     </div>
                                 </div>
-                                <!--仮-->
-                                <p>{{ test }}</p>
                             </div>
                         </div>
                     </div>
@@ -533,17 +358,3 @@ onMounted(() => {
         </div>
     </div>
 </template>
-
-<style scoped>
-.item-img:hover {
-    background-color: rgb(255, 255, 255);
-    z-index: 1;
-    opacity: 0.7;
-}
-
-.image-container:hover {
-    background-color: rgb(255, 255, 255);
-    z-index: 1;
-    opacity: 0.6;
-}
-</style>
