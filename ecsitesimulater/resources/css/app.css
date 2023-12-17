@@ -11,27 +11,26 @@ body {
     user-select: none;
 }
 
-
 .whole-nether {
-    background-image: url(../js/web_png/nether_back.png);
+    background-image: url(../../public/web_png/nether_back.png);
     background-color: red;
     animation: blink 3s infinite;
     padding: 0 0 100% 0;
 }
 
 .whole-overworld {
-    background-image: url(../js/web_png/overworld_back.png);
+    background-image: url(../../public/web_png/overworld_back.png);
     padding: 0 0 100% 0;
 }
 
 .whole-all {
-    background-image: url(../js/web_png/overworld_back.png);
+    background-image: url(../../public/web_png/overworld_back.png);
     padding: 0 0 100% 0;
     
 }
 
 .whole-end {
-    background-image: url(../js/web_png/theend_back.png);
+    background-image: url(../../public/web_png/theend_back.png);
     padding: 0 0 100% 0;
 }
 
@@ -76,10 +75,6 @@ body {
     box-shadow: 10px 10px rgba(50, 50, 50, 0.8);
 }
 
-.tab-container {
-    display: flex;
-}
-
 .tab-category-container {
     display: flex;
     border-left: 3px solid #f2f2f2;
@@ -94,70 +89,6 @@ body {
     border-left: 3px solid #333333;
     border-right: none;
     border-bottom: 3px solid #333333;
-}
-
-.tab-left {
-    width: 100%;
-    flex: 1;
-    text-align: center;
-    border-left: none;
-    border-right: none;
-    border-bottom: 3px solid #333333;
-}
-
-.tab-right {
-    width: 100%;
-    flex: 1;
-    text-align: center;
-    border-left: 3px solid #333333;
-    border-right: none;
-    border-bottom: 3px solid #333333;
-}
-
-.tab-click {
-    flex: 1;
-    text-align: center;
-    cursor: pointer;
-    border-bottom: none;
-    border-left: 3px solid #333333;
-}
-
-.tab-click-left {
-    flex: 1;
-    text-align: center;
-    cursor: pointer;
-    border-bottom: none;
-    border-left: none;
-}
-
-.tab-world {
-    font-weight: bold;
-    color: #f2f2f2;
-    padding: 10px;
-    width: 100%;
-    height: 100%;
-    border-top: 3px solid #f2f2f2;
-    border-left: 3px solid #f2f2f2;
-    border-right: 3px solid rgb(101, 101, 101);
-    border-bottom: none;
-    background-color: #999999;
-    cursor: pointer;
-    font-family: 'DotGothic16', sans-serif;
-}
-
-.tab-world-click {
-    font-weight: bold;
-    color: rgb(110, 110, 110);
-    padding: 10px;
-    width: 100%;
-    height: 100%;
-    border-top: 3px solid #f2f2f2;
-    border-left: 3px solid #f2f2f2;
-    border-right: 3px solid rgb(101, 101, 101);
-    border-bottom: none;
-    background-color: #cccccc;
-    cursor: pointer;
-    font-family: 'DotGothic16', sans-serif;
 }
 
 .btn-category {
@@ -244,12 +175,6 @@ body {
     opacity: 0.7;
 }
 
-.image-container:hover {
-    background-color: rgb(255, 255, 255);
-    z-index: 1;
-    opacity: 0.6;
-}
-
 .tab-category-bottom {
     border: 3px solid #333333;
     border-top: none;
@@ -275,7 +200,7 @@ input {
     font-family: 'DotGothic16', sans-serif;
     color: white;
     background-color: rgb(101, 101, 101);
-    background-image: url('../js/web_png/search.png');
+    background-image: url('../../public/web_png/search.png');
     background-size: 30px;
     background-repeat: no-repeat;
     background-position: 2px center;
@@ -338,125 +263,6 @@ input {
     position: relative;
 }
 
-.loading-animation {
-    background-color: rgba(255, 255, 255, 0.8);
-    background-position: center;
-    background-size: cover;
-    color: black;
-    position: relative;
-    animation: slide 2s infinite linear;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-}
-
-.loading-dots::before {
-    content: "....";
-    display: inline-block;
-    animation: loading-dots-animation 1s infinite steps(5, end);
-}
-
-@keyframes loading-dots-animation {
-    0% {
-        content: "....";
-        /* 初期の表示 */
-    }
-
-    20% {
-        content: " ...";
-        /* 1つ目のドットを非表示に */
-    }
-
-    40% {
-        content: "  ..";
-        /* 2つ目のドットも非表示に */
-    }
-
-    60% {
-        content: "   .";
-        /* 3つ目のドットも非表示に */
-    }
-
-    80% {
-        content: "    ";
-        /* 4つ目のドットも非表示に */
-    }
-
-    100% {
-        content: "....";
-        /* 全てのドットを表示 */
-    }
-}
-
-.vertical-scrollable-list {
-    height: 276px;
-    width: 526px;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding-right: 20px;
-}
-
-.itemlist-inline {
-    border-left: 3px solid #f2f2f2;
-    border-right: 3px solid rgb(101, 101, 101);
-}
-
-/* スクロールバーの横幅を変更 */
-::-webkit-scrollbar {
-    width: 50px;
-}
-
-/* スクロールバーのトラック（背景部分*/
-::-webkit-scrollbar-track {
-    background: #999999;
-    margin: 0 0 20px 0;
-    border-top: 3px solid #333333;
-    border-left: 3px solid #333333;
-    border-right: 3px solid #f2f2f2;
-    border-bottom: 3px solid #f2f2f2;
-
-}
-
-/* スクロールバーのスクロールノブ（長方形に変更*/
-::-webkit-scrollbar-thumb {
-    background: #afafaf;
-    border-top: 3px solid #f2f2f2;
-    border-left: 3px solid #333333;
-    border-right: 3px solid #f2f2f2;
-    border-bottom: 3px solid #333333;
-    height: 60px;
-}
-
-.vertical-scrollable-list img {
-    width: 49px;
-    height: 49px;
-    cursor: pointer;
-}
-
-.vertical-scrollable-list ul {
-    list-style: none;
-    padding: 0 0 0 10px;
-    margin: 0;
-}
-
-.vertical-scrollable-list li {
-    display: inline-block;
-    vertical-align: top;
-    width: 50px;
-    height: 50px;
-    background-color: #999999;
-    border-left: 3px solid #333333;
-    border-top: 3px solid #333333;
-    border-bottom: 5px solid #f2f2f2;
-    border-right: 5px solid #f2f2f2;
-}
-
 .recipe {
     width: 380px;
     height: 204px;
@@ -474,69 +280,8 @@ input {
     border-right: 3px solid rgb(101, 101, 101);
 }
 
-.attention-img {
-    margin: 75px 60px;
-    list-style-type: none;
-}
-
-
-
-
-
-
-
-/*ここからすういの部分 */
 .recipe-box {
     display: flex;
-}
-
-.sagyou-ul{
-    list-style: none;
-    margin: 15px 0 15px 15px;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(3, 50px);
-    /* 3つの列を作成し、各列の幅を50pxに設定 */
-    grid-template-rows: repeat(3, 50px);
-    grid-gap: 6px;
-
-}
-
-
-.sagyou-li{
-    width: 49px;
-    height: 49px;
-    background-color: #999999;
-    border-left: 3px solid #333333;
-    border-top: 3px solid #333333;
-    border-bottom: 5px solid #f2f2f2;
-    border-right: 5px solid #f2f2f2;
-
-}
-
-/*鍛冶台*/
-.kaji-ul {
-    display: flex;
-    list-style: none;
-    margin: 75px 0 0 5px;
-}
-
-.kaji-li{
-    width: 49px;
-    height: 49px;
-    margin-left: 3px;
-    background-color: #999999;
-    border-left: 3px solid #333333;
-    border-top: 3px solid #333333;
-    border-bottom: 3px solid #f2f2f2;
-    border-right: 3px solid #f2f2f2;
-
-}
-
-/*かまど*/
-.kamado-ul{
-    list-style: none;
-    margin: 15px 50px 0 70px;
 }
 
 
@@ -547,139 +292,4 @@ input {
 
 .right-side {
     text-align: center;
-}
-
-/*？ボタン*/
-.box {
-    width: 30px;
-    height: 30px;
-    margin-left: 168px;
-    background-color: #999999;
-    border-left: 3px solid #333333;
-    border-top: 3px solid #333333;
-    border-bottom: 3px solid #f2f2f2;
-    border-right: 3px solid #f2f2f2;
-    box-sizing: border-box; /* ボーダーボックスモデルを使用して、外側のサイズにボーダーを含める */
-}
-
-.square-button button {
-    width: 35px;
-    height: 30px;
-    margin: 0 0 15px 65px;
-    text-align: center;
-    background-color: #cccccc;
-    color: #000;
-    border-left: 3px solid black;
-    border-top: 3px solid black;
-    border-right: 3px solid white;
-    border-bottom: 3px solid white;
-    cursor: pointer;
-
-}
-
-.square-button button img {
-    width: 25px;
-    height: 20px;
-    margin-top: 3px;
-    object-fit: cover;
-}
-
-
-.square_triangle_arrow {
-    position: relative;
-    padding-left: 35px;
-    display: inline-block;
-}
-
-.square_triangle_arrow::before {
-    content: "";
-    margin: auto;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 90px;
-    width: 45px;
-    height: 10px;
-    background: #999999;
-}
-
-.square_triangle_arrow::after {
-    content: "";
-    margin: auto;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 25px;
-    width: 0;
-    height: 0;
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
-    border-left: 25px solid #999999;
-}
-
-.image-container {
-    width: 50px;
-    height: 50px;
-    margin-left: 30px;
-    border-left: 3px solid black;
-    border-top: 3px solid black;
-    border-right: 3px solid white;
-    border-bottom: 3px solid white;
-    background-color: #999;
-}
-
-.image-container img {
-    width: 100%;
-    height: 100%;
-}
-
-
-.button-container {
-    display: flex;
-    margin-left: 55px;
-    margin-top: 15px;
-}
-
-.out-button {
-    border: 3px solid #000;
-    margin-left: 17px;
-
-}
-
-.button:hover {
-    opacity: 0.8;
-}
-
-.button-left:hover {
-    background-color: #A4e76a;
-}
-
-.button-left {
-    display: flex;
-    width: 45.2px;
-    height: 30.2px;
-    align-items: center;
-    justify-content: center;
-    background-color: #999;
-    border-left: 3px solid white;
-    border-top: 3px solid white;
-    border-right: 3px solid #999;
-    border-bottom: 3px solid #999;
-}
-
-.button-right:hover {
-    background-color: #df272d;
-}
-
-.button-right {
-    display: flex;
-    width: 45.2px;
-    height: 30.2px;
-    align-items: center;
-    justify-content: center;
-    background-color: #999;
-    border-left: 3px solid white;
-    border-top: 3px solid white;
-    border-right: 3px solid #999;
-    border-bottom: 3px solid #999;
 }
