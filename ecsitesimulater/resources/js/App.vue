@@ -4,8 +4,11 @@ import axios from "axios"
 
 // 左側デザインコンポーネント
 import WorldBtn from './components/left-design/WorldBtn.vue'; // ワールドボタン
+import TopCategory from './components/left-design/TopCategory.vue' // 上部カテゴリーボタン
 import LoadingAnime from './components/left-design/LoadingAnime.vue' // ローディングアニメーション
-import ItemList from './components/left-design/ItemList.vue'
+import CategoryName from './components/left-design/CategoryName.vue' // カテゴリー名
+import ItemList from './components/left-design/ItemList.vue' // アイテム一覧
+import BottomCategory from "./components/left-design/BottomCategory.vue"; // 下部カテゴリーボタン
 
 //右側デザインコンポーネント
 import NotCraft from './components/right-design/NotCraft.vue' // クラフト不可
@@ -43,9 +46,9 @@ const filtereditems = computed(() => {
 });
 
 //オーバーワールドアイテム
-const getOverWorlditem = () => {
+const getOverWorlditem = (category) => {
     axios
-        .get("/item/world/1")
+        .get(`/item/catwar/1/${category}`)
         .then((response) => {
             items.value = response.data;
         })
@@ -57,9 +60,9 @@ const getOverWorlditem = () => {
         });
 }
 //ネザーワールドアイテム
-const getNetheritem = () => {
+const getNetheritem = (category) => {
     axios
-        .get("/item/world/2")
+        .get(`/item/catwar/2/${category}`)
         .then((response) => {
             items.value = response.data;
         })
@@ -71,9 +74,9 @@ const getNetheritem = () => {
         });
 }
 //エンドワールドアイテム
-const getEnditem = () => {
+const getEnditem = (category) => {
     axios
-        .get("/item/world/3")
+        .get(`/item/catwar/3/${category}`)
         .then((response) => {
             items.value = response.data;
         })
@@ -85,9 +88,9 @@ const getEnditem = () => {
         });
 }
 //オールアイテム
-const getAllitem = () => {
+const getAllitem = (category) => {
     axios
-        .get("/item/world/4")
+        .get(`/item/catwar/4/${category}`)
         .then((response) => {
             items.value = response.data;
         })
@@ -105,53 +108,13 @@ const setCategory = (category) => {
     searchTerm.value = "";
     isLoading.value = true;
     if (isOverworldClick.value === true) {
-        axios
-            .get(`/item/catwar/1/${category}`)
-            .then((response) => {
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
+        getOverWorlditem(category)
     } else if (isNetherTabClick.value === true) {
-        axios
-            .get(`/item/catwar/2/${category}`)
-            .then((response) => {
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
+        getNetheritem(category)
     } else if (isEndTabClick.value === true) {
-        axios
-            .get(`/item/catwar/3/${category}`)
-            .then((response) => {
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
+        getEnditem(category)
     } else if (isAllTabClick.value === true) {
-        axios
-            .get(`/item/categoly/${category}`)
-            .then((response) => {
-                items.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
+        getAllitem(category)
     }
     //categoryに応じてcategoryNameを設定
     switch (category) {
@@ -271,14 +234,14 @@ const getSavedItems = () => {
     existingItems.value = savedItems;
 };
 
-
-
 onMounted(() => {
     //リロード時オールの全アイテムが表示される
-    getAllitem();
+    getAllitem(10);
 });
 
 const UpdateLoading = (payload) => {
+    categoryName.value = payload.categoryName
+    currentCategory.value = payload.currentCategory
     isLoading.value = payload.isLoading;
     isAllTabClick.value = payload.isAllTabClick
     isNetherTabClick.value = payload.isNetherTabClick
@@ -309,141 +272,49 @@ const UpdateLoading = (payload) => {
                         :currentCategory="currentCategory" :isLoading="isLoading" :searchTerm="searchTerm"
                         :getAllitem="getAllitem" :getNetheritem="getNetheritem" :getEnditem="getEnditem"
                         :getOverWorlditem="getOverWorlditem" @update-category="UpdateLoading" />
-
-                    <!--カテゴリーボタン上部-->
+                    <!--カテゴリー上部-->
                     <div class="tab-category-container">
-                        <!--建築ブロックボタン-->
-                        <div class="tab-category">
-                            <button @click="setCategory(1)"
-                                :class="{ 'btn-category-click': currentCategory === 1, 'btn-category': currentCategory !== 1, }">
-                                <img src="../../../img/architecture/bricks.webp" />
-                            </button>
-                        </div>
-                        <!--色付きブロックボタン-->
-                        <div class="tab-category">
-                            <button @click="setCategory(2)"
-                                :class="{ 'btn-category-click': currentCategory === 2, 'btn-category': currentCategory !== 2, }">
-                                <img src="../../../img/colored/cyan_wool.webp" />
-                            </button>
-                        </div>
-                        <!--天然ブロックボタン-->
-                        <div class="tab-category">
-                            <button @click="setCategory(3)"
-                                :class="{ 'btn-category-click': currentCategory === 3, 'btn-category': currentCategory !== 3, }">
-                                <img src="../../../img/natural/grass_block.webp" />
-                            </button>
-                        </div>
-                        <!--機能的ブロックボタン-->
-                        <div class="tab-category">
-                            <button @click="setCategory(4)"
-                                :class="{ 'btn-category-click': currentCategory === 4, 'btn-category': currentCategory !== 4, }">
-                                <img src="../../../img/function/oak_sign.webp" />
-                            </button>
-                        </div>
-                        <!--レッドストーン-->
-                        <div class="tab-category">
-                            <button @click="setCategory(5)"
-                                :class="{ 'btn-category-click': currentCategory === 5, 'btn-category': currentCategory !== 5, }">
-                                <img src="../../../img/redstone/redstone.png" />
-                            </button>
-                        </div>
+                        <TopCategory :setCategory="setCategory" :currentCategory="currentCategory" />
                         <!--検索ボックス-->
                         <input v-model="searchTerm" placeholder="検索" />
                     </div>
                     <!--非同期の待ち時間アニメーション-->
                     <LoadingAnime :isLoading="isLoading" />
                     <!--カテゴリ名前-->
-                    <h1 class="title">
-                        {{ categoryName }}
-                        {{ items.length }}アイテム
-                    </h1>
+                    <CategoryName :categoryName="categoryName" :items="items" />
                     <!--アイテム一覧-->
                     <ItemList :filtereditems="filtereditems" :hoveredItem="hoveredItem" :itemRecipe="itemRecipe" />
                     <!--カテゴリーボタン下部-->
-                    <div>
-                        <div class="tab-category-container-bottom">
-                            <!--道具と実用-->
-                            <div class="tab-category-bottom">
-                                <button @click="setCategory(6)"
-                                    :class="{ 'btn-category-bottom-click': currentCategory === 6, 'btn-category-bottom': currentCategory !== 6, }">
-                                    <img src="../../../img/tool/diamond_pickaxe.webp" />
-                                </button>
-                            </div>
-                            <!--戦闘-->
-                            <div class="tab-category-bottom">
-                                <button @click="setCategory(7)"
-                                    :class="{ 'btn-category-bottom-click': currentCategory === 7, 'btn-category-bottom': currentCategory !== 7, }">
-                                    <img src="../../../img/battle/netherite_sword.webp" />
-                                </button>
-                            </div>
-                            <!--食べ物と飲み物-->
-                            <div class="tab-category-bottom">
-                                <button @click="setCategory(8)"
-                                    :class="{ 'btn-category-bottom-click': currentCategory === 8, 'btn-category-bottom': currentCategory !== 8, }">
-                                    <img src="../../../img/food/golden_apple.png" />
-                                </button>
-                            </div>
-                            <!--材料-->
-                            <div class="tab-category-bottom">
-                                <button @click="setCategory(9)"
-                                    :class="{ 'btn-category-bottom-click': currentCategory === 9, 'btn-category-bottom': currentCategory !== 9, }">
-                                    <img src="../../../img/material/iron_ingot.webp" />
-                                </button>
-                            </div>
-                            <!--オール-->
-                            <div class="tab-category-bottom">
-                                <button @click="setCategory(10)"
-                                    :class="{ 'btn-category-bottom-click': currentCategory === 10, 'btn-category-bottom': currentCategory !== 10, }">
-                                    <img src="../../../web_png/all.png" />
-                                </button>
-                            </div>
-                            <!--二つ分開ける-->
-                            <div class="tab-category-bottom-blank"></div>
-                            <div class="tab-category-bottom-blank"></div>
-                            <!--ここまで-->
-                            <!--保存-->
-                            <div class="tab-category-bottom">
-                                <button @click="setCategoryKeep()"
-                                    :class="{ 'btn-category-bottom-click': currentCategory === 11, 'btn-category-bottom': currentCategory !== 11, }">
-                                    <img src="../../../web_png/book.png" />
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <BottomCategory :setCategoryKeep="setCategoryKeep" :setCategory="setCategory"
+                        :currentCategory="currentCategory" />
                 </div>
             </div>
-            <div>
-                <!--右側デザイン-->
-                <div class="recipe">
-                    <div class="recipe-inline">
-                        <div class="recipe-box">
-                            <!--クラフト不可-->
-                            <NotCraft :itemRecipeList="itemRecipeList" />
-                            <!--作業台-->
-                            <SagyouCraft :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
-                                :itemRecipe="itemRecipe" />
-                            <!--醸造台-->
-                            <BrewingTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName" />
-                            <!--かまど-->
-                            <FurnaceTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName" />
-                            <!--鍛冶台-->
-                            <BlacksmithTable :itemRecipeList="itemRecipeList"
-                                :hoveredItemRecipeName="hoveredItemRecipeName" />
-
-                            <!--レシピ右側-->
-                            <div class="right-side" v-if="itemImgSrc">
-
-                                <!--後でこのあたりにitemGetNoteを追加する-->
-
-                                <!--注意書き-->
-                                <AttentionNote :itemRecipeNote="itemRecipeNote" />
-                                <!--アイテムを戻るボタン-->
-                                <BackBtn />
-                                <!--レシピ右側の画像-->
-                                <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" />
-                                <!--保存、削除ボタン-->
-                                <KeepdeleteBtn :keepItemBtn="keepItemBtn" :deleteItemBtn="deleteItemBtn" />
-                            </div>
+            <!--右側デザイン-->
+            <div class="recipe">
+                <div class="recipe-inline">
+                    <div class="recipe-box">
+                        <!--クラフト不可-->
+                        <NotCraft :itemRecipeList="itemRecipeList" />
+                        <!--作業台-->
+                        <SagyouCraft :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
+                            :itemRecipe="itemRecipe" />
+                        <!--醸造台-->
+                        <BrewingTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName" />
+                        <!--かまど-->
+                        <FurnaceTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName" />
+                        <!--鍛冶台-->
+                        <BlacksmithTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName" />
+                        <!--レシピ右側-->
+                        <div class="right-side" v-if="itemImgSrc">
+                            <!--後でこのあたりにitemGetNoteを追加する-->
+                            <!--注意書き-->
+                            <AttentionNote :itemRecipeNote="itemRecipeNote" />
+                            <!--アイテムを戻るボタン-->
+                            <BackBtn />
+                            <!--レシピ右側の画像-->
+                            <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" />
+                            <!--保存、削除ボタン-->
+                            <KeepdeleteBtn :keepItemBtn="keepItemBtn" :deleteItemBtn="deleteItemBtn" />
                         </div>
                     </div>
                 </div>

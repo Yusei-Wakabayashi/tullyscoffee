@@ -30,7 +30,7 @@ const setOverworldClick = () => {
         searchTerm: ''
     });
 
-    props.getOverWorlditem()
+    props.getOverWorlditem(10)
 };
 //ネザー
 const setNetherTabClick = () => {
@@ -46,7 +46,7 @@ const setNetherTabClick = () => {
         searchTerm: ''
     });
 
-    props.getNetheritem()
+    props.getNetheritem(10)
 };
 //エンド
 const setEndTabClick = () => {
@@ -62,7 +62,7 @@ const setEndTabClick = () => {
         searchTerm: ''
     });
 
-    props.getEnditem()
+    props.getEnditem(10)
 };
 
 const setAllTabClick = () => {
@@ -78,7 +78,7 @@ const setAllTabClick = () => {
         searchTerm: ''
     });
 
-    props.getAllitem();
+    props.getAllitem(10);
 };
 </script>
 
@@ -117,6 +117,14 @@ const setAllTabClick = () => {
 </template>
 
 <style scoped>
+.tab {
+    width: 100%;
+    flex: 1;
+    text-align: center;
+    border-left: 3px solid #333333;
+    border-right: none;
+    border-bottom: 3px solid #333333;
+}
 .tab-container {
     display: flex;
 }
