@@ -239,6 +239,7 @@ onMounted(() => {
     getAllitem(10);
 });
 
+//ワールドコンポーネントで値をemitsで変更するためのメソッド
 const UpdateLoading = (payload) => {
     categoryName.value = payload.categoryName
     currentCategory.value = payload.currentCategory
