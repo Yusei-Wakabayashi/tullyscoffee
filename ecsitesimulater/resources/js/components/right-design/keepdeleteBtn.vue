@@ -1,20 +1,68 @@
 <script setup>
+import { defineProps, defineEmits } from 'vue';
+
 const props = defineProps({
-    keepItemBtn: Function,
-    deleteItemBtn: Function
-})
+  existingItems: Array,
+  selectedItemClick: Object,
+});
+
+const emits = defineEmits();
+
+// アイテムの保存メソッド
+const keepItemBtn = () => {
+  // 同じアイテムが既に保存されているか確認
+  const isAlreadySaved = props.existingItems.some((item) => {
+    return item.name === props.selectedItemClick.name;
+  });
+
+  // ローカルストレージに保存
+  localStorage.setItem("saved-Minecraft-Items", JSON.stringify(props.existingItems));
+
+  // アイテムがまだ保存されていない場合追加
+  if (!isAlreadySaved) {
+    // アイテムを保存
+    props.existingItems.unshift(props.selectedItemClick);
+    localStorage.setItem("saved-Minecraft-Items", JSON.stringify(props.existingItems));
+  }
+
+  // イベントをエミット
+  emits('update-keep', {
+    existingItems: props.existingItems,
+    selectedItemClick: props.selectedItemClick,
+  });
+};
+
+// アイテムの削除メソッド
+const deleteItemBtn = () => {
+  // クリックされたアイテムのIDを取得
+  const clickItemId = props.selectedItemClick.id;
+
+  // clickItemIdと異なるidを持つ要素だけを残す。一致したものは消す
+  const deleteItem = props.existingItems.filter((item) => item.id !== clickItemId);
+
+  // ローカルストレージに保存
+  localStorage.setItem("saved-Minecraft-Items", JSON.stringify(deleteItem));
+
+  window.location.reload();
+
+  // アイテムが正常に削除された場合にのみページをリロードして保存画面のまま表示
+  if (deleteItem.length > 0) {
+    window.location.reload();
+  }
+};
 </script>
 
 <template>
-    <div class="button-container">
-        <div class="out-button">
-            <button class="button-left" @click="keepItemBtn()">保存</button>
-        </div>
-        <div class="out-button">
-            <button class="button-right" @click="deleteItemBtn()">削除</button>
-        </div>
+  <div class="button-container">
+    <div class="out-button">
+      <button class="button-left" @click="keepItemBtn">保存</button>
     </div>
+    <div class="out-button">
+      <button class="button-right" @click="deleteItemBtn">削除</button>
+    </div>
+  </div>
 </template>
+
 
 <style scoped>
 .button-container {

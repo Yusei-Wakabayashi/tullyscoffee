@@ -189,45 +189,6 @@ const itemRecipe = (item) => {
 // 既存のローカルストレージ内データを取得
 const existingItems = JSON.parse(localStorage.getItem("saved-Minecraft-Items")) || [];
 
-// アイテムの保存メソッド
-const keepItemBtn = () => {
-
-    // 同じアイテムが既に保存されているか確認
-    const isAlreadySaved = existingItems.some((item) => {
-        return item.name === selectedItemClick.value.name;
-    });
-
-    // ローカルストレージに保存
-    localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItems));
-
-    // アイテムがまだ保存されていない場合追加
-    if (!isAlreadySaved) {
-        // アイテムを保存
-        existingItems.unshift(selectedItemClick.value);
-        localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItems));
-    }
-};
-
-// アイテムの削除メソッド
-const deleteItemBtn = () => {
-
-    // クリックされたアイテムのIDを取得
-    const clickItemId = selectedItemClick.value.id;
-
-    // clickItemIdと異なるidを持つ要素だけを残す。一致したものは消す
-    const deleteItem = existingItems.filter((item) => item.id !== clickItemId);
-
-    // ローカルストレージに保存
-    localStorage.setItem("saved-Minecraft-Items", JSON.stringify(deleteItem));
-
-    window.location.reload();
-
-    // アイテムが正常に削除された場合にのみページをリロードして保存画面のまま表示
-    if (existingItems.length - 1) {
-        window.location.reload();
-    }
-};
-
 // ローカルストレージから保存されたアイテムを取得するメソッド
 const getSavedItems = () => {
     const savedItems = JSON.parse(localStorage.getItem("saved-Minecraft-Items")) || [];
@@ -249,6 +210,11 @@ const UpdateLoading = (payload) => {
     isEndTabClick.value = payload.isEndTabClick
     isOverworldClick.value = payload.isOverworldClick
     searchTerm.value = payload.searchTerm
+}
+
+const UpdateKeep = (keep) => {
+    existingItems.value = keep.existingItems
+    selectedItemClick.value = keep.selectedItemClick
 }
 </script>
  
@@ -315,7 +281,7 @@ const UpdateLoading = (payload) => {
                             <!--レシピ右側の画像-->
                             <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" />
                             <!--保存、削除ボタン-->
-                            <KeepdeleteBtn :keepItemBtn="keepItemBtn" :deleteItemBtn="deleteItemBtn" />
+                            <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick" @update-keep="UpdateKeep" />
                         </div>
                     </div>
                 </div>
