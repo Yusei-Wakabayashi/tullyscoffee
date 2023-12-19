@@ -1,25 +1,25 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import axios from "axios"
+import axios from "axios";
 
 // 左側デザインコンポーネント
 import WorldBtn from './components/left-design/WorldBtn.vue'; // ワールドボタン
-import TopCategory from './components/left-design/TopCategory.vue' // 上部カテゴリーボタン
-import LoadingAnime from './components/left-design/LoadingAnime.vue' // ローディングアニメーション
-import CategoryName from './components/left-design/CategoryName.vue' // カテゴリー名
-import ItemList from './components/left-design/ItemList.vue' // アイテム一覧
+import TopCategory from './components/left-design/TopCategory.vue'; // 上部カテゴリーボタン
+import LoadingAnime from './components/left-design/LoadingAnime.vue'; // ローディングアニメーション
+import CategoryName from './components/left-design/CategoryName.vue'; // カテゴリー名
+import ItemList from './components/left-design/ItemList.vue'; // アイテム一覧
 import BottomCategory from "./components/left-design/BottomCategory.vue"; // 下部カテゴリーボタン
 
 //右側デザインコンポーネント
-import NotCraft from './components/right-design/NotCraft.vue' // クラフト不可
+import NotCraft from './components/right-design/NotCraft.vue'; // クラフト不可
 import SagyouCraft from './components/right-design/SagyouTable.vue'; // 作業台
 import BrewingTable from './components/right-design/BrewingTable.vue'; // 醸造台
 import FurnaceTable from './components/right-design/FurnaceTable.vue'; // かまど
-import BlacksmithTable from './components/right-design/BlacksmithTable.vue' // 鍛冶台
-import AttentionNote from './components/right-design/AttentionNote.vue' // アイテム注意書き
-import BackBtn from './components/right-design/BackItem.vue' // アイテムレシピ戻るボタン
+import BlacksmithTable from './components/right-design/BlacksmithTable.vue'; // 鍛冶台
+import AttentionNote from './components/right-design/AttentionNote.vue'; // アイテム注意書き
+import BackBtn from './components/right-design/BackItem.vue'; // アイテムレシピ戻るボタン
 import ResultImg from './components/right-design/ResultImg.vue'; // クラフト結果画像
-import KeepdeleteBtn from './components/right-design/keepdeleteBtn.vue' // 保存削除ボタン
+import KeepdeleteBtn from './components/right-design/KeepdeleteBtn.vue'; // 保存削除ボタン
 
 const items = ref([]); // アイテム配列
 const currentCategory = ref(10); // 初期のcss状態(ALLカテゴリーボタン)
@@ -32,14 +32,14 @@ const isEndTabClick = ref(false); // エンドワールドボタン
 const isAllTabClick = ref(true); // オールボタン
 const itemRecipeList = ref([]); // アイテムのレシピIDのリスト
 const hoveredItem = ref(null); // カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
-const hoveredItemRecipeName = ref(null)
+const hoveredItemRecipeName = ref(null);
 const itemRecipeNote = ref(''); // クラフトレシピの注意書き
-const itemGetNote = ref('') // クラフト不可のものの入手場所
-const itemImgSrc = ref('') // itemImgの値をセット
-const itemName = ref('') // レシピの結果画像文字
+const itemGetNote = ref(''); // クラフト不可のものの入手場所
+const itemImgSrc = ref(''); // itemImgの値をセット
+const itemName = ref(''); // レシピの結果画像文字
 const selectedItemClick = ref(null);
 
-//アイテム名検索(アイテム名)
+//アイテム名比較
 const filtereditems = computed(() => {
     // データベース内のアイテム名を含むアイテムだけをフィルタリング
     return items.value.filter((item) => item.name.includes(searchTerm.value));
@@ -102,6 +102,19 @@ const getAllitem = (category) => {
         });
 };
 
+const categoryNames = {
+    1: "建築:",
+    2: "色付きブロック:",
+    3: "天然ブロック:",
+    4: "機能的ブロック:",
+    5: "レッドストーン:",
+    6: "道具と実用:",
+    7: "戦闘:",
+    8: "食べ物と飲み物:",
+    9: "材料:",
+    10: "全アイテム一覧:",
+};
+
 //クリックしたものの引数をcurrentCategoryに入れてアイテム表示を変更する
 const setCategory = (category) => {
     currentCategory.value = category; //cssのデザイン変化
@@ -116,41 +129,9 @@ const setCategory = (category) => {
     } else if (isAllTabClick.value === true) {
         getAllitem(category)
     }
-    //categoryに応じてcategoryNameを設定
-    switch (category) {
-        case 1:
-            categoryName.value = "建築:";
-            break;
-        case 2:
-            categoryName.value = "色付きブロック:";
-            break;
-        case 3:
-            categoryName.value = "天然ブロック:";
-            break;
-        case 4:
-            categoryName.value = "機能的ブロック:";
-            break;
-        case 5:
-            categoryName.value = "レッドストーン:";
-            break;
-        case 6:
-            categoryName.value = "道具と実用:";
-            break;
-        case 7:
-            categoryName.value = "戦闘:";
-            break;
-        case 8:
-            categoryName.value = "食べ物と飲み物:";
-            break;
-        case 9:
-            categoryName.value = "材料:";
-            break;
-        case 10:
-            categoryName.value = "全アイテム一覧:";
-            break;
-        default:
-            categoryName.value = "";
-    }
+
+    //カテゴリー名を変更
+    categoryName.value = categoryNames[category];
 };
 
 // 保存ボタンメソッド
@@ -200,7 +181,7 @@ onMounted(() => {
     getAllitem(10);
 });
 
-//ワールドコンポーネントで値をemitsで変更するためのメソッド
+//ワールドコンポーネントで値をemitsで変更するためのもの
 const UpdateLoading = (payload) => {
     categoryName.value = payload.categoryName
     currentCategory.value = payload.currentCategory
@@ -212,6 +193,7 @@ const UpdateLoading = (payload) => {
     searchTerm.value = payload.searchTerm
 }
 
+//保存削除ボタンコンポーネントで値をemitsで変更するためのもの
 const UpdateKeep = (keep) => {
     existingItems.value = keep.existingItems
     selectedItemClick.value = keep.selectedItemClick
@@ -266,11 +248,14 @@ const UpdateKeep = (keep) => {
                         <SagyouCraft :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
                             :itemRecipe="itemRecipe" />
                         <!--醸造台-->
-                        <BrewingTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName" />
+                        <BrewingTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
+                            :itemRecipe="itemRecipe" />
                         <!--かまど-->
-                        <FurnaceTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName" />
+                        <FurnaceTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
+                            :itemRecipe="itemRecipe" />
                         <!--鍛冶台-->
-                        <BlacksmithTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName" />
+                        <BlacksmithTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
+                            :itemRecipe="itemRecipe" />
                         <!--レシピ右側-->
                         <div class="right-side" v-if="itemImgSrc">
                             <!--後でこのあたりにitemGetNoteを追加する-->
@@ -281,7 +266,8 @@ const UpdateKeep = (keep) => {
                             <!--レシピ右側の画像-->
                             <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" />
                             <!--保存、削除ボタン-->
-                            <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick" @update-keep="UpdateKeep" />
+                            <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick"
+                                @update-keep="UpdateKeep" />
                         </div>
                     </div>
                 </div>

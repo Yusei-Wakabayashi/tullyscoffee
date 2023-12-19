@@ -2,6 +2,7 @@
 const props = defineProps({
     itemRecipeList: Array,
     hoveredItemRecipeName: String,
+    itemRecipe: Function
 });
 </script>
 
@@ -11,7 +12,7 @@ const props = defineProps({
         <ul class="kaji-ul">
             <li class="kaji-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
                 <img class="item-img" :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
-                    @mouseleave="hoveredItemRecipeName = null" width="49">
+                    @mouseleave="hoveredItemRecipeName = null" @click="itemRecipe(recipe)" width="49">
 
                 <!-- アイテム名 -->
                 <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
@@ -38,6 +39,6 @@ const props = defineProps({
     border-top: 3px solid #333333;
     border-bottom: 3px solid #f2f2f2;
     border-right: 3px solid #f2f2f2;
-
+    cursor: pointer;
 }
 </style>
