@@ -1,0 +1,9 @@
+diff a/ecsitesimulater/resources/css/app.css b/ecsitesimulater/resources/css/app.css	(rejected hunks)
+@@ -26,6 +26,7 @@
+ .whole-all {
+     background-image: url(../js/web_png/overworld_back.png);
+     padding: 0 0 100% 0;
++    
+ }
+ 
+ .whole-end {
