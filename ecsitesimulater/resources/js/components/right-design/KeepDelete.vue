@@ -10,8 +10,8 @@ const emits = defineEmits();
 
 // アイテムの保存メソッド
 const keepItemBtn = () => {
+    console.log(props.selectedItemClick)
     
-    // イベントをエミット
     emits('update-keep', {
         existingItems: props.existingItems,
         selectedItemClick: props.selectedItemClick,

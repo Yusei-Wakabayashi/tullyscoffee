@@ -1,6 +1,19 @@
+<script setup>
+import { ref } from 'vue'
+const props = defineProps({
+    selectedItemClick: Object, // オブジェクトが渡される
+});
+
+const itemBackList = ref([])
+
+const addItemRecipe = () => {
+    
+}
+</script>
+
 <template>
     <div class="square-button">
-        <button type="submit">
+        <button class="back-btn" @click="addItemRecipe()">
             <img src="../../../../public/web_png/return.png" />
         </button>
     </div>
@@ -19,7 +32,6 @@
     border-right: 3px solid white;
     border-bottom: 3px solid white;
     cursor: pointer;
-
 }
 
 .square-button button img {

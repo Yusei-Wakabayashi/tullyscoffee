@@ -12,14 +12,14 @@ import BottomCategory from "./components/left-design/BottomCategory.vue"; // 下
 
 //右側デザインコンポーネント
 import NotCraft from './components/right-design/NotCraft.vue'; // クラフト不可
-import SagyouCraft from './components/right-design/SagyouTable.vue'; // 作業台
+import SagyouCraft from './components/right-design/SagyouTable.vue'; // 作業台  
 import BrewingTable from './components/right-design/BrewingTable.vue'; // 醸造台
 import FurnaceTable from './components/right-design/FurnaceTable.vue'; // かまど
 import BlacksmithTable from './components/right-design/BlacksmithTable.vue'; // 鍛冶台
 import AttentionNote from './components/right-design/AttentionNote.vue'; // アイテム注意書き
 import BackBtn from './components/right-design/BackItem.vue'; // アイテムレシピ戻るボタン
 import ResultImg from './components/right-design/ResultImg.vue'; // クラフト結果画像
-import KeepdeleteBtn from './components/right-design/KeepdeleteBtn.vue'; // 保存削除ボタン
+import KeepdeleteBtn from './components/right-design/KeepDelete.vue'; // 保存削除ボタン
 
 const items = ref([]); // アイテム配列
 const currentCategory = ref(10); // 初期のcss状態(ALLカテゴリーボタン)
@@ -262,7 +262,7 @@ const UpdateKeep = (keep) => {
                             <!--注意書き-->
                             <AttentionNote :itemRecipeNote="itemRecipeNote" />
                             <!--アイテムを戻るボタン-->
-                            <BackBtn />
+                            <BackBtn :selectedItemClick="selectedItemClick" />
                             <!--レシピ右側の画像-->
                             <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" />
                             <!--保存、削除ボタン-->
