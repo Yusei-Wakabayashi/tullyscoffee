@@ -37,6 +37,7 @@ const props = defineProps({
     overflow-y: scroll;
     overflow-x: hidden;
     padding-right: 20px;
+    cursor: pointer;
 }
 
 
