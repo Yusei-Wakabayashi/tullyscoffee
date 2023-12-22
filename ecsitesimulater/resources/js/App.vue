@@ -203,7 +203,7 @@ const UpdateKeep = (keep) => {
 <template>
     <div :class="{
         'whole-nether': isNetherTabClick,
-        'whole-overworld': !isNetherTabClick,
+        'whole-overworld': isOverworldClick,
         'whole-end': isEndTabClick,
         'whole-all': isAllTabClick,
     }">
