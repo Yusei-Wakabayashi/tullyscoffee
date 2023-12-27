@@ -34,7 +34,7 @@ const itemRecipeList = ref([]); // アイテムのレシピIDのリスト
 const hoveredItem = ref(null); // カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
 const hoveredItemRecipeName = ref(null);
 const itemRecipeNote = ref(''); // クラフトレシピの注意書き
-const itemGetNote = ref(''); // クラフト不可のものの入手場所
+const itemRecipeGet = ref('') // クラフト不可のものの入手場所
 const itemImgSrc = ref(''); // itemImgの値をセット
 const itemName = ref(''); // レシピの結果画像文字
 const selectedItemClick = ref(null);
@@ -102,6 +102,7 @@ const getAllitem = (category) => {
         });
 };
 
+// カテゴリー名のオブジェクト
 const categoryNames = {
     1: "建築:",
     2: "色付きブロック:",
@@ -144,11 +145,11 @@ const setCategoryKeep = () => {
 
 //画像をクリックしたときのレシピ表示処理
 const itemRecipe = (item) => {
-    isLoading.value = true;
-    itemRecipeNote.value = item.note;
-    itemGetNote.value = item.howtoget;
-    const itemId = item.id;
-    const itemImg = item.pic
+    isLoading.value = true; // ローディング
+    itemRecipeNote.value = item.note; // アイテムの注意書き
+    itemRecipeGet.value = item.howtoget // クラフト不可のアイテムの入手方法
+    const itemId = item.id; // クリックしたアイテムのid
+    const itemImg = item.pic // クリックしたアイテムの画像
     itemName.value = item.name
     itemImgSrc.value = itemImg; //アイテム一覧の押したアイテム画像を入れる
     selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
@@ -258,7 +259,7 @@ const UpdateKeep = (keep) => {
                             :itemRecipe="itemRecipe" />
                         <!--レシピ右側-->
                         <div class="right-side" v-if="itemImgSrc">
-                            <!--後でこのあたりにitemGetNoteを追加する-->
+
                             <!--注意書き-->
                             <AttentionNote :itemRecipeNote="itemRecipeNote" />
                             <!--アイテムを戻るボタン-->
@@ -269,6 +270,7 @@ const UpdateKeep = (keep) => {
                             <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick"
                                 @update-keep="UpdateKeep" />
                         </div>
+                        <h3 style="color: red">{{ itemRecipeGet }}</h3>
                     </div>
                 </div>
             </div>

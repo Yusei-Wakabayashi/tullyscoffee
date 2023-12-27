@@ -1,52 +1,49 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
     existingItems: Array,
-    selectedItemClick: Object, // オブジェクトが渡される
+    selectedItemClick: Object,
 });
 
 const emits = defineEmits();
 
-// アイテムの保存メソッド
+// 保存ボタンのテキスト内容を動的に設定するための算出プロパティ
+const saveButtonText = computed(() => {
+    return props.existingItems.some(item => item.name === props.selectedItemClick.name) // アイテム名を比較
+        ? '既存'
+        : '保存';
+});
+
 const keepItemBtn = () => {
-    console.log(props.selectedItemClick)
-    
     emits('update-keep', {
         existingItems: props.existingItems,
         selectedItemClick: props.selectedItemClick,
     });
 
-    // 同じアイテムが既に保存されているか確認
-    const isAlreadySaved = props.existingItems.some((item) => {
-        return item.name === props.selectedItemClick.name;
-    });
+    const isAlreadySaved = props.existingItems.some(item => item.name === props.selectedItemClick.name);
+
+    if (!isAlreadySaved) {
+        props.existingItems.unshift(props.selectedItemClick);
+        localStorage.setItem("saved-Minecraft-Items", JSON.stringify(props.existingItems));
+
+        // 更新後のテキストを反映
+        saveButtonText.value = '既存';
+        window.alert('保存完了')
+    }
 
     // ローカルストレージに保存
     localStorage.setItem("saved-Minecraft-Items", JSON.stringify(props.existingItems));
-
-    // アイテムがまだ保存されていない場合追加
-    if (!isAlreadySaved) {
-        // アイテムを保存
-        props.existingItems.unshift(props.selectedItemClick);
-        localStorage.setItem("saved-Minecraft-Items", JSON.stringify(props.existingItems));
-    }
 };
 
-// アイテムの削除メソッド
 const deleteItemBtn = () => {
-    // クリックされたアイテムのIDを取得
     const clickItemId = props.selectedItemClick.id;
+    const deleteItem = props.existingItems.filter(item => item.id !== clickItemId);
 
-    // clickItemIdと異なるidを持つ要素だけを残す。一致したものは消す
-    const deleteItem = props.existingItems.filter((item) => item.id !== clickItemId);
-
-    // ローカルストレージに保存
     localStorage.setItem("saved-Minecraft-Items", JSON.stringify(deleteItem));
 
     window.location.reload();
 
-    // アイテムが正常に削除された場合にのみページをリロードして保存画面のまま表示
     if (deleteItem.length > 0) {
         window.location.reload();
     }
@@ -56,7 +53,7 @@ const deleteItemBtn = () => {
 <template>
     <div class="button-container">
         <div class="out-button">
-            <button class="button-left" @click="keepItemBtn()">保存</button>
+            <button class="button-left" @click="keepItemBtn()">{{ saveButtonText }}</button>
         </div>
         <div class="out-button">
             <button class="button-right" @click="deleteItemBtn()">削除</button>

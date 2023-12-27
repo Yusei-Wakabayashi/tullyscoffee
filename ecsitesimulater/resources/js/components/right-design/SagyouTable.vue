@@ -2,7 +2,7 @@
 const props = defineProps({
     itemRecipeList: Array,
     hoveredItemRecipeName: String,
-    itemRecipeBack: Function
+    itemRecipe: Function
 });
 </script>
 
