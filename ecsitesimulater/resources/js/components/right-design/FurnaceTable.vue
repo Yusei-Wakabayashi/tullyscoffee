@@ -32,4 +32,28 @@ const props = defineProps({
 img{
     cursor: pointer;
 }
+
+
+.kamado li {
+
+  width: 49px;
+  height: 49px;
+  text-align: center;
+  margin-bottom: 5px;
+  background-color: #999999;
+  border-left: 3px solid #333333;
+  border-top: 3px solid #333333;
+  border-bottom: 3px solid #f2f2f2;
+  border-right: 3px solid #f2f2f2;
+  cursor: pointer;
+}
+.kamado li:nth-child(2){
+  background-color: transparent;
+  border: none;
+}
+
+.kamado img{
+  width: 49px;
+}
+
 </style>
