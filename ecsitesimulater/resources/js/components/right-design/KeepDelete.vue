@@ -2,8 +2,8 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-    existingItems: Array,
-    selectedItemClick: Object,
+    existingItems: Array, // ローカルストレージ
+    selectedItemClick: Object, // アイテムの情報が入る
 });
 
 const emits = defineEmits();
@@ -11,8 +11,7 @@ const emits = defineEmits();
 // 保存ボタンのテキスト内容を動的に設定するための算出プロパティ
 const saveButtonText = computed(() => {
     return props.existingItems.some(item => item.name === props.selectedItemClick.name) // アイテム名を比較
-        ? '既存'
-        : '保存';
+        ? '既存' : '保存';
 });
 
 const keepItemBtn = () => {
