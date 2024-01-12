@@ -153,12 +153,11 @@ const itemRecipe = (item) => {
     itemImgSrc.value = itemImg; // アイテム一覧の押したアイテム画像を入れる
     selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
 
-    // itemBackListにレシピが一つでも入っていたら空にする
-    if(itemBackList.value.length > 1){
+    if (itemBackList.value.length > 0) {
         itemBackList.value = []
     }
     itemBackList.value.push(item)
-    
+
     console.log(itemBackList.value)
 
     axios
@@ -206,31 +205,32 @@ const itemBack = () => {
     // itemBackList にアイテムがあるかどうかを確認
     if (itemBackList.value.length > 0) {
         // itemBackListの末尾からアイテムレシピを取り出す
-        const lastItem = itemBackList.value.pop();
+        itemBackList.value.pop();
+        const lastItem = itemBackList.value[itemBackList.value.length - 1]
 
-        console.log(itemBackList.value)
+        // lastItemが存在する場合
+        if (lastItem) {
+            isLoading.value = true;
+            itemRecipeNote.value = lastItem.note;
+            itemRecipeGet.value = lastItem.howtoget;
+            const itemId = lastItem.id;
+            const itemImg = lastItem.pic;
+            itemName.value = lastItem.name;
+            itemImgSrc.value = itemImg;
+            selectedItemClick.value = lastItem;
 
-
-        isLoading.value = true;
-        itemRecipeNote.value = lastItem.note;
-        itemRecipeGet.value = lastItem.howtoget;
-        const itemId = lastItem.id;
-        const itemImg = lastItem.pic;
-        itemName.value = lastItem.name;
-        itemImgSrc.value = itemImg;
-        selectedItemClick.value = lastItem;
-
-        axios
-            .get(`/item/recipesearch/${itemId}`)
-            .then((response) => {
-                itemRecipeList.value = response.data;
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-            .finally(() => {
-                isLoading.value = false;
-            });
+            axios
+                .get(`/item/recipesearch/${itemId}`)
+                .then((response) => {
+                    itemRecipeList.value = response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    isLoading.value = false;
+                });
+        }
     }
 };
 
