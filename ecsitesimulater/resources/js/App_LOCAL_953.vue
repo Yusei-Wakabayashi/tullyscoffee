@@ -219,7 +219,7 @@ onMounted(() => {
 <template>
     <div :class="{
         'whole-nether': isNetherTabClick,
-        'whole-overworld': isOverworldClick,
+        'whole-overworld': !isNetherTabClick,
         'whole-end': isEndTabClick,
         'whole-all': isAllTabClick,
     }">
