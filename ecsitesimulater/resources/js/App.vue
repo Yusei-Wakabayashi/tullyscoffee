@@ -292,7 +292,7 @@ const UpdateKeep = (keep) => {
                     <div class="tab-category-container">
                         <TopCategory :setCategory="setCategory" :currentCategory="currentCategory" />
                         <!--検索ボックス-->
-                        <input v-model="searchTerm" placeholder="検索" />
+                        <input v-model="searchTerm" placeholder="検索 ．．．" />
                     </div>
                     <!--非同期の待ち時間アニメーション-->
                     <LoadingAnime :isLoading="isLoading" />
@@ -338,7 +338,7 @@ const UpdateKeep = (keep) => {
                             <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" />
                             <!--保存、削除ボタン-->
                             <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick"
-                                @update-keep="UpdateKeep" />
+                                @update-keep="UpdateKeep" @item-deleted="getSavedItems()" />
                         </div>
                         <h3 style="color: red">{{ itemRecipeGet }}</h3>
                     </div>
