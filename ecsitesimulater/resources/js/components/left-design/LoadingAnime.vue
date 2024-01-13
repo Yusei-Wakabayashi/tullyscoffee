@@ -7,13 +7,17 @@ const props = defineProps({
 <!--非同期loading-->
 <template>
     <div v-show="isLoading" class="loading-animation">
-        <h1>Now Loading<span class="loading-dots"></span></h1>
+        <h1>
+            <img src="../../../../public/web_png/looding_6fps.png" alt="">
+            Now Loading
+            <img src="../../../../public/web_png/looding_6fps.png" alt="">
+        </h1>
     </div>
 </template>
 
 <style scoped>
 .loading-animation {
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.445);
     background-position: center;
     background-size: cover;
     color: black;
@@ -34,37 +38,5 @@ const props = defineProps({
     content: "....";
     display: inline-block;
     animation: loading-dots-animation 1s infinite steps(5, end);
-}
-
-@keyframes loading-dots-animation {
-    0% {
-        content: "....";
-        /* 初期の表示 */
-    }
-
-    20% {
-        content: " ...";
-        /* 1つ目のドットを非表示に */
-    }
-
-    40% {
-        content: "  ..";
-        /* 2つ目のドットも非表示に */
-    }
-
-    60% {
-        content: "   .";
-        /* 3つ目のドットも非表示に */
-    }
-
-    80% {
-        content: "    ";
-        /* 4つ目のドットも非表示に */
-    }
-
-    100% {
-        content: "....";
-        /* 全てのドットを表示 */
-    }
 }
 </style>
