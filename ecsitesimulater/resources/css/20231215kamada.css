@@ -7,7 +7,7 @@
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0);
-    animation: colorChange 100s infinite linear;
+    animation: colorChange 500s infinite linear;
   }
 
   @keyframes colorChange {

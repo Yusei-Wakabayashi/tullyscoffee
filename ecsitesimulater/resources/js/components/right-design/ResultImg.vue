@@ -10,12 +10,17 @@ const props = defineProps({
 <template>
     <div class="arrow_img">
         <div class="square_triangle_arrow">
-            <img class="image-container" :src="itemImgSrc" @mouseover="hoveredItem = itemName"
+            <div class="flex-box">
+                <img class="image-container" :src="itemImgSrc" @mouseover="hoveredItem = itemName"
                 @mouseleave="hoveredItem = null" />
-            <div class="item-name" v-if="hoveredItem === itemName">
-                {{ itemName }}
+                <div class="item-name" v-if="hoveredItem === itemName">
+                    {{ itemName }}
+                </div>
+                <div class="numbox">×4</div>
             </div>
+
         </div>
+            
     </div>
 </template>
 
@@ -32,7 +37,7 @@ const props = defineProps({
     position: absolute;
     top: 0;
     bottom: 0;
-    right: 90px;
+    right: 118px;
     width: 45px;
     height: 10px;
     background: #999999;
@@ -44,7 +49,7 @@ const props = defineProps({
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 25px;
+    left: 60px;
     width: 0;
     height: 0;
     border-top: 25px solid transparent;
@@ -64,6 +69,10 @@ const props = defineProps({
     cursor: pointer;
 }
 
+.image-container{
+    margin-left: 60px;
+}
+
 .image-container img {
     width: 100%;
     height: 100%;
@@ -73,5 +82,24 @@ const props = defineProps({
     background-color: rgb(255, 255, 255);
     z-index: 1;
     opacity: 0.6;
+}
+
+.numbox{
+    width: 30px;
+    height: 30px;
+    background-color: #999999;
+    border-left: 3px solid #333333;
+    border-top: 3px solid #333333;
+    border-bottom: 3px solid #f2f2f2;
+    border-right: 3px solid #f2f2f2;
+    box-sizing: border-box;
+}
+
+.flex-box{
+    display: flex;
+}
+
+.numbox{
+    margin-top: 24px;
 }
 </style>

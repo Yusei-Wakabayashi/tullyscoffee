@@ -54,6 +54,7 @@ img{
 
 .kamado img{
   width: 49px;
+  height: 49px;
 }
 
 </style>
