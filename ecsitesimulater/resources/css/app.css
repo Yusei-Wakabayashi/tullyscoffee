@@ -33,9 +33,10 @@ body {
 }
 
 .whole-end {
-    background-image: url(../../public/web_png/end_efect01.png), url(../../public/web_png/end_efect02.png), url(../../public/web_png/end_efect03.png), url(../../public/web_png/theend_back.png);
-    background-repeat: no-repeat, no-repeat, no-repeat, repeat;
-    background-position: 0 -50px, 25% -50px, 50% -50px, center;
+    background-image: url(../../public/web_png/end_efect01.png), url(../../public/web_png/end_efect02.png), url(../../public/web_png/end_efect03.png), url(../../public/web_png/end_efect02.png), url(../../public/web_png/end_efect01.png), url(../../public/web_png/end_efect03.png), url(../../public/web_png/end_efect02.png), url(../../public/web_png/end_efect01.png), url(../../public/web_png/end_efect03.png), url(../../public/web_png/theend_back.png);
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+    background-position: 0 -50px, 25% -50px, 35% -50px, 50% -50px, 75% -50px, 85% -50px, 0 -50px, 25% -50px, 35% -50px, 0% 0%;
+    background-size: 25px 25px, 50px 50px, 30px 30px, 40px 40px, 50px 50px, 25px 25px, 25px 25px, 50px 50px, 30px 30px, 900px 600px;
     animation-name: move_effect;
     animation: move_effect 13s linear infinite;
     padding: 0 0 100% 0;
@@ -60,67 +61,67 @@ body {
 
 @keyframes move_effect {
     0% {
-        background-position: 0 -50px, 25% -50px, 50% -50px, center;
+        background-position: 0 -50px,   25% -50px, 35% -50px, 50% -50px, 75% -50px, 85% -50px,   0 -50px,    25% -50px, 35% -50px, 0px 0px;
     }
     5% {
-        background-position: 5% 7%, 31% 6%, 55% 5%, center;
+        background-position: 5% 7%,     31% 6%,    39% 8%,    54% 5%,    77% 6%,    85% -50px,   0 -50px,    25% -50px, 35% -50px, 45px 30px;
     }
     10% {
-        background-position: 10% 14%, 37% 12%, 60% 14%, center;
+        background-position: 10% 14%,   37% 12%,   43% 16%,   58% 14%,   79% 12%,   85% -50px,   0 -50px,    25% -50px, 35% -50px, 90px 60px;
     }
     15% {
-        background-position: 15% 21%, 44% 18%, 65% 21%, center;
+        background-position: 15% 21%,   43% 18%,   47% 24%,   62% 21%,   81% 18%,   85% -50px,   0 -50px,    25% -50px, 35% -50px, 135px 90px;
     }
     20% {
-        background-position: 20% 28%, 51% 24%, 60% 28%, center;
+        background-position: 20% 28%,   49% 24%,   51% 32%,   66% 28%,   83% 24%,   85% -50px,   0 -50px,    25% -50px, 35% -50px, 180px 120px;
     }
     25% {
-        background-position: 25% 35%, 58% 30%, 55% 35%, center;
+        background-position: 25% 35%,   55% 30%,   55% 40%,   70% 35%,   85% 30%,   85% -50px,   0 -50px,    25% -50px, 35% -50px, 225px 150px;
     }
-    30% {
-        background-position: 30% 42%, 65% 36%, 60% 42%, center;
+    30% { 
+        background-position: 30% 42%,   61% 36%,   59% 48%,   74% 42%,   87% 36%,   85% -50px,   0 -50px,    25% -50px, 35% -50px, 270px 180px;
     }
     35% {
-        background-position: 35% 49%, 72% 42%, 65% 49%, center;
+        background-position: 35% 49%,   67% 42%,   63% 56%,   78% 49%,   89% 42%,   87% 5%,      5% 7%,      31% 6%,    39% 8%,    315px 210px;
     }
     40% {
-        background-position: 40% 56%, 79% 48%, 70% 56%, center;
+        background-position: 40% 56%,   73% 48%,   67% 64%,   82% 56%,   91% 48%,   89% 10%,     10% 14%,    37% 12%,   43% 16%,   360px 240px;
     }
     45% {
-        background-position: 45% 63%, 8% 54%, 75% 63%, center;
+        background-position: 45% 63%,   79% 54%,   71% 72%,   86% 63%,   93% 54%,   91% 15%,     15% 21%,    43% 18%,   47% 24%,   405px 270px;
     }
     50% {
-        background-position: 50% 70%, 45% 60%, 70% 70%, center;
+        background-position: 50% 70%,   85% 60%,   75% 80%,   90% 70%,   95% 60%,   93% 20%,     20% 28%,    49% 24%,   51% 32%,   450px 300px;
     }
     55% {
-        background-position: 55% 77%, 40% 66%, 65% 77%, center;
+        background-position: 55% 77%,   91% 66%,   79% 88%,   94% 77%,   97% 66%,   95% 25%,     25% 35%,    55% 30%,   55% 40%,   495px 330px;
     }
     60% {
-        background-position: 60% 84%, 45% 72%, 70% 84%, center;
+        background-position: 60% 84%,   97% 72%,   83% 96%,   98% 84%,   99% 72%,   97% 30%,     30% 42%,    61% 36%,   59% 48%,   540px 360px;
     }
     65% {
-        background-position: 65% 91%, 50% 78%, 75% 91%, center;
+        background-position: 65% 91%,   103% 78%,  87% 104%,  102% 91%,  101% 78%,  99% 35%,     35% 49%,    67% 42%,   63% 56%,   585px 390px;
     }
     70% {
-        background-position: 70% 98%, 55% 84%, 80% 98%, center;
+        background-position: 70% 98%,   103% 84%,  91% 104%,  102% 98%,  101% 84%,  101% 40%,    40% 56%,   73% 48%,   67% 64%,    630px 420px;
     }
     75% {
-        background-position: 75% 105%, 50% 90%, 75% 105%, center;
+        background-position: 75% 105%,  103% 90%,  95% 104%,  102% 105%, 101% 90%,  101% 45%,    45% 63%,   79% 54%,   71% 72%,    675px 450px;
     }
     80% {
-        background-position: 80% 105%, 45% 96%, 70% 105%, center;
+        background-position: 80% 105%,  103% 96%,  99% 104%,  102% 105%, 101% 96%,  101% 50%,    50% 70%,   85% 60%,   75% 80%,    720px 480px;
     }
     85% {
-        background-position: 85% 105%, 50% 104%, 75% 105%, center;
+        background-position: 85% 105%,  103% 104%, 104% 104%, 102% 105%, 101% 104%, 101% 55%,    55% 77%,   91% 66%,   79% 88%,    765px 510px;
     }
     90% {
-        background-position: 90% 105%, 55% 104%, 80% 105%, center;
+        background-position: 90% 105%,  103% 104%, 104% 104%, 102% 105%, 101% 104%, 101% 60%,    60% 84%,   97% 72%,   83% 96%,    810px 540px;
     }
     95% {
-        background-position: 95% 105%, 60% 104%, 85% 105%, center;
+        background-position: 95% 105%,  103% 104%, 104% 104%, 102% 105%, 101% 104%, 101% 65%,    65% 91%,   103% 78%,  87% 104%,   855px 570px;
     }
     100% {
-        background-position: 100% 105%, 55% 104%, 80% 105%, center;
+        background-position: 100% 105%, 103% 104%, 104% 104%, 102% 105%, 101% 104%, 101% 70%,    70% 98%,   103% 84%,  91% 104%,   900px 600px;
     }
 }
 
@@ -191,7 +192,7 @@ input {
     position: absolute;
     font-weight: bold;
     z-index: 1;
-    transform: translateX(48px);
+    transform: translateX(49px);
 }   
 
 .item-name-recipe {
