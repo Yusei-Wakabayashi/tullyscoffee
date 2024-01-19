@@ -35,8 +35,10 @@ const hoveredItemRecipeName = ref(null);
 const itemRecipeNote = ref(''); // クラフトレシピの注意書き
 const itemRecipeGet = ref('') // クラフト不可のものの入手場所
 const itemImgSrc = ref(''); // itemImgの値をセット
+const itemNumGet = ref('')
 const itemName = ref(''); // レシピの結果画像文字
 const selectedItemClick = ref(null);
+const itemBackList = ref([]) // 1つ前のアイテムレシピを入れる
 
 //アイテム名比較
 const filtereditems = computed(() => {
@@ -147,10 +149,9 @@ const itemRecipe = (item) => {
     isLoading.value = true; // ローディング
     itemRecipeNote.value = item.note; // アイテムの注意書き
     itemRecipeGet.value = item.howtoget // クラフト不可のアイテムの入手方法
-    const itemId = item.id; // クリックしたアイテムのid
-    const itemImg = item.pic // クリックしたアイテムの画像
     itemName.value = item.name
-    itemImgSrc.value = itemImg; // アイテム一覧の押したアイテム画像を入れる
+    itemNumGet.value = item.order
+    itemImgSrc.value = item.pic; //アイテム一覧の押したアイテム画像を入れる
     selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
 
     if (itemBackList.value.length > 0) {
@@ -161,7 +162,7 @@ const itemRecipe = (item) => {
     console.log(itemBackList.value)
 
     axios
-        .get(`/item/recipesearch/${itemId}`)
+        .get(`/item/recipesearch/${item.id}`)
         .then((response) => {
             itemRecipeList.value = response.data;
         })
@@ -173,22 +174,20 @@ const itemRecipe = (item) => {
         });
 };
 
-const itemBackList = ref([]) // 1つ前のアイテムレシピを入れる
 //アイテムレシピの中の画像をクリックしたときのレシピ表示処理
 const itemRecipeBack = (item) => {
-    isLoading.value = true; // ローディング
-    itemRecipeNote.value = item.note; // アイテムの注意書き
-    itemRecipeGet.value = item.howtoget // クラフト不可のアイテムの入手方法
-    const itemId = item.id; // クリックしたアイテムのid
-    const itemImg = item.pic // クリックしたアイテムの画像
+    isLoading.value = true;
+    itemRecipeNote.value = item.note;
+    itemRecipeGet.value = item.howtoget
     itemName.value = item.name
-    itemImgSrc.value = itemImg; //アイテム一覧の押したアイテム画像を入れる
-    selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
+    itemNumGet.value = item.order
+    itemImgSrc.value = item.pic;
+    selectedItemClick.value = item
 
     itemBackList.value.push(item)// 一個前のアイテムレシピを入れていく
     console.log(itemBackList.value)
     axios
-        .get(`/item/recipesearch/${itemId}`)
+        .get(`/item/recipesearch/${item.id}`)
         .then((response) => {
             itemRecipeList.value = response.data;
         })
@@ -202,8 +201,9 @@ const itemRecipeBack = (item) => {
 
 // 押した時に一個前のレシピに戻るメソッド
 const itemBack = () => {
+    console.log(itemBackList.value)
     // itemBackList にアイテムがあるかどうかを確認
-    if (itemBackList.value.length > 0) {
+    if (itemBackList.value.length > 1) {
         // itemBackListの末尾からアイテムレシピを取り出す
         itemBackList.value.pop();
         const lastItem = itemBackList.value[itemBackList.value.length - 1]
@@ -213,14 +213,13 @@ const itemBack = () => {
             isLoading.value = true;
             itemRecipeNote.value = lastItem.note;
             itemRecipeGet.value = lastItem.howtoget;
-            const itemId = lastItem.id;
-            const itemImg = lastItem.pic;
             itemName.value = lastItem.name;
-            itemImgSrc.value = itemImg;
+            itemImgSrc.value = lastItem.pic;
             selectedItemClick.value = lastItem;
+            itemNumGet.value = lastItem.order
 
             axios
-                .get(`/item/recipesearch/${itemId}`)
+                .get(`/item/recipesearch/${lastItem.id}`)
                 .then((response) => {
                     itemRecipeList.value = response.data;
                 })
@@ -335,7 +334,7 @@ const UpdateKeep = (keep) => {
                                 </button>
                             </div>
                             <!--レシピ右側の画像-->
-                            <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" />
+                            <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" :itemNumGet="itemNumGet" />
                             <!--保存、削除ボタン-->
                             <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick"
                                 @update-keep="UpdateKeep" @item-deleted="getSavedItems()" />

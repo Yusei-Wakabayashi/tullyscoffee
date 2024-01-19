@@ -8,7 +8,7 @@ const props = defineProps({
 
 const emits = defineEmits();
 
-// existingItems を ref でラップし、computed プロパティに変換
+// existingItemsをcomputedプロパティに変換
 const existingItemsRef = ref(props.existingItems);
 const existingItems = computed(() => existingItemsRef.value);
 
