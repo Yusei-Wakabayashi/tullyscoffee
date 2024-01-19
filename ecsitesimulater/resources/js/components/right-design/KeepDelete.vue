@@ -4,6 +4,7 @@ import { defineProps, defineEmits, ref, computed, } from 'vue';
 const props = defineProps({
     existingItems: Array, // ローカルストレージ
     selectedItemClick: Object, // アイテムの情報が入る
+    items: Array
 });
 
 const emits = defineEmits();
@@ -12,7 +13,7 @@ const emits = defineEmits();
 const existingItemsRef = ref(props.existingItems);
 const existingItems = computed(() => existingItemsRef.value);
 
-// 保存ボタンのテキスト内容を動的に設定するための算出プロパティ
+// 保存ボタンのテキスト内容を動的に変更する算出プロパティ
 const saveButtonText = computed(() => {
     return existingItems.value.some(item => item.name === props.selectedItemClick.name)
         ? '既存' : '保存';
@@ -44,7 +45,6 @@ const deleteItemBtn = () => {
         const clickItemId = props.selectedItemClick.id;
         existingItemsRef.value = existingItemsRef.value.filter(item => item.id !== clickItemId);
         localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItemsRef.value));
-        window.location.reload()
     }
 };
 </script>

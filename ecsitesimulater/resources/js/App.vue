@@ -19,6 +19,7 @@ import BlacksmithTable from './components/right-design/BlacksmithTable.vue'; // 
 import AttentionNote from './components/right-design/AttentionNote.vue'; // アイテム注意書き
 import ResultImg from './components/right-design/ResultImg.vue'; // クラフト結果画像
 import KeepdeleteBtn from './components/right-design/KeepDelete.vue'; // 保存削除ボタン
+import Multiplerecipe from "./components/right-design/Multiplerecipe.vue";
 
 const items = ref([]); // アイテム配列
 const currentCategory = ref(10); // 初期のcss状態(ALLカテゴリーボタン)
@@ -144,6 +145,15 @@ const setCategoryKeep = () => {
     items.value = existingItems.value; // 保存されたアイテムだけを表示する
 }
 
+// 既存のローカルストレージ内データを取得
+const existingItems = JSON.parse(localStorage.getItem("saved-Minecraft-Items")) || [];
+
+// ローカルストレージから保存されたアイテムを取得するメソッド
+const getSavedItems = () => {
+    const savedItems = JSON.parse(localStorage.getItem("saved-Minecraft-Items")) || [];
+    existingItems.value = savedItems;
+};
+
 //アイテム一覧から画像をクリックしたときのレシピ表示処理
 const itemRecipe = (item) => {
     isLoading.value = true; // ローディング
@@ -231,15 +241,6 @@ const itemBack = () => {
                 });
         }
     }
-};
-
-// 既存のローカルストレージ内データを取得
-const existingItems = JSON.parse(localStorage.getItem("saved-Minecraft-Items")) || [];
-
-// ローカルストレージから保存されたアイテムを取得するメソッド
-const getSavedItems = () => {
-    const savedItems = JSON.parse(localStorage.getItem("saved-Minecraft-Items")) || [];
-    existingItems.value = savedItems;
 };
 
 onMounted(() => {
@@ -337,10 +338,11 @@ const UpdateKeep = (keep) => {
                             <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" :itemNumGet="itemNumGet" />
                             <!--保存、削除ボタン-->
                             <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick"
-                                @update-keep="UpdateKeep" @item-deleted="getSavedItems()" />
+                                @update-keep="UpdateKeep" :items="items" />
                         </div>
                         <h3 style="color: red">{{ itemRecipeGet }}</h3>
                     </div>
+                    <Multiplerecipe />
                 </div>
             </div>
         </div>
