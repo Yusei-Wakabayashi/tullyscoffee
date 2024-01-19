@@ -17,7 +17,6 @@ import BrewingTable from './components/right-design/BrewingTable.vue'; // 醸造
 import FurnaceTable from './components/right-design/FurnaceTable.vue'; // かまど
 import BlacksmithTable from './components/right-design/BlacksmithTable.vue'; // 鍛冶台
 import AttentionNote from './components/right-design/AttentionNote.vue'; // アイテム注意書き
-import BackBtn from './components/right-design/BackItem.vue'; // アイテムレシピ戻るボタン
 import ResultImg from './components/right-design/ResultImg.vue'; // クラフト結果画像
 import KeepdeleteBtn from './components/right-design/KeepDelete.vue'; // 保存削除ボタン
 
@@ -143,7 +142,7 @@ const setCategoryKeep = () => {
     items.value = existingItems.value; // 保存されたアイテムだけを表示する
 }
 
-//画像をクリックしたときのレシピ表示処理
+//アイテム一覧から画像をクリックしたときのレシピ表示処理
 const itemRecipe = (item) => {
     isLoading.value = true; // ローディング
     itemRecipeNote.value = item.note; // アイテムの注意書き
@@ -151,10 +150,16 @@ const itemRecipe = (item) => {
     const itemId = item.id; // クリックしたアイテムのid
     const itemImg = item.pic // クリックしたアイテムの画像
     itemName.value = item.name
-    itemImgSrc.value = itemImg; //アイテム一覧の押したアイテム画像を入れる
+    itemImgSrc.value = itemImg; // アイテム一覧の押したアイテム画像を入れる
     selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
 
-    console.log(item)
+    if (itemBackList.value.length > 0) {
+        itemBackList.value = []
+    }
+    itemBackList.value.push(item)
+
+    console.log(itemBackList.value)
+
     axios
         .get(`/item/recipesearch/${itemId}`)
         .then((response) => {
@@ -166,6 +171,67 @@ const itemRecipe = (item) => {
         .finally(() => {
             isLoading.value = false;
         });
+};
+
+const itemBackList = ref([]) // 1つ前のアイテムレシピを入れる
+//アイテムレシピの中の画像をクリックしたときのレシピ表示処理
+const itemRecipeBack = (item) => {
+    isLoading.value = true; // ローディング
+    itemRecipeNote.value = item.note; // アイテムの注意書き
+    itemRecipeGet.value = item.howtoget // クラフト不可のアイテムの入手方法
+    const itemId = item.id; // クリックしたアイテムのid
+    const itemImg = item.pic // クリックしたアイテムの画像
+    itemName.value = item.name
+    itemImgSrc.value = itemImg; //アイテム一覧の押したアイテム画像を入れる
+    selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
+
+    itemBackList.value.push(item)// 一個前のアイテムレシピを入れていく
+    console.log(itemBackList.value)
+    axios
+        .get(`/item/recipesearch/${itemId}`)
+        .then((response) => {
+            itemRecipeList.value = response.data;
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            isLoading.value = false;
+        });
+};
+
+// 押した時に一個前のレシピに戻るメソッド
+const itemBack = () => {
+    // itemBackList にアイテムがあるかどうかを確認
+    if (itemBackList.value.length > 0) {
+        // itemBackListの末尾からアイテムレシピを取り出す
+        itemBackList.value.pop();
+        const lastItem = itemBackList.value[itemBackList.value.length - 1]
+
+        // lastItemが存在する場合
+        if (lastItem) {
+            isLoading.value = true;
+            itemRecipeNote.value = lastItem.note;
+            itemRecipeGet.value = lastItem.howtoget;
+            const itemId = lastItem.id;
+            const itemImg = lastItem.pic;
+            itemName.value = lastItem.name;
+            itemImgSrc.value = itemImg;
+            selectedItemClick.value = lastItem;
+
+            axios
+                .get(`/item/recipesearch/${itemId}`)
+                .then((response) => {
+                    itemRecipeList.value = response.data;
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+                .finally(() => {
+                    isLoading.value = false;
+                });
+        }
+    }
 };
 
 // 既存のローカルストレージ内データを取得
@@ -226,7 +292,7 @@ const UpdateKeep = (keep) => {
                     <div class="tab-category-container">
                         <TopCategory :setCategory="setCategory" :currentCategory="currentCategory" />
                         <!--検索ボックス-->
-                        <input v-model="searchTerm" placeholder="検索" />
+                        <input v-model="searchTerm" placeholder="検索 ．．．" />
                     </div>
                     <!--非同期の待ち時間アニメーション-->
                     <LoadingAnime :isLoading="isLoading" />
@@ -247,28 +313,32 @@ const UpdateKeep = (keep) => {
                         <NotCraft :itemRecipeList="itemRecipeList" />
                         <!--作業台-->
                         <SagyouCraft :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
-                            :itemRecipe="itemRecipe" />
+                            :itemRecipeBack="itemRecipeBack" />
                         <!--醸造台-->
                         <BrewingTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
-                            :itemRecipe="itemRecipe" />
+                            :itemRecipeBack="itemRecipeBack" />
                         <!--かまど-->
                         <FurnaceTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
-                            :itemRecipe="itemRecipe" />
+                            :itemRecipeBack="itemRecipeBack" />
                         <!--鍛冶台-->
                         <BlacksmithTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
-                            :itemRecipe="itemRecipe" />
+                            :itemRecipeBack="itemRecipeBack" />
                         <!--レシピ右側-->
                         <div class="right-side" v-if="itemImgSrc">
 
                             <!--注意書き-->
                             <AttentionNote :itemRecipeNote="itemRecipeNote" />
                             <!--アイテムを戻るボタン-->
-                            <BackBtn :selectedItemClick="selectedItemClick" />
+                            <div class="square-button">
+                                <button class="back-btn" @click="itemBack()">
+                                    <img src="../../public/web_png/return.png" />
+                                </button>
+                            </div>
                             <!--レシピ右側の画像-->
                             <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" />
                             <!--保存、削除ボタン-->
                             <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick"
-                                @update-keep="UpdateKeep" />
+                                @update-keep="UpdateKeep" @item-deleted="getSavedItems()" />
                         </div>
                         <h3 style="color: red">{{ itemRecipeGet }}</h3>
                     </div>
@@ -277,3 +347,26 @@ const UpdateKeep = (keep) => {
         </div>
     </div>
 </template>
+
+<style>
+.square-button button {
+    width: 35px;
+    height: 30px;
+    margin: 0 0 15px 65px;
+    text-align: center;
+    background-color: #cccccc;
+    color: #000;
+    border-left: 3px solid black;
+    border-top: 3px solid black;
+    border-right: 3px solid white;
+    border-bottom: 3px solid white;
+    cursor: pointer;
+}
+
+.square-button button img {
+    width: 25px;
+    height: 20px;
+    margin-top: 3px;
+    object-fit: cover;
+}
+</style>

@@ -2,7 +2,7 @@
 const props = defineProps({
     itemRecipeList: Array,
     hoveredItemRecipeName: String,
-    itemRecipe: Function
+    itemRecipeBack: Function
 });
 </script>
 
@@ -12,7 +12,7 @@ const props = defineProps({
         <ul class="kamado-ul">
             <li v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
                 <img :src="recipe.pic" @mouseover="hoveredItemRecipeName = i" @mouseleave="hoveredItemRecipeName = null"
-                    @click="itemRecipe(recipe)">
+                    @click="itemRecipeBack(recipe, i)">
 
                 <!-- アイテム名 -->
                 <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">

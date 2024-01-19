@@ -2,23 +2,24 @@
 const props = defineProps({
     filtereditems: Array,
     hoveredItem: Number,
-    itemRecipe: Function
+    itemRecipe: Function,
+    scrolled: Number
 });
 </script>
 
 <!--アイテム一覧画面-->
 <template>
     <div class="itemlist-inline">
-        <div class="vertical-scrollable-list">
+        <div class="vertical-scrollable-list" @scroll="(e)=>{scrolled=e.target.scrollTop}">
             <ul>
                 <li v-for="(item, i) in filtereditems" :key="i" class="item-container">
+                    <!--アイテム名-->
+                    <div class="item-name" v-if="hoveredItem === i" :style="'top:'+ (parseInt((i) /8)*57.2 + 170 - scrolled)+'px'">
+                        {{ item.name }}
+                    </div>
                     <!--アイテム画像-->
                     <img class="item-img" @mouseover="hoveredItem = i" @mouseleave="hoveredItem = null" :src="item.pic"
                         @click="itemRecipe(item)" />
-                    <!--アイテム名-->
-                    <div class="item-name" v-if="hoveredItem === i">
-                        {{ item.name }}
-                    </div>
                 </li>
             </ul>
         </div>

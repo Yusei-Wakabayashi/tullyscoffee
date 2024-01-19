@@ -1,51 +1,50 @@
 <script setup>
-import { computed } from 'vue';
+import { defineProps, defineEmits, ref, computed, } from 'vue';
 
 const props = defineProps({
-    existingItems: Array,
-    selectedItemClick: Object,
+    existingItems: Array, // ローカルストレージ
+    selectedItemClick: Object, // アイテムの情報が入る
 });
 
 const emits = defineEmits();
 
+// existingItems を ref でラップし、computed プロパティに変換
+const existingItemsRef = ref(props.existingItems);
+const existingItems = computed(() => existingItemsRef.value);
+
 // 保存ボタンのテキスト内容を動的に設定するための算出プロパティ
 const saveButtonText = computed(() => {
-    return props.existingItems.some(item => item.name === props.selectedItemClick.name) // アイテム名を比較
-        ? '既存'
-        : '保存';
+    return existingItems.value.some(item => item.name === props.selectedItemClick.name)
+        ? '既存' : '保存';
 });
 
 const keepItemBtn = () => {
     emits('update-keep', {
-        existingItems: props.existingItems,
+        existingItems: existingItems.value,
         selectedItemClick: props.selectedItemClick,
     });
 
-    const isAlreadySaved = props.existingItems.some(item => item.name === props.selectedItemClick.name);
+    const isAlreadySaved = existingItems.value.some(item => item.name === props.selectedItemClick.name);
 
     if (!isAlreadySaved) {
-        props.existingItems.unshift(props.selectedItemClick);
-        localStorage.setItem("saved-Minecraft-Items", JSON.stringify(props.existingItems));
+        existingItemsRef.value.unshift(props.selectedItemClick);
+        localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItemsRef.value));
 
         // 更新後のテキストを反映
         saveButtonText.value = '既存';
-        window.alert('保存完了')
+        window.alert('保存完了');
     }
 
     // ローカルストレージに保存
-    localStorage.setItem("saved-Minecraft-Items", JSON.stringify(props.existingItems));
+    localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItemsRef.value));
 };
 
 const deleteItemBtn = () => {
-    const clickItemId = props.selectedItemClick.id;
-    const deleteItem = props.existingItems.filter(item => item.id !== clickItemId);
-
-    localStorage.setItem("saved-Minecraft-Items", JSON.stringify(deleteItem));
-
-    window.location.reload();
-
-    if (deleteItem.length > 0) {
-        window.location.reload();
+    if (saveButtonText.value === "既存") {
+        const clickItemId = props.selectedItemClick.id;
+        existingItemsRef.value = existingItemsRef.value.filter(item => item.id !== clickItemId);
+        localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItemsRef.value));
+        window.location.reload()
     }
 };
 </script>

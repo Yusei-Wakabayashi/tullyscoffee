@@ -16,7 +16,7 @@ const props = defineProps({
                 <div class="item-name" v-if="hoveredItem === itemName">
                     {{ itemName }}
                 </div>
-                <div class="numbox">×4</div>
+                <div class="numbox"></div>
             </div>
 
         </div>
