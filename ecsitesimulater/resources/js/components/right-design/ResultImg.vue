@@ -2,7 +2,8 @@
 const props = defineProps({
     itemImgSrc: String,
     hoveredItem: Number,
-    itemName: String
+    itemName: String,
+    itemNumGet: Number
 })
 </script>
 
@@ -13,10 +14,13 @@ const props = defineProps({
             <div class="flex-box">
                 <img class="image-container" :src="itemImgSrc" @mouseover="hoveredItem = itemName"
                 @mouseleave="hoveredItem = null" />
-                <div class="item-name" v-if="hoveredItem === itemName">
+                <div class="item-name-result" v-if="hoveredItem === itemName">
                     {{ itemName }}
                 </div>
-                <div class="numbox"></div>
+                <div class="numbox">
+                    <!--クラフトしたときのアイテム数-->
+                    ×{{ itemNumGet }}
+                </div>
             </div>
 
         </div>
@@ -25,6 +29,19 @@ const props = defineProps({
 </template>
 
 <style scoped>
+.item-name-result {
+    margin: -10% 0;
+    white-space: nowrap;
+    display: inline;
+    padding: 7px;
+    background: rgb(35, 35, 35, 0.7);
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    font-weight: bold;
+    z-index: 1;
+    transform: translateX(110px);
+}   
 .square_triangle_arrow {
     position: relative;
     padding-left: 35px;

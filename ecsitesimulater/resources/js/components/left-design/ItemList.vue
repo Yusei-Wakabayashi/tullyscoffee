@@ -27,6 +27,20 @@ const props = defineProps({
 </template>
 
 <style scoped>
+
+.item-name {
+    /*margin: -20% 0;*/
+    white-space: nowrap;
+    display: inline;
+    padding: 7px;
+    background: rgb(35, 35, 35, 0.7);
+    color: #fff;
+    text-align: center;
+    position: absolute;
+    font-weight: bold;
+    z-index: 1;
+    transform: translateX(49px);
+}  
 .itemlist-inline {
     border-left: 3px solid #f2f2f2;
     border-right: 3px solid rgb(101, 101, 101);

@@ -2,7 +2,7 @@
 const props = defineProps({
     itemRecipeList: Array,
     hoveredItemRecipeName: String,
-    itemRecipe: Function
+    itemRecipeBack: Function
 });
 </script>
 
@@ -13,8 +13,8 @@ const props = defineProps({
             
         <ul>
             <li v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
-                <img :src="recipe.pic" @mouseover="hoveredItemRecipeName = i" @mouseleave="hoveredItemRecipeName = null"
-                    @click="itemRecipe(recipe)">
+                <img class="item-img" :src="recipe.pic" @mouseover="hoveredItemRecipeName = i" @mouseleave="hoveredItemRecipeName = null"
+                    @click="itemRecipeBack(recipe)">
 
                 <!-- アイテム名 -->
                 <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
@@ -75,6 +75,7 @@ img {
     width: 49px;
     height: 49px;
     text-align: center;
+    cursor: pointer;
 }
 
 </style>
