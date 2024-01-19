@@ -84,11 +84,12 @@ const props = defineProps({
 
 /* スクロールバーのスクロールノブ（長方形に変更*/
 ::-webkit-scrollbar-thumb {
-    background: #afafaf;
+    background: linear-gradient(to bottom, transparent 18%, gray 18%, gray 25%, transparent 25%, transparent 32%, gray 32%, gray 39%, transparent 39%, transparent 46%, gray 46%, gray 53%, transparent 53%, transparent 60%, gray 60%, gray 67%, transparent 67%, transparent 74%, gray 74%, gray 81%, transparent 81%, transparent 88%, transparent);
     border-top: 3px solid #f2f2f2;
     border-left: 3px solid #333333;
     border-right: 3px solid #f2f2f2;
     border-bottom: 3px solid #333333;
     height: 60px;
+
 }
 </style>
