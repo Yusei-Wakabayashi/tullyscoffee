@@ -4,7 +4,8 @@ import { defineProps, defineEmits, ref, computed, } from 'vue';
 const props = defineProps({
     existingItems: Array, // ローカルストレージ
     selectedItemClick: Object, // アイテムの情報が入る
-    items: Array
+    items: Array,
+    getSavedItems: Function
 });
 
 const emits = defineEmits();
@@ -17,6 +18,11 @@ const existingItems = computed(() => existingItemsRef.value);
 const saveButtonText = computed(() => {
     return existingItems.value.some(item => item.name === props.selectedItemClick.name)
         ? '既存' : '保存';
+});
+
+// 選択されたアイテムがローカルストレージに入っているかどうかを判定する算出プロパティ
+const hasItemsInLocalStorage = computed(() => {
+    return existingItems.value.some(item => item.id === props.selectedItemClick.id);
 });
 
 const keepItemBtn = () => {
@@ -45,6 +51,8 @@ const deleteItemBtn = () => {
         const clickItemId = props.selectedItemClick.id;
         existingItemsRef.value = existingItemsRef.value.filter(item => item.id !== clickItemId);
         localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItemsRef.value));
+        props.getSavedItems()
+        props.items = props.existingItems;
     }
 };
 </script>
@@ -52,10 +60,12 @@ const deleteItemBtn = () => {
 <template>
     <div class="button-container">
         <div class="out-button">
-            <button class="button-left" @click="keepItemBtn()">{{ saveButtonText }}</button>
+            <button class="button-left" @click="keepItemBtn()"
+                :style="{ 'background-color': !hasItemsInLocalStorage ? '#A4e76a' : '#ccc' }">{{ saveButtonText }}</button>
         </div>
         <div class="out-button">
-            <button class="button-right" @click="deleteItemBtn()">削除</button>
+            <button class="button-right" @click="deleteItemBtn()"
+                :style="{ 'background-color': hasItemsInLocalStorage ? '#df272d' : '#ccc' }">削除</button>
         </div>
     </div>
 </template>
@@ -70,11 +80,6 @@ const deleteItemBtn = () => {
 .out-button {
     border: 3px solid #000;
     margin-left: 17px;
-
-}
-
-.button-left:hover {
-    background-color: #A4e76a;
 }
 
 .button-left {
@@ -84,15 +89,10 @@ const deleteItemBtn = () => {
     height: 30.2px;
     align-items: center;
     justify-content: center;
-    background-color: #999;
     border-left: 3px solid white;
     border-top: 3px solid white;
     border-right: 3px solid #999;
     border-bottom: 3px solid #999;
-}
-
-.button-right:hover {
-    background-color: #df272d;
 }
 
 .button-right {
@@ -102,10 +102,18 @@ const deleteItemBtn = () => {
     height: 30.2px;
     align-items: center;
     justify-content: center;
-    background-color: #999;
     border-left: 3px solid white;
     border-top: 3px solid white;
     border-right: 3px solid #999;
     border-bottom: 3px solid #999;
+}
+
+.button-right.red-button {
+    background-color: #df272d;
+    /* 赤色に変更 */
+}
+
+.button-right.disabled {
+    cursor: not-allowed;
 }
 </style>

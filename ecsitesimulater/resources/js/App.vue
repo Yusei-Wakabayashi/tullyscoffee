@@ -17,6 +17,7 @@ import BrewingTable from './components/right-design/BrewingTable.vue'; // 醸造
 import FurnaceTable from './components/right-design/FurnaceTable.vue'; // かまど
 import BlacksmithTable from './components/right-design/BlacksmithTable.vue'; // 鍛冶台
 import AttentionNote from './components/right-design/AttentionNote.vue'; // アイテム注意書き
+import BackItem from "./components/right-design/BackItem.vue";
 import ResultImg from './components/right-design/ResultImg.vue'; // クラフト結果画像
 import KeepdeleteBtn from './components/right-design/KeepDelete.vue'; // 保存削除ボタン
 import Multiplerecipe from "./components/right-design/Multiplerecipe.vue";
@@ -211,7 +212,6 @@ const itemRecipeBack = (item) => {
 
 // 押した時に一個前のレシピに戻るメソッド
 const itemBack = () => {
-    console.log(itemBackList.value)
     // itemBackList にアイテムがあるかどうかを確認
     if (itemBackList.value.length > 1) {
         // itemBackListの末尾からアイテムレシピを取り出す
@@ -329,16 +329,12 @@ const UpdateKeep = (keep) => {
                             <!--注意書き-->
                             <AttentionNote :itemRecipeNote="itemRecipeNote" />
                             <!--アイテムを戻るボタン-->
-                            <div class="square-button">
-                                <button class="back-btn" @click="itemBack()">
-                                    <img src="../../public/web_png/return.png" />
-                                </button>
-                            </div>
+                            <BackItem :itemBackList="itemBackList" :itemBack="itemBack" />
                             <!--レシピ右側の画像-->
                             <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" :itemNumGet="itemNumGet" />
                             <!--保存、削除ボタン-->
                             <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick"
-                                @update-keep="UpdateKeep" :items="items" />
+                                @update-keep="UpdateKeep" :items="items" :getSavedItems="getSavedItems" />
                         </div>
                         <h3 style="color: red">{{ itemRecipeGet }}</h3>
                     </div>
@@ -348,26 +344,3 @@ const UpdateKeep = (keep) => {
         </div>
     </div>
 </template>
-
-<style>
-.square-button button {
-    width: 35px;
-    height: 30px;
-    margin: 0 0 15px 65px;
-    text-align: center;
-    background-color: #cccccc;
-    color: #000;
-    border-left: 3px solid black;
-    border-top: 3px solid black;
-    border-right: 3px solid white;
-    border-bottom: 3px solid white;
-    cursor: pointer;
-}
-
-.square-button button img {
-    width: 25px;
-    height: 20px;
-    margin-top: 3px;
-    object-fit: cover;
-}
-</style>
