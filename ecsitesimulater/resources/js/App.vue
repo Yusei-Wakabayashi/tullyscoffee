@@ -107,16 +107,16 @@ const getAllitem = (category) => {
 
 // カテゴリー名のオブジェクト
 const categoryNames = {
-    1: "建築:",
-    2: "色付きブロック:",
-    3: "天然ブロック:",
-    4: "機能的ブロック:",
-    5: "レッドストーン:",
-    6: "道具と実用:",
-    7: "戦闘:",
-    8: "食べ物と飲み物:",
-    9: "材料:",
-    10: "全アイテム一覧:",
+    1: "建築",
+    2: "色付きブロック",
+    3: "天然ブロック",
+    4: "機能的ブロック",
+    5: "レッドストーン",
+    6: "道具と実用",
+    7: "戦闘",
+    8: "食べ物と飲み物",
+    9: "材料",
+    10: "全アイテム一覧",
 };
 
 //クリックしたものの引数をcurrentCategoryに入れてアイテム表示を変更する
@@ -290,7 +290,7 @@ const UpdateKeep = (keep) => {
                         :getOverWorlditem="getOverWorlditem" @update-category="UpdateLoading" />
                     <!--カテゴリー上部-->
                     <div class="tab-category-container">
-                        <TopCategory :setCategory="setCategory" :currentCategory="currentCategory" />
+                        <TopCategory :setCategory="setCategory" :currentCategory="currentCategory" :categoryNames="categoryNames" />
                         <!--検索ボックス-->
                         <input v-model="searchTerm" placeholder="検索 ．．．" />
                     </div>
@@ -302,7 +302,7 @@ const UpdateKeep = (keep) => {
                     <ItemList :filtereditems="filtereditems" :hoveredItem="hoveredItem" :itemRecipe="itemRecipe" />
                     <!--カテゴリーボタン下部-->
                     <BottomCategory :setCategoryKeep="setCategoryKeep" :setCategory="setCategory"
-                        :currentCategory="currentCategory" />
+                        :currentCategory="currentCategory" :categoryNames="categoryNames" />
                 </div>
             </div>
             <!--右側デザイン-->

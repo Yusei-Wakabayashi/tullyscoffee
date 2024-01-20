@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
     itemBackList: Array,
-    itemBack: Function
+    itemBack: Function,
 })
 </script>
 
