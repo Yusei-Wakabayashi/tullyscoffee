@@ -161,7 +161,7 @@ const itemRecipe = (item) => {
     itemRecipeNote.value = item.note; // アイテムの注意書き
     itemRecipeGet.value = item.howtoget // クラフト不可のアイテムの入手方法
     itemName.value = item.name
-    itemNumGet.value = item.order
+    itemNumGet.value = item.item_num
     itemImgSrc.value = item.pic; //アイテム一覧の押したアイテム画像を入れる
     selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
 
@@ -170,13 +170,11 @@ const itemRecipe = (item) => {
     }
     itemBackList.value.push(item)
 
-    console.log(itemBackList.value)
-
     axios
         .get(`/item/recipesearch/${item.id}`)
         .then((response) => {
             itemRecipeList.value = response.data;
-            console.log(response.data)
+            itemNumGet.value = response.data[0].item_num
         })
         .catch((error) => {
             console.log(error);
@@ -192,16 +190,16 @@ const itemRecipeBack = (item) => {
     itemRecipeNote.value = item.note;
     itemRecipeGet.value = item.howtoget
     itemName.value = item.name
-    itemNumGet.value = item.order
+    itemNumGet.value = item.num
     itemImgSrc.value = item.pic;
     selectedItemClick.value = item
 
     itemBackList.value.push(item)// 一個前のアイテムレシピを入れていく
-    console.log(itemBackList.value)
     axios
         .get(`/item/recipesearch/${item.id}`)
         .then((response) => {
             itemRecipeList.value = response.data;
+            itemNumGet.value = response.data[0].item_num
         })
         .catch((error) => {
             console.log(error);
@@ -227,12 +225,13 @@ const itemBack = () => {
             itemName.value = lastItem.name;
             itemImgSrc.value = lastItem.pic;
             selectedItemClick.value = lastItem;
-            itemNumGet.value = lastItem.order
+            itemNumGet.value = lastItem.num
 
             axios
                 .get(`/item/recipesearch/${lastItem.id}`)
                 .then((response) => {
                     itemRecipeList.value = response.data;
+                    itemNumGet.value = response.data[0].item_num
                 })
                 .catch((error) => {
                     console.log(error);

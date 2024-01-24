@@ -17,9 +17,13 @@ const props = defineProps({
                 <div class="item-name-result" v-if="hoveredItem === itemName">
                     {{ itemName }}
                 </div>
-                <div class="numbox">
+                <div class="numbox" v-if="itemNumGet > 1">
                     <!--クラフトしたときのアイテム数-->
-                    ×{{ itemNumGet }}
+                    <h4>{{ itemNumGet }}</h4>
+                </div>
+                <div class="numbox" v-if="itemNumGet === 0">
+                    <!--クラフトしたときのアイテム数-->
+                    <h4></h4>
                 </div>
             </div>
 
@@ -104,12 +108,10 @@ const props = defineProps({
 .numbox{
     width: 30px;
     height: 30px;
-    background-color: #999999;
-    border-left: 3px solid #333333;
-    border-top: 3px solid #333333;
-    border-bottom: 3px solid #f2f2f2;
-    border-right: 3px solid #f2f2f2;
-    box-sizing: border-box;
+    color: white;
+    position: relative;
+    right: 25px;
+    top: 5px;
 }
 
 .flex-box{
