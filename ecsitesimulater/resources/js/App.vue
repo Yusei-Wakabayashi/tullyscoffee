@@ -122,7 +122,7 @@ const categoryNames = {
 //クリックしたものの引数をcurrentCategoryに入れてアイテム表示を変更する
 const setCategory = (category) => {
     currentCategory.value = category; //cssのデザイン変化
-    searchTerm.value = "";
+
     isLoading.value = true;
     if (isOverworldClick.value === true) {
         getOverWorlditem(category)
