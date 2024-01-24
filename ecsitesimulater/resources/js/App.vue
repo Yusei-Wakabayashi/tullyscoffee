@@ -140,7 +140,7 @@ const setCategory = (category) => {
 
 // 保存ボタンメソッド
 const setCategoryKeep = () => {
-    categoryName.value = "保存アイテム一覧:";
+    categoryName.value = "保存アイテム一覧";
     currentCategory.value = 11;
     getSavedItems();
     items.value = existingItems.value; // 保存されたアイテムだけを表示する
@@ -176,6 +176,7 @@ const itemRecipe = (item) => {
         .get(`/item/recipesearch/${item.id}`)
         .then((response) => {
             itemRecipeList.value = response.data;
+            console.log(response.data)
         })
         .catch((error) => {
             console.log(error);
@@ -264,6 +265,7 @@ const UpdateLoading = (payload) => {
 const UpdateKeep = (keep) => {
     existingItems.value = keep.existingItems
     selectedItemClick.value = keep.selectedItemClick
+    items.value = keep.items
 }
 </script>
  
