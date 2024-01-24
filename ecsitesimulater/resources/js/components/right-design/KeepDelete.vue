@@ -30,7 +30,6 @@ const keepItemBtn = () => {
         existingItems: existingItems.value,
         selectedItemClick: props.selectedItemClick,
     });
-
     const isAlreadySaved = existingItems.value.some(item => item.name === props.selectedItemClick.name);
 
     if (!isAlreadySaved) {
@@ -48,11 +47,12 @@ const keepItemBtn = () => {
 
 const deleteItemBtn = () => {
     if (saveButtonText.value === "既存") {
-        const clickItemId = props.selectedItemClick.id;
-        existingItemsRef.value = existingItemsRef.value.filter(item => item.id !== clickItemId);
+        existingItemsRef.value = existingItemsRef.value.filter(item => item.id !== props.selectedItemClick.id);
         localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItemsRef.value));
-        props.getSavedItems()
-        props.items = props.existingItems;
+        props.getSavedItems();
+        emits('update-keep', {
+            items: existingItemsRef.value
+        })
     }
 };
 </script>
