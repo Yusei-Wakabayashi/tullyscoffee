@@ -2,7 +2,7 @@
 const props = defineProps({
     itemRecipeList: Array,
     hoveredItemRecipeName: String,
-    itemRecipeBack: Function
+    itemRecipe: Function
 });
 </script>
 
@@ -13,8 +13,8 @@ const props = defineProps({
             
         <ul>
             <li v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
-                <img class="item-img" :src="recipe.pic" @mouseover="hoveredItemRecipeName = i" @mouseleave="hoveredItemRecipeName = null"
-                    @click="itemRecipeBack(recipe)">
+                <img :src="recipe.pic" @mouseover="hoveredItemRecipeName = i" @mouseleave="hoveredItemRecipeName = null"
+                    @click="itemRecipe(recipe)">
 
                 <!-- アイテム名 -->
                 <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
@@ -41,8 +41,6 @@ const props = defineProps({
 }
 
 .brewing-flex li {
-    position: relative; 
-    z-index: 1;
     list-style: none;
     width: 49px;
     height: 49px;
@@ -60,8 +58,7 @@ li:nth-child(2) {
 }
 
 .box {
-    position: absolute;
-    z-index: 2; 
+    position: absolute; 
     width: 5px;
     height: 69px;
     margin: 69.6px 0 0 112px;
@@ -75,7 +72,6 @@ img {
     width: 49px;
     height: 49px;
     text-align: center;
-    cursor: pointer;
 }
 
 </style>
