@@ -13,22 +13,23 @@ const props = defineProps({
         <div class="square_triangle_arrow">
             <div class="flex-box">
                 <img class="image-container" :src="itemImgSrc" @mouseover="hoveredItem = itemName"
-                @mouseleave="hoveredItem = null" />
+                     @mouseleave="hoveredItem = null" />
                 <div class="item-name-result" v-if="hoveredItem === itemName">
                     {{ itemName }}
                 </div>
-                <div class="numbox">
-                    <!--クラフトしたときのアイテム数-->
-                    ×{{ itemNumGet }}
+                <!--数値が0の時だけopacityを0にして文字を透明化-->
+                <div class="numbox" :class="{ 'transparent-text': itemNumGet === 0 }">
+                    <h4>{{ itemNumGet }}</h4>
                 </div>
             </div>
-
         </div>
-            
     </div>
 </template>
 
 <style scoped>
+.transparent-text {
+    opacity: 0;  /* 透明にするスタイル */
+}
 .item-name-result {
     margin: -10% 0;
     white-space: nowrap;
@@ -104,12 +105,10 @@ const props = defineProps({
 .numbox{
     width: 30px;
     height: 30px;
-    background-color: #999999;
-    border-left: 3px solid #333333;
-    border-top: 3px solid #333333;
-    border-bottom: 3px solid #f2f2f2;
-    border-right: 3px solid #f2f2f2;
-    box-sizing: border-box;
+    color: white;
+    position: relative;
+    right: 25px;
+    top: 5px;
 }
 
 .flex-box{

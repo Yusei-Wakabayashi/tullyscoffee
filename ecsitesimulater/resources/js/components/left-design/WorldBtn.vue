@@ -27,7 +27,7 @@ const setOverworldClick = () => {
         isNetherTabClick: false,
         isEndTabClick: false,
         isAllTabClick: false,
-        searchTerm: ''
+        searchTerm: props.searchTerm,
     });
 
     props.getOverWorlditem(10)
@@ -43,7 +43,7 @@ const setNetherTabClick = () => {
         isNetherTabClick: true,
         isEndTabClick: false,
         isAllTabClick: false,
-        searchTerm: ''
+        searchTerm: props.searchTerm,
     });
 
     props.getNetheritem(10)
@@ -59,7 +59,7 @@ const setEndTabClick = () => {
         isNetherTabClick: false,
         isEndTabClick: true,
         isAllTabClick: false,
-        searchTerm: ''
+        searchTerm: props.searchTerm,
     });
 
     props.getEnditem(10)
@@ -75,7 +75,7 @@ const setAllTabClick = () => {
         isNetherTabClick: false,
         isEndTabClick: false,
         isAllTabClick: true,
-        searchTerm: ''
+        searchTerm: props.searchTerm,
     });
 
     props.getAllitem(10);

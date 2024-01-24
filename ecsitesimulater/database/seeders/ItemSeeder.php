@@ -38,7 +38,6 @@ class ItemSeeder extends Seeder
                 'id' => $value[2],
                 'note' => $value[3],
                 'order' => $value[4],
-                'howtoget' => $value[5],
             ];
         }
         foreach($csv_data as $data){
@@ -48,7 +47,6 @@ class ItemSeeder extends Seeder
                     'name' => $data['name'],
                     'note' => $data['note'],
                     'order' => $data['order'],
-                    'howtoget' => $data['howtoget'],
                 ]);
                 
             }
