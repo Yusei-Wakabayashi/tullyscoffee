@@ -10,7 +10,7 @@ const props = defineProps({
 <template>
     <div v-if="itemRecipeList[0]?.craft_num === 2">
         <ul class="sagyou-ul">
-            <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
+            <li class="sagyou-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i" :class="{ 'no-cursor': !recipe?.pic }">
                 <img class="item-img" :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
                     @mouseleave="hoveredItemRecipeName = null" @click="itemRecipeBack(recipe)" width="49">
 
@@ -47,4 +47,9 @@ const props = defineProps({
     border-right: 5px solid #f2f2f2;
     cursor: pointer;
 }
+
+.sagyou-li.no-cursor {
+    cursor: default;
+}
+
 </style>
