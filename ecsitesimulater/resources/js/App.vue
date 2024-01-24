@@ -35,7 +35,6 @@ const itemRecipeList = ref([]); // アイテムのレシピIDのリスト
 const hoveredItem = ref(null); // カーソルがアイテム画像にホバーした際のアイテム名を格納するリファレンス
 const hoveredItemRecipeName = ref(null);
 const itemRecipeNote = ref(''); // クラフトレシピの注意書き
-const itemRecipeGet = ref('') // クラフト不可のものの入手場所
 const itemImgSrc = ref(''); // itemImgの値をセット
 const itemNumGet = ref('')
 const itemName = ref(''); // レシピの結果画像文字
@@ -159,7 +158,6 @@ const getSavedItems = () => {
 const itemRecipe = (item) => {
     isLoading.value = true; // ローディング
     itemRecipeNote.value = item.note; // アイテムの注意書き
-    itemRecipeGet.value = item.howtoget // クラフト不可のアイテムの入手方法
     itemName.value = item.name
     itemNumGet.value = item.item_num
     itemImgSrc.value = item.pic; //アイテム一覧の押したアイテム画像を入れる
@@ -188,7 +186,6 @@ const itemRecipe = (item) => {
 const itemRecipeBack = (item) => {
     isLoading.value = true;
     itemRecipeNote.value = item.note;
-    itemRecipeGet.value = item.howtoget
     itemName.value = item.name
     itemNumGet.value = item.num
     itemImgSrc.value = item.pic;
@@ -221,7 +218,6 @@ const itemBack = () => {
         if (lastItem) {
             isLoading.value = true;
             itemRecipeNote.value = lastItem.note;
-            itemRecipeGet.value = lastItem.howtoget;
             itemName.value = lastItem.name;
             itemImgSrc.value = lastItem.pic;
             selectedItemClick.value = lastItem;
@@ -337,7 +333,6 @@ const UpdateKeep = (keep) => {
                             <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick"
                                 @update-keep="UpdateKeep" :items="items" :getSavedItems="getSavedItems" />
                         </div>
-                        <h3 style="color: red">{{ itemRecipeGet }}</h3>
                     </div>
                     <Multiplerecipe />
                 </div>
