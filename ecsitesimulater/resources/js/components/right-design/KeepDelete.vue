@@ -18,7 +18,7 @@ const hasItemsInLocalStorage = computed(() => {
 });
 
 const keepItemBtn = () => {
-    if (hasItemsInLocalStorage) {
+    if (!hasItemsInLocalStorage.value) {
         const isAlreadySaved = existingItemsRef.value.some(item => item.id === props.selectedItemClick.id);
         console.log(props.selectedItemClick.name)
 
@@ -32,7 +32,7 @@ const keepItemBtn = () => {
 };
 
 const deleteItemBtn = () => {
-    if (hasItemsInLocalStorage) {
+    if (hasItemsInLocalStorage.value) {
         existingItemsRef.value = existingItemsRef.value.filter(item => item.id !== props.selectedItemClick.id);
         localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItemsRef.value));
         props.getSavedItems();

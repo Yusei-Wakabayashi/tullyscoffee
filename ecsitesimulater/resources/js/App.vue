@@ -372,7 +372,7 @@ const UpdateKeep = (keep) => {
                                 @update-keep="UpdateKeep" :items="items" :getSavedItems="getSavedItems" />
                         </div>
                     </div>
-                    <Multiplerecipe :test="test" :itemRecipeList="itemRecipeList" :count="count"
+                    <Multiplerecipe :itemRecipeList="itemRecipeList" :count="count"
                         :itemRecipeCountUp="itemRecipeCountUp" :itemRecipeCountDown="itemRecipeCountDown" />
                 </div>
             </div>
