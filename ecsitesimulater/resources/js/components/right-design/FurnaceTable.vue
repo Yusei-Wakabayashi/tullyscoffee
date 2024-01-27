@@ -30,7 +30,7 @@ const props = defineProps({
     margin: 15px 50px 0 70px;
 }
 
-img {
+.item-img {
     cursor: pointer;
 }
 
@@ -46,7 +46,6 @@ img {
     border-top: 3px solid #333333;
     border-bottom: 3px solid #f2f2f2;
     border-right: 3px solid #f2f2f2;
-    cursor: pointer;
 }
 
 .kamado li:nth-child(2) {
