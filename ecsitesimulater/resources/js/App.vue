@@ -48,6 +48,11 @@ const filtereditems = computed(() => {
     return items.value.filter((item) => item.name.includes(searchTerm.value));
 });
 
+// 検索語クリアボタン   
+const searchClear = () => {
+    searchTerm.value = ''
+}
+
 //オーバーワールドアイテム
 const getOverWorlditem = (category) => {
     axios
@@ -260,6 +265,7 @@ const itemBack = () => {
 
 const count = ref(0)
 
+// アイテムレシピの切り替え
 const itemRecipeCountUp = () => {
     if (count.value < itemRecipeList.value.length - 1) {
         count.value++;
@@ -268,6 +274,7 @@ const itemRecipeCountUp = () => {
     }
 }
 
+// アイテムレシピの切り替え
 const itemRecipeCountDown = () => {
     if (count.value > 0) {
         count.value--;
@@ -327,6 +334,7 @@ const UpdateKeep = (keep) => {
                             :categoryNames="categoryNames" />
                         <!--検索ボックス-->
                         <input v-model="searchTerm" placeholder="検索 ．．．" />
+                        <img class="clear-img" src="../../public/web_png/clear-button.png" @click="searchClear()" alt="">
                     </div>
                     <!--非同期の待ち時間アニメーション-->
                     <LoadingAnime :isLoading="isLoading" />
