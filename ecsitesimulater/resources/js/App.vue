@@ -40,6 +40,7 @@ const itemNumGet = ref('')
 const itemName = ref(''); // レシピの結果画像文字
 const selectedItemClick = ref(null);
 const itemBackList = ref([]) // 1つ前のアイテムレシピを入れる
+const recipeDesign = ref(false)
 
 //アイテム名比較
 const filtereditems = computed(() => {
@@ -174,7 +175,11 @@ const itemRecipe = (item) => {
         .then((response) => {
             itemRecipeList.value = response.data;
             itemNumGet.value = response.data[0].item_num
-            console.log(response.data)
+            if (response.data.length === 1) {
+                recipeDesign.value = false
+            } else {
+                recipeDesign.value = true
+            }
         })
         .catch((error) => {
             console.log(error);
@@ -200,6 +205,11 @@ const itemRecipeBack = (item) => {
         .then((response) => {
             itemRecipeList.value = response.data;
             itemNumGet.value = response.data[0].item_num
+            if (response.data.length === 1) {
+                recipeDesign.value = false
+            } else {
+                recipeDesign.value = true
+            }
         })
         .catch((error) => {
             console.log(error);
@@ -232,6 +242,11 @@ const itemBack = () => {
                 .then((response) => {
                     itemRecipeList.value = response.data;
                     itemNumGet.value = response.data[0].item_num
+                    if (response.data.length === 1) {
+                        recipeDesign.value = false
+                    } else {
+                        recipeDesign.value = true
+                    }
                 })
                 .catch((error) => {
                     console.log(error);
@@ -244,6 +259,7 @@ const itemBack = () => {
 };
 
 const count = ref(0)
+
 const itemRecipeCountUp = () => {
     if (count.value < itemRecipeList.value.length - 1) {
         count.value++;
@@ -324,8 +340,8 @@ const UpdateKeep = (keep) => {
                 </div>
             </div>
             <!--右側デザイン-->
-            <div class="recipe">
-                <div class="recipe-inline">
+            <div class="recipe" :class="{ 'recipe-switchi': recipeDesign }">
+                <div class="recipe-inline" :class="{ 'recipe-inline-switchi': recipeDesign }">
                     <div class="recipe-box">
                         <!--クラフト不可-->
                         <NotCraft :itemRecipeList="itemRecipeList" />
@@ -356,10 +372,29 @@ const UpdateKeep = (keep) => {
                                 @update-keep="UpdateKeep" :items="items" :getSavedItems="getSavedItems" />
                         </div>
                     </div>
-                    <Multiplerecipe :itemRecipeList="itemRecipeList" :count="count" :itemRecipeCountUp="itemRecipeCountUp"
-                        :itemRecipeCountDown="itemRecipeCountDown" />
+                    <Multiplerecipe :test="test" :itemRecipeList="itemRecipeList" :count="count"
+                        :itemRecipeCountUp="itemRecipeCountUp" :itemRecipeCountDown="itemRecipeCountDown" />
                 </div>
             </div>
         </div>
     </div>
 </template>
+
+<style>
+.recipe-switchi {
+    width: 380px;
+    height: 254px;
+    background-color: #cccccc;
+    border: 4px solid #333333;
+    box-shadow: 10px 10px rgba(50, 50, 50, 0.8);
+    margin: 152px 20px;
+}
+
+.recipe-inline-switchi {
+    height: 250px;
+    border-left: 3px solid #f2f2f2;
+    border-top: 3px solid #f2f2f2;
+    border-bottom: 3px solid rgb(101, 101, 101);
+    border-right: 3px solid rgb(101, 101, 101);
+}
+</style>

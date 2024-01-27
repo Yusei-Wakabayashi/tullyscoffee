@@ -15,7 +15,7 @@ const props = defineProps({
             </button>
         </div>
         <h1>
-            <span>{{ count + 1 }}</span>
+            <span>{{ count + 1 }} / {{ itemRecipeList.length }}</span>
         </h1>
         <div class="arrow-button">
             <button @click="itemRecipeCountUp()">
@@ -30,7 +30,7 @@ const props = defineProps({
 .flex_box{
     display: flex;
     position: relative;
-    left: 40px;
+    left: 10px;
 }
 
 .arrow-button button{
