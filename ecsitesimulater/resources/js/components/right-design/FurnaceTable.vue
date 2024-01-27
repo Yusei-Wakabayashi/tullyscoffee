@@ -2,15 +2,16 @@
 const props = defineProps({
     itemRecipeList: Array,
     hoveredItemRecipeName: String,
-    itemRecipeBack: Function
+    itemRecipeBack: Function,
+    count: Number
 });
 </script>
 
 <!--かまど-->
 <template>
-    <div class="kamado" v-if="itemRecipeList[0]?.craft_num === 4">
+    <div class="kamado" v-if="itemRecipeList[count]?.craft_num === 4">
         <ul class="kamado-ul">
-            <li v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
+            <li v-for="(recipe, i) in itemRecipeList[count].recipes" :key="i">
                 <img class="item-img" :src="recipe.pic" v-if="recipe.pic !== '/img/fire.png'" @mouseover="hoveredItemRecipeName = i"
                     @mouseleave="hoveredItemRecipeName = null" @click="itemRecipeBack(recipe, i)">
                 <img v-if="recipe.pic === '/img/fire.png'" src="/img/fire.png">

@@ -18,7 +18,7 @@ const props = defineProps({
                     {{ itemName }}
                 </div>
                 <!--数値が0の時だけopacityを0にして文字を透明化-->
-                <div class="numbox" :class="{ 'transparent-text': itemNumGet === 0 }">
+                <div class="numbox" :class="{ 'transparent-text': itemNumGet === 0 || itemNumGet === 1 }">
                     <h4>{{ itemNumGet }}</h4>
                 </div>
             </div>

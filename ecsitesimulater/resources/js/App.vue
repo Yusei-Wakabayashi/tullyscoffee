@@ -162,6 +162,7 @@ const itemRecipe = (item) => {
     itemNumGet.value = item.item_num
     itemImgSrc.value = item.pic; //アイテム一覧の押したアイテム画像を入れる
     selectedItemClick.value = item // クリックされたときにitemを入れて保存メソッドで使う
+    count.value = 0
 
     if (itemBackList.value.length > 0) {
         itemBackList.value = []
@@ -173,6 +174,7 @@ const itemRecipe = (item) => {
         .then((response) => {
             itemRecipeList.value = response.data;
             itemNumGet.value = response.data[0].item_num
+            console.log(response.data)
         })
         .catch((error) => {
             console.log(error);
@@ -190,6 +192,7 @@ const itemRecipeBack = (item) => {
     itemNumGet.value = item.num
     itemImgSrc.value = item.pic;
     selectedItemClick.value = item
+    count.value = 0
 
     itemBackList.value.push(item)// 一個前のアイテムレシピを入れていく
     axios
@@ -222,6 +225,7 @@ const itemBack = () => {
             itemImgSrc.value = lastItem.pic;
             selectedItemClick.value = lastItem;
             itemNumGet.value = lastItem.num
+            count.value = 0
 
             axios
                 .get(`/item/recipesearch/${lastItem.id}`)
@@ -238,6 +242,22 @@ const itemBack = () => {
         }
     }
 };
+
+const count = ref(0)
+const itemRecipeCountUp = () => {
+    if (count.value < itemRecipeList.value.length - 1) {
+        count.value++;
+        itemNumGet.value = itemRecipeList.value[count.value].item_num
+        console.log(itemRecipeList.value[count.value].item_num)
+    }
+}
+
+const itemRecipeCountDown = () => {
+    if (count.value > 0) {
+        count.value--;
+        itemNumGet.value = itemRecipeList.value[count.value].item_num
+    }
+}
 
 onMounted(() => {
     //リロード時オールの全アイテムが表示される
@@ -287,7 +307,8 @@ const UpdateKeep = (keep) => {
                         :getOverWorlditem="getOverWorlditem" @update-category="UpdateLoading" />
                     <!--カテゴリー上部-->
                     <div class="tab-category-container">
-                        <TopCategory :setCategory="setCategory" :currentCategory="currentCategory" :categoryNames="categoryNames" />
+                        <TopCategory :setCategory="setCategory" :currentCategory="currentCategory"
+                            :categoryNames="categoryNames" />
                         <!--検索ボックス-->
                         <input v-model="searchTerm" placeholder="検索 ．．．" />
                     </div>
@@ -310,16 +331,16 @@ const UpdateKeep = (keep) => {
                         <NotCraft :itemRecipeList="itemRecipeList" />
                         <!--作業台-->
                         <SagyouCraft :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
-                            :itemRecipeBack="itemRecipeBack" />
+                            :itemRecipeBack="itemRecipeBack" :count="count" />
                         <!--醸造台-->
                         <BrewingTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
-                            :itemRecipeBack="itemRecipeBack" />
+                            :itemRecipeBack="itemRecipeBack" :count="count" />
                         <!--かまど-->
                         <FurnaceTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
-                            :itemRecipeBack="itemRecipeBack" />
+                            :itemRecipeBack="itemRecipeBack" :count="count" />
                         <!--鍛冶台-->
                         <BlacksmithTable :itemRecipeList="itemRecipeList" :hoveredItemRecipeName="hoveredItemRecipeName"
-                            :itemRecipeBack="itemRecipeBack" />
+                            :itemRecipeBack="itemRecipeBack" :count="count" />
                         <!--レシピ右側-->
                         <div class="right-side" v-if="itemImgSrc">
 
@@ -328,13 +349,15 @@ const UpdateKeep = (keep) => {
                             <!--アイテムを戻るボタン-->
                             <BackItem :itemBackList="itemBackList" :itemBack="itemBack" />
                             <!--レシピ右側の画像-->
-                            <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName" :itemNumGet="itemNumGet" />
+                            <ResultImg :itemImgSrc="itemImgSrc" :hoveredItem="hoveredItem" :itemName="itemName"
+                                :itemNumGet="itemNumGet" />
                             <!--保存、削除ボタン-->
                             <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick"
                                 @update-keep="UpdateKeep" :items="items" :getSavedItems="getSavedItems" />
                         </div>
                     </div>
-                    <Multiplerecipe />
+                    <Multiplerecipe :itemRecipeList="itemRecipeList" :count="count" :itemRecipeCountUp="itemRecipeCountUp"
+                        :itemRecipeCountDown="itemRecipeCountDown" />
                 </div>
             </div>
         </div>

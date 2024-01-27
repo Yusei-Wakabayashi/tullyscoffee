@@ -2,15 +2,16 @@
 const props = defineProps({
     itemRecipeList: Array,
     hoveredItemRecipeName: String,
-    itemRecipeBack: Function
+    itemRecipeBack: Function,
+    count: Number
 });
 </script>
 
 <!--鍛冶台-->
 <template>
-    <div class="kaji" v-if="itemRecipeList[0]?.craft_num === 5">
+    <div class="kaji" v-if="itemRecipeList[count]?.craft_num === 5">
         <ul class="kaji-ul">
-            <li class="kaji-li" v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
+            <li class="kaji-li" v-for="(recipe, i) in itemRecipeList[count].recipes" :key="i">
                 <img class="item-img" :src="recipe?.pic" @mouseover="hoveredItemRecipeName = i"
                     @mouseleave="hoveredItemRecipeName = null" @click="itemRecipeBack(recipe)" width="49">
 

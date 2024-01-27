@@ -2,17 +2,18 @@
 const props = defineProps({
     itemRecipeList: Array,
     hoveredItemRecipeName: String,
-    itemRecipe: Function
+    itemRecipe: Function,
+    count: Number
 });
 </script>
 
 <!--醸造台-->
 <template>
-    <div v-if="itemRecipeList[0]?.craft_num === 3">
+    <div v-if="itemRecipeList[count]?.craft_num === 3">
         <div class="brewing-flex">
             
         <ul>
-            <li v-for="(recipe, i) in itemRecipeList[0].recipes" :key="i">
+            <li v-for="(recipe, i) in itemRecipeList[count].recipes" :key="i">
                 <img :src="recipe.pic" @mouseover="hoveredItemRecipeName = i" @mouseleave="hoveredItemRecipeName = null"
                     @click="itemRecipe(recipe)">
 
