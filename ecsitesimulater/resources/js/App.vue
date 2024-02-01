@@ -21,6 +21,7 @@ import BackItem from "./components/right-design/BackItem.vue";
 import ResultImg from './components/right-design/ResultImg.vue'; // クラフト結果画像
 import KeepdeleteBtn from './components/right-design/KeepDelete.vue'; // 保存削除ボタン
 import Multiplerecipe from "./components/right-design/Multiplerecipe.vue";
+import SagyouImg from "@/components/right-design/SagyouImg.vue";
 
 const items = ref([]); // アイテム配列
 const currentCategory = ref(10); // 初期のcss状態(ALLカテゴリーボタン)
@@ -367,6 +368,9 @@ const UpdateKeep = (keep) => {
                             :itemRecipeBack="itemRecipeBack" :count="count" />
                         <!--レシピ右側-->
                         <div class="right-side" v-if="itemImgSrc">
+
+                            <!--作業台画像-->
+                            <SagyouImg :itemRecipeList="itemRecipeList" :count="count" />
 
                             <!--注意書き-->
                             <AttentionNote :itemRecipeNote="itemRecipeNote" />
