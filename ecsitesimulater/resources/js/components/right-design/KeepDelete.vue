@@ -12,7 +12,6 @@ const props = defineProps({
 const emits = defineEmits();
 
 const existingItemsRef = ref(props.existingItems);
-const existingselectedItemClick = ref(props.selectedItemClick);
 
 const hasItemsInLocalStorage = computed(() => {
     return existingItemsRef.value.some(item => item.id === props.selectedItemClick.id);
@@ -28,10 +27,6 @@ const keepItemBtn = () => {
         }
 
         localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItemsRef.value));
-        // console.log(props.selectedItemClick.name);
-        // console.log(existingselectedItemClick.value);
-        // console.log(props.existingItems);
-        // console.log(existingItemsRef.value);
     }
 };
 
@@ -47,10 +42,6 @@ const deleteItemBtn = () => {
                 selectedItemClick: existingselectedItemClick.value,
             });
         }
-        // console.log(props.selectedItemClick.name);
-        // console.log(existingselectedItemClick.value);
-        // console.log(props.existingItems);
-        // console.log(existingItemsRef.value);
     }
 };
 </script>
