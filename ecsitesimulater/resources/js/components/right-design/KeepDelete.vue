@@ -5,7 +5,8 @@ const props = defineProps({
     existingItems: Array, // ローカルストレージ
     selectedItemClick: Object, // アイテムの情報が入る
     items: Array,
-    getSavedItems: Function
+    getSavedItems: Function,
+    currentCategory: Number
 });
 
 const emits = defineEmits();
@@ -20,7 +21,6 @@ const hasItemsInLocalStorage = computed(() => {
 const keepItemBtn = () => {
     if (!hasItemsInLocalStorage.value) {
         const isAlreadySaved = existingItemsRef.value.some(item => item.id === props.selectedItemClick.id);
-        console.log(props.selectedItemClick.name)
 
         if (!isAlreadySaved) {
             existingItemsRef.value.unshift(props.selectedItemClick);
@@ -28,6 +28,10 @@ const keepItemBtn = () => {
         }
 
         localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItemsRef.value));
+        // console.log(props.selectedItemClick.name);
+        // console.log(existingselectedItemClick.value);
+        // console.log(props.existingItems);
+        // console.log(existingItemsRef.value);
     }
 };
 
@@ -36,10 +40,17 @@ const deleteItemBtn = () => {
         existingItemsRef.value = existingItemsRef.value.filter(item => item.id !== props.selectedItemClick.id);
         localStorage.setItem("saved-Minecraft-Items", JSON.stringify(existingItemsRef.value));
         props.getSavedItems();
-        emits('update-keep', {
-            items: existingItemsRef.value,
-            selectedItemClick: existingselectedItemClick.value
-        });
+        if (props.currentCategory === 11) {
+            const existingselectedItemClick = ref(props.selectedItemClick);
+            emits('update-keep', {
+                items: existingItemsRef.value,
+                selectedItemClick: existingselectedItemClick.value,
+            });
+        }
+        // console.log(props.selectedItemClick.name);
+        // console.log(existingselectedItemClick.value);
+        // console.log(props.existingItems);
+        // console.log(existingItemsRef.value);
     }
 };
 </script>

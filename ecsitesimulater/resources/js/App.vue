@@ -381,7 +381,7 @@ const UpdateKeep = (keep) => {
                                 :itemNumGet="itemNumGet" />
                             <!--保存、削除ボタン-->
                             <KeepdeleteBtn :existingItems="existingItems" :selectedItemClick="selectedItemClick"
-                                @update-keep="UpdateKeep" :items="items" :getSavedItems="getSavedItems" />
+                                @update-keep="UpdateKeep" :items="items" :getSavedItems="getSavedItems" :currentCategory="currentCategory"/>
                         </div>
                     </div>
                     <Multiplerecipe :itemRecipeList="itemRecipeList" :count="count"
