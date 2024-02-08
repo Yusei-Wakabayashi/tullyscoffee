@@ -9,15 +9,15 @@ const props = defineProps({
 
 <template>
     <div class="flex_box" v-if="itemRecipeList.length > 2">
-        <div class="arrow-button" @click="itemRecipeCountDown()">
-            <button>
+        <div class="arrow-button" v-if="count >= 1">
+            <button  @click="itemRecipeCountDown()">
                 <img src="../../../../public/web_png/arrow_left.png" />
             </button>
         </div>
         <h1>
             <span>{{ count + 1 }} / {{ itemRecipeList.length }}</span>
         </h1>
-        <div class="arrow-button">
+        <div class="arrow-button" v-if="count < itemRecipeList.length - 1">
             <button @click="itemRecipeCountUp()">
                 <img src="../../../../public/web_png/arrow_right.png" />
             </button>
@@ -29,8 +29,7 @@ const props = defineProps({
 
 .flex_box{
     display: flex;
-    position: relative;
-    left: 10px;
+    padding: 0 30px;
 }
 
 .arrow-button button{

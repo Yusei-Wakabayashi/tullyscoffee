@@ -5,24 +5,19 @@ const props = defineProps({
 })
 
 const hoveredItemRecipeNote = ref(null)
-var maxLength = 25;
+const maxLength = ref(25);
 function insertLineBreaks(text) {
     // 改行後のテキストを格納するための変数
     let result = '';
     
     // 文字列を指定の文字数で分割して、改行を挿入する
-    for (let i = 0; i < text.length; i += maxLength) {
-        result += text.substr(i, maxLength) + '\n';
+    for (let i = 0; i < text.length; i += maxLength.value) {
+        result += text.substr(i, maxLength.value) + '\n';
     }
     
     return result;
 }
 
-// 改行を挿入する前のテキスト
-// const originalText = 'この文章は改行して表示されます。これはテスト用の文章で、指定の文字数で改行するJavaScriptの関数を使っています。';
-
-// 指定の文字数で改行を挿入した後のテキスト
-// const textWithLineBreaks = insertLineBreaks(originalText, 20);
 </script>
 
 <!--注意書き-->
