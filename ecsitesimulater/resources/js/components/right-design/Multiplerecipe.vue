@@ -8,7 +8,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="flex_box" v-if="itemRecipeList.length > 2">
+    <div class="flex_box" v-if="itemRecipeList.length > 1">
         <div class="arrow-button" v-if="count >= 1">
             <button  @click="itemRecipeCountDown()">
                 <img src="../../../../public/web_png/arrow_left.png" />
