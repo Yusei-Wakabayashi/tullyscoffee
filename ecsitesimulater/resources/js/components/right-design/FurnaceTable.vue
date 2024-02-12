@@ -27,7 +27,7 @@ const props = defineProps({
 <style scoped>
 .kamado-ul {
     list-style: none;
-    margin: 15px 50px 0 70px;
+    margin: 20px 50px 0 70px;
 }
 
 .item-img {

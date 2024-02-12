@@ -14,7 +14,7 @@ const props = defineProps({
             
         <ul>
             <li v-for="(recipe, i) in itemRecipeList[count].recipes" :key="i">
-                <img :src="recipe.pic" @mouseover="hoveredItemRecipeName = i" @mouseleave="hoveredItemRecipeName = null"
+                <img class="item-img" :src="recipe.pic" @mouseover="hoveredItemRecipeName = i" @mouseleave="hoveredItemRecipeName = null"
                     @click="itemRecipe(recipe)">
 
                 <!-- アイテム名 -->
@@ -73,6 +73,7 @@ img {
     width: 49px;
     height: 49px;
     text-align: center;
+    cursor: pointer;
 }
 
 </style>
