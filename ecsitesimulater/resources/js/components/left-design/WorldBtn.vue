@@ -113,7 +113,6 @@ const setAllTabClick = () => {
                 オール
             </button>
         </div>
-        <p>test</p>
     </div>
 </template>
 
