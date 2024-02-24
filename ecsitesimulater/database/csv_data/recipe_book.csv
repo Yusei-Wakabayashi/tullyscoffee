@@ -118,9 +118,9 @@
 /img/architecture/bamboo_pressure_plate.webp,竹の感圧版,117,形さえ合っていれば場所はどこでもクラフト可能です,117
 /img/architecture/bamboo_button.webp,竹のボタン,118,どの場所でもクラフトできるよ,118
 /img/architecture/crimson_stem.webp,真紅の幹,119,幹を破壊することで入手可能です,119
-/img/architecture/crimson_hyphae.webp,真紅の菌糸,120,どこでもクラフト可能です,120
+/img/architecture/warped_hyphae.webp,真紅の菌糸,120,どこでもクラフト可能です,120
 /img/architecture/stripped_crimson_stem.webp,表皮を剥いだ真紅の幹,121,幹に斧を使用し破壊することで入手可能です,121
-/img/architecture/stripped_crimson_hyphae.webp,表皮を剥いだ真紅の菌糸,122,どこでもクラフト可能です,122
+/img/architecture/stripped_warped_hyphae.webp,表皮を剥いだ真紅の菌糸,122,どこでもクラフト可能です,122
 /img/architecture/crimson_planks.webp,真紅の板材,123,どこでもクラフト可能です,123
 /img/architecture/crimson_stairs.webp,真紅の階段,124,形さえ合っていれば右向き、左向きのどちらでもクラフトできます,124
 /img/architecture/crimson_slab.webp,真紅のハーフブロック,125,形さえ合っていれば場所はどこでもクラフト可能です,125
@@ -131,9 +131,9 @@
 /img/architecture/crimson_pressure_plate.webp,真紅の感圧版,130,形さえ合っていれば場所はどこでもクラフト可能です,130
 /img/architecture/crimson_button.webp,真紅のボタン,131,クラフト？どこでもできるぞ！,131
 /img/architecture/warped_stem.webp,歪んだ幹,132,幹を破壊することで入手可能です,132
-/img/architecture/warped_hyphae.webp,歪んだ菌糸,133,形と向きさえ合っていれば場所はどこでもクラフト可能です,133
+/img/architecture/crimson_hyphae.webp,歪んだ菌糸,133,形と向きさえ合っていれば場所はどこでもクラフト可能です,133
 /img/architecture/stripped_warped_stem.webp,表皮を剥いだ歪んだ幹,134,幹に斧を使用し破壊することで入手可能です,134
-/img/architecture/stripped_warped_hyphae.webp,表皮を剥いだ歪んだ菌糸,135,どこでもクラフト可能です,135
+/img/architecture/stripped_crimson_hyphae.webp,表皮を剥いだ歪んだ菌糸,135,どこでもクラフト可能です,135
 /img/architecture/warped_planks.webp,歪んだ板材,136,場所はどこでもクラフト可能です,136
 /img/architecture/warped_stairs.webp,歪んだ階段,137,形さえ合っていれば右向き、左向きのどちらでもクラフトできます,137
 /img/architecture/warped_slab.webp,歪んだハーフブロック,138,形さえ合っていれば場所はどこでもクラフト可能です,138
