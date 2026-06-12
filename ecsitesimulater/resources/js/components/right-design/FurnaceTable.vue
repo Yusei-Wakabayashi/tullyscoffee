@@ -5,6 +5,7 @@ const props = defineProps({
     itemRecipeBack: Function,
     count: Number
 });
+const fireImg = '/img/fire.png'
 </script>
 
 <!--かまど-->
@@ -12,9 +13,9 @@ const props = defineProps({
     <div class="kamado" v-if="itemRecipeList[count]?.craft_num === 4">
         <ul class="kamado-ul">
             <li v-for="(recipe, i) in itemRecipeList[count].recipes" :key="i">
-                <img class="item-img" :src="recipe.pic" v-if="recipe.pic !== '/img/fire.png'" @mouseover="hoveredItemRecipeName = i"
+                <img class="item-img" :src="recipe.pic" v-if="recipe.pic !== fireImg" @mouseover="hoveredItemRecipeName = i"
                     @mouseleave="hoveredItemRecipeName = null" @click="itemRecipeBack(recipe, i)">
-                <img v-if="recipe.pic === '/img/fire.png'" src="/img/fire.png">
+                <img v-if="recipe.pic === fireImg" :src="fireImg">
                 <!-- アイテム名 -->
                 <div class="item-name-recipe" v-if="hoveredItemRecipeName === i">
                     {{ recipe.name }}
